@@ -1,17 +1,272 @@
-<h1>Encabezado n1</h1>
-<p>Párrafo de ejemplo</p>
-hola como estas
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-AR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="SWAP Podcast — Conversaciones reales para jóvenes que quieren crecer. Salud, productividad, desarrollo personal, carrera, emprendimiento, IA y mentalidad.">
+  <title>SWAP Podcast</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+
+  <!-- ======== HEADER / NAV ======== -->
+  <header class="site-header" id="site-header">
+    <nav class="nav-container" aria-label="Navegación principal">
+      <a href="#hero" class="nav-logo">
+        <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast logo" width="50" height="50">
+      </a>
+
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#que-es">Qué es SWAP</a></li>
+        <li><a href="#temas">Temas</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#escuchanos">Escuchanos</a></li>
+        <li><a href="#contacto" class="nav-cta btn-magnetic">Quiero participar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ======== HERO ======== -->
+    <section id="hero" class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+      <div class="hero-content">
+        <h1 id="hero-heading" class="hero-title">
+          <span class="text-reveal"><span>SWAP</span></span>
+          <span class="text-reveal"><span>PODCAST</span></span>
+        </h1>
+        <p class="hero-subtitle reveal">Conversaciones reales para jóvenes que quieren crecer.</p>
+        <a href="#contacto" class="btn btn-primary btn-magnetic reveal">Sé parte</a>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ======== DUAL SPLIT — QUÉ ES SWAP ======== -->
+    <section id="que-es" class="split-section" aria-labelledby="about-heading">
+      <div class="split-left">
+        <div class="split-text">
+          <h2 id="about-heading" class="split-heading reveal">
+            NO SOMOS<br>EXPERTOS.<br>
+            <span class="text-accent">SOMOS<br>CURIOSOS.</span>
+          </h2>
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="split-card reveal">
+          <span class="split-card-label">EL PODCAST</span>
+          <p>SWAP es un podcast en español para jóvenes de 16 a 25 años que quieren sacarle el máximo jugo a su vida. Hablamos de salud, productividad, desarrollo personal, carrera, emprendimiento, inteligencia artificial y mentalidad.</p>
+        </div>
+        <div class="split-card reveal">
+          <span class="split-card-label">EL FORMATO</span>
+          <p>Conversacional, no entrevista. Somos dos pibes curiosos teniendo charlas reales con personas que tienen algo valioso para compartir. Entre pares, no de arriba hacia abajo.</p>
+        </div>
+        <div class="split-card reveal">
+          <span class="split-card-label">LA DURACIÓN</span>
+          <p>Episodios con invitados de 60 a 90 minutos. Episodios solos de hasta 30 minutos. Sin apuro, sin guión rígido — la conversación fluye.</p>
+        </div>
+        <div class="split-card reveal">
+          <span class="split-card-label">EL VIBE</span>
+          <p>Auténtico, sin filtros, casual y cercano. No fingimos saber todo. Compartimos el viaje, las dudas y los aprendizajes tal como son.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== HORIZONTAL SCROLL — TEMAS ======== -->
+    <section id="temas" class="horizontal-section" aria-labelledby="topics-heading">
+      <div class="horizontal-sticky">
+        <div class="horizontal-header">
+          <h2 id="topics-heading" class="section-title reveal">DE QUÉ HABLAMOS</h2>
+          <p class="section-subtitle reveal">Si suma valor, es tema de SWAP.</p>
+        </div>
+        <div class="horizontal-track" id="horizontal-track">
+          <article class="topic-card">
+            <span class="topic-number">01</span>
+            <h3>SALUD</h3>
+            <p>Bienestar físico y mental, hábitos, nutrición, deporte y todo lo que te hace sentir bien.</p>
+          </article>
+          <article class="topic-card">
+            <span class="topic-number">02</span>
+            <h3>PRODUCTIVIDAD</h3>
+            <p>Sistemas, rutinas, gestión del tiempo y energía para hacer más de lo que importa.</p>
+          </article>
+          <article class="topic-card">
+            <span class="topic-number">03</span>
+            <h3>DESARROLLO PERSONAL</h3>
+            <p>Autoconocimiento, propósito, claridad mental y crecimiento continuo.</p>
+          </article>
+          <article class="topic-card">
+            <span class="topic-number">04</span>
+            <h3>CARRERA</h3>
+            <p>Decisiones profesionales, primer laburo, estudios y cómo encontrar tu camino.</p>
+          </article>
+          <article class="topic-card">
+            <span class="topic-number">05</span>
+            <h3>EMPRENDIMIENTO</h3>
+            <p>Crear proyectos, mentalidad emprendedora, fracasos y aprendizajes reales.</p>
+          </article>
+          <article class="topic-card">
+            <span class="topic-number">06</span>
+            <h3>IA Y TECNOLOGÍA</h3>
+            <p>Cómo la tecnología está cambiando todo y cómo aprovecharla siendo joven.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== STATS ======== -->
+    <section class="stats-section" aria-labelledby="stats-heading">
+      <div class="container">
+        <h2 id="stats-heading" class="visually-hidden">SWAP en números</h2>
+        <div class="stats-grid">
+          <div class="stat-item reveal">
+            <span class="stat-number">13</span>
+            <span class="stat-label">EPISODIOS</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number">2</span>
+            <span class="stat-label">HOSTS</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number">5</span>
+            <span class="stat-label">PLATAFORMAS</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number">&infin;</span>
+            <span class="stat-label">TEMAS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== EXPERIENCIA DEL INVITADO ======== -->
+    <section id="experiencia" class="experience-section" aria-labelledby="experience-heading">
+      <div class="container">
+        <h2 id="experience-heading" class="section-title reveal">CÓMO ES SER INVITADO</h2>
+        <div class="experience-grid">
+          <div class="experience-item reveal">
+            <span class="experience-number">01</span>
+            <div class="experience-content">
+              <h3>CONVERSACIÓN, NO INTERROGATORIO</h3>
+              <p>No es una entrevista formal. Es una charla entre pares donde fluyen las ideas. Te vas a sentir cómodo desde el minuto uno.</p>
+            </div>
+          </div>
+          <div class="experience-item reveal">
+            <span class="experience-number">02</span>
+            <div class="experience-content">
+              <h3>VOS ELEGÍS DE QUÉ HABLAR</h3>
+              <p>Nos adaptamos a lo que te apasiona. Si te copa, a la audiencia le va a copar.</p>
+            </div>
+          </div>
+          <div class="experience-item reveal">
+            <span class="experience-number">03</span>
+            <div class="experience-content">
+              <h3>SETUP PROFESIONAL</h3>
+              <p>3 cámaras, audio profesional, edición cuidada. Tu mensaje se escucha y se ve como merece.</p>
+            </div>
+          </div>
+          <div class="experience-item reveal">
+            <span class="experience-number">04</span>
+            <div class="experience-content">
+              <h3>SIN PRESIÓN, CON VALOR</h3>
+              <p>No necesitás ser famoso ni experto. Si tenés algo valioso para compartir, queremos escucharte.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== ESCUCHANOS ======== -->
+    <section id="escuchanos" class="listen-section" aria-labelledby="listen-heading">
+      <div class="container">
+        <h2 id="listen-heading" class="section-title reveal">ESCUCHANOS</h2>
+        <p class="section-subtitle reveal">Elegí tu plataforma y conocé de qué se trata.</p>
+        <div class="listen-grid">
+          <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY" target="_blank" rel="noopener noreferrer"
+            class="listen-link btn-magnetic reveal" aria-label="Escuchar en Spotify">
+            <span class="listen-name">Spotify</span>
+            <span class="listen-arrow">&rarr;</span>
+          </a>
+          <a href="https://www.youtube.com/@SwapPodcast" target="_blank" rel="noopener noreferrer"
+            class="listen-link btn-magnetic reveal" aria-label="Ver en YouTube">
+            <span class="listen-name">YouTube</span>
+            <span class="listen-arrow">&rarr;</span>
+          </a>
+          <a href="https://podcasts.apple.com/ar/podcast/swap-podcast/id1830727081?l=en-GB" target="_blank"
+            rel="noopener noreferrer" class="listen-link btn-magnetic reveal" aria-label="Escuchar en Apple Podcasts">
+            <span class="listen-name">Apple Podcasts</span>
+            <span class="listen-arrow">&rarr;</span>
+          </a>
+          <a href="https://www.instagram.com/swapodcast" target="_blank" rel="noopener noreferrer"
+            class="listen-link btn-magnetic reveal" aria-label="Seguir en Instagram">
+            <span class="listen-name">Instagram</span>
+            <span class="listen-arrow">&rarr;</span>
+          </a>
+          <a href="https://www.tiktok.com/@swappodcast" target="_blank" rel="noopener noreferrer"
+            class="listen-link btn-magnetic reveal" aria-label="Seguir en TikTok">
+            <span class="listen-name">TikTok</span>
+            <span class="listen-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== CTA / CONTACTO ======== -->
+    <section id="contacto" class="cta-section" aria-labelledby="cta-heading">
+      <div class="cta-bg" aria-hidden="true">
+        <div class="orb orb-cta-1"></div>
+        <div class="orb orb-cta-2"></div>
+      </div>
+      <div class="container cta-content">
+        <h2 id="cta-heading" class="cta-title reveal">¿QUERÉS<br>SER PARTE?</h2>
+        <p class="cta-subtitle reveal">Si tenés algo valioso para compartir,<br>nos encantaría tenerte en SWAP.</p>
+        <a href="mailto:podcastswap@gmail.com" class="btn btn-primary btn-large btn-magnetic reveal">ESCRIBINOS</a>
+        <p class="cta-email reveal">podcastswap@gmail.com</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast" width="40" height="40">
+        <span class="footer-tagline">Conversaciones reales. Valor real.</span>
+      </div>
+      <nav class="footer-links" aria-label="Redes sociales">
+        <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY" target="_blank"
+          rel="noopener noreferrer">Spotify</a>
+        <a href="https://www.youtube.com/@SwapPodcast" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://www.instagram.com/swapodcast" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@swappodcast" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 SWAP Podcast</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
 </body>
 
 </html>
