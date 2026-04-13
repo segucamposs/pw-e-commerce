@@ -24,7 +24,7 @@ University project for **ITBA 71.38 - Programacion Web**. Solo e-commerce websit
 
 ## Current Phase
 
-**Fresh start — building from scratch.** Current phase: static HTML/CSS/JS (no build tools). Open `index.html` directly in browser to preview. Next.js will be added at deliverable E4.
+**E2 complete — static HTML/CSS/JS site live on Vercel.** Open `index.html` or `guest.html` directly in browser to preview locally. Next.js will be introduced at deliverable E4.
 
 ```bash
 # After Next.js setup (E4):
@@ -32,6 +32,15 @@ npm install
 npm run dev      # dev server on localhost:3000
 npm run build    # production build
 ```
+
+## Design System
+
+CSS custom properties defined in `:root` of `styles.css` (shared via `guest.css` too):
+
+- **Colors:** `--bg` (#080808 dark), `--accent` (#C8FF00 lime), `--text` (#EFEFEF), `--text-muted` (#666)
+- **Fonts:** `--font-display: 'Syne'` (headings), `--font-body: 'DM Sans'` (body) — loaded via Google Fonts
+- **Layout:** `--container: 1200px`, `--section-gap: 7rem`, `--radius: 12px`
+- `guest.css` is standalone (not imported from `styles.css`) but uses the same token names
 
 ## File Structure
 
@@ -98,17 +107,53 @@ Audit and improve web accessibility following WCAG 2.2 guidelines. Use when aske
 - `.claude/skills/accessibility/references/A11Y-PATTERNS.md`: Practical, copy-paste-ready patterns for common accessibility requirements. Each pattern is self-contained and linked from the main [SKILL.md](../SKILL.md).
 - `.claude/skills/accessibility/references/WCAG.md`
 
+## MANDATORY PREPARATION
+
+Add strategic color to features that are too monochromatic or lack visual interest, making interfaces more engaging and expressive. Use when the user mentions the design looking gray, dull, lacking warmth, needing more color, or wanting a more vibrant or expressive palette.
+
+- `.claude/skills/colorize/SKILL.md`
+
+## STEPS
+
+Evaluate design from a UX perspective, assessing visual hierarchy, information architecture, emotional resonance, cognitive load, and overall quality with quantitative scoring, persona-based testing, automated anti-pattern detection, and actionable feedback. Use when the user asks to review, crit...
+
+- `.claude/skills/critique/SKILL.md`
+- `.claude/skills/critique/reference/cognitive-load.md`: Cognitive load is the total mental effort required to use an interface. Overloaded users make mistakes, get frustrated, and leave. This reference helps identify and fix cognitive overload.
+- `.claude/skills/critique/reference/heuristics-scoring.md`: Score each of Nielsen's 10 Usability Heuristics on a 0–4 scale. Be honest — a 4 means genuinely excellent, not "good enough."
+- `.claude/skills/critique/reference/personas.md`: Test the interface through the eyes of 5 distinct user archetypes. Each persona exposes different failure modes that a single "design director" perspective would miss.
+
+## Frontend Code Review
+
+Trigger when the user requests a review of frontend files (e.g., `.tsx`, `.ts`, `.js`). Support both pending-change reviews and focused file reviews while applying the checklist rules.
+
+- `.claude/skills/frontend-code-review/SKILL.md`
+- `.claude/skills/frontend-code-review/references/business-logic.md`: IsUrgent: True
+- `.claude/skills/frontend-code-review/references/code-quality.md`: IsUrgent: True Category: Code Quality
+- `.claude/skills/frontend-code-review/references/performance.md`: IsUrgent: True Category: Performance
+
 ## Design Thinking
 
 Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beaut...
 
 - `.claude/skills/frontend-design/SKILL.md`
 
+## MANDATORY PREPARATION
+
+Performs a final quality pass fixing alignment, spacing, consistency, and micro-detail issues before shipping. Use when the user mentions polish, finishing touches, pre-launch review, something looks off, or wants to go from good to great.
+
+- `.claude/skills/polish/SKILL.md`
+
 ## SEO optimization
 
 Optimize for search engine visibility and ranking. Use when asked to "improve SEO", "optimize for search", "fix meta tags", "add structured data", "sitemap optimization", or "search engine optimization".
 
 - `.claude/skills/seo/SKILL.md`
+
+## MANDATORY PREPARATION
+
+Improves typography by fixing font choices, hierarchy, sizing, weight, and readability so text feels intentional. Use when the user mentions fonts, type, readability, text hierarchy, sizing looks off, or wants more polished, intentional typography.
+
+- `.claude/skills/typeset/SKILL.md`
 
 ## UI/UX Pro Max - Design Intelligence
 
