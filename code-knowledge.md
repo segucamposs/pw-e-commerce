@@ -216,3 +216,59 @@ const msg = `Hola, ${nombre}!`;
 
 ### Module Pattern (IIFE-style functions)
 Each feature (scrollReveal, navbarScroll, etc.) is wrapped in its own function and called at the bottom of the file. This keeps the code organized and avoids variables from different features colliding.
+
+### `async` / `await`
+A modern way to write code that waits for something to finish (like a network request) without blocking everything else. `async` marks a function as asynchronous; `await` pauses inside that function until a Promise resolves.
+```js
+const submit = async () => {
+  const result = await fetch('/api/data'); // waits for response
+  const data = await result.json();        // waits for JSON parsing
+};
+```
+If the awaited operation fails, it throws an error — caught with `try/catch`.
+
+---
+
+## Accessibility Patterns
+
+### ARIA Tab Pattern
+A tab interface has three key roles that assistive tech understands:
+- `role="tablist"` — the container that holds the tab buttons
+- `role="tab"` — each clickable tab button; has `aria-selected="true/false"` and `aria-controls="panel-id"`
+- `role="tabpanel"` — each content panel; has `aria-labelledby="tab-id"`
+
+The `hidden` attribute (native HTML) hides inactive panels from both visual display and screen readers — no CSS needed.
+
+Keyboard navigation: Arrow keys move focus between tabs within the tablist. This is implemented manually in JS since it differs from standard Tab key behavior.
+
+```html
+<div role="tablist">
+  <button role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">Spotify</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">YouTube</button>
+</div>
+<div id="panel-1" role="tabpanel" aria-labelledby="tab-1">...</div>
+<div id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>...</div>
+```
+
+`tabindex="-1"` on inactive tabs removes them from the Tab key order — only the active tab is reachable by Tab; inactive ones are reached by arrow keys.
+
+### `<details>` / `<summary>` (Native Accordion)
+A built-in HTML element that shows/hides content without any JavaScript. The `<summary>` is always visible; clicking it toggles the `open` attribute on `<details>`.
+```html
+<details>
+  <summary>¿Cuánto dura?</summary>
+  <p>Alrededor de 1 hora.</p>
+</details>
+```
+CSS can target the open state with `details[open] summary { ... }`.
+
+### `position: fixed` (Floating Action Button)
+An element with `position: fixed` stays in the same spot on screen regardless of scrolling — positioned relative to the viewport, not the page. Used for the WhatsApp FAB pinned to the bottom-right corner.
+```css
+.whatsapp-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 200; /* stays on top of all other content */
+}
+```

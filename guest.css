@@ -325,6 +325,87 @@ img    { max-width: 100%; display: block; }
   color: var(--text-muted);
 }
 
+.g-faq {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.g-faq .faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.g-faq .faq-item:last-child {
+  border-bottom: none;
+}
+
+.g-faq .faq-item summary {
+  padding: 0.85rem 0;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.g-faq .faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.g-faq .faq-item summary::after {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  line-height: 1;
+}
+
+.g-faq .faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.g-faq .faq-item[open] summary {
+  color: var(--accent);
+}
+
+.g-faq .faq-answer {
+  padding: 0 0 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.whatsapp-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 52px;
+  height: 52px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 200;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-fab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5);
+}
+
 @media (max-width: 380px) {
   .hosts-grid {
     grid-template-columns: 1fr;

@@ -163,8 +163,41 @@ const formHandler = () => {
   });
 };
 
+const listenTabs = () => {
+  const tablist = document.querySelector('[role="tablist"]');
+  if (!tablist) return;
+
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => {
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
+      document.querySelectorAll('[role="tabpanel"]').forEach((p) => {
+        p.hidden = true;
+      });
+
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+    });
+
+    tab.addEventListener('keydown', (e) => {
+      const idx = tabs.indexOf(tab);
+      if (e.key === 'ArrowRight') {
+        tabs[(idx + 1) % tabs.length].focus();
+      } else if (e.key === 'ArrowLeft') {
+        tabs[(idx - 1 + tabs.length) % tabs.length].focus();
+      }
+    });
+  });
+};
+
 scrollReveal();
 navbarScroll();
 mobileNav();
 statsCounter();
 formHandler();
+listenTabs();

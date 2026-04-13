@@ -54,3 +54,8 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "add the links of youtube, tiktok, instagram, etc. + add Apple Podcasts"
 **Output:** Updated platform links in index.html and guest.html — real URLs for YouTube, TikTok, Instagram, Apple Podcasts. Removed Spotify placeholder (no link provided). Added TikTok and Apple Podcasts buttons with SVG icons. All links open in new tab with rel="noopener noreferrer".
+
+---
+
+**Prompt:** "1. I think that the 'Todo lo que necesitas saber' part has to go to the 'Para invitados' section, what do you think? 2. Let the user choose which podcast to hear, don't leave only one option. 3. Add the whatsapp button to the bottom right part of the screen on every moment (doesn't has to be functional yet)."
+**Output:** (1) Moved FAQ section from index.html to guest.html (before the CTA block), with adapted styles in guest.css. (2) Replaced single Spotify embed in escuchanos section with a 3-tab system (Spotify iframe / YouTube card / Apple Podcasts card) using ARIA tablist pattern; added `listenTabs()` JS module with keyboard navigation; TikTok and Instagram kept as social buttons below tabs. (3) Added WhatsApp FAB (fixed, bottom-right, #25D366) to both index.html and guest.html, with styles in styles.css and guest.css.
