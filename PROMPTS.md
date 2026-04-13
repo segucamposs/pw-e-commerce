@@ -42,6 +42,11 @@ All prompts sent during the development of this project, with date and time.
 
 ---
 
+**Prompt:** "what more can we add to this to make it even better? / lets add all these features except testimonials and WhatsApp. Form should be newsletter-ready for later."
+**Output:** Added: Open Graph + Twitter Card meta tags (index.html + guest.html), Featured Episodes section (3 episode cards), FAQ section using native <details>/<summary> (5 questions), Spotify embed player in escuchanos section. Updated formHandler to async/await with submitToNewsletter() integration point. New CSS for all components. Responsive at 1024px and 768px.
+
+---
+
 **Prompt:** "are you saving the prompts?"
 **Output:** Fixed PROMPTS.md — corrected order and added all missing prompt entries.
 

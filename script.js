@@ -91,6 +91,14 @@ const formHandler = () => {
   if (!form) return;
 
   const status = document.getElementById('form-status');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  const submitToNewsletter = async (data) => {
+    // Newsletter integration point — replace with your chosen service.
+    // data = { nombre, email, instagram, tema }
+    // Example: await fetch('/api/subscribe', { method: 'POST', body: JSON.stringify(data) })
+    return { ok: true };
+  };
 
   const showError = (inputId, errorId, message) => {
     const input = document.getElementById(inputId);
@@ -110,12 +118,13 @@ const formHandler = () => {
     status.className = 'form-status';
   };
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     clearErrors();
 
     const nombre = document.getElementById('nombre').value.trim();
     const email = document.getElementById('email').value.trim();
+    const instagram = document.getElementById('instagram').value.trim();
     const tema = document.getElementById('tema').value.trim();
     let valid = true;
 
@@ -136,9 +145,21 @@ const formHandler = () => {
 
     if (!valid) return;
 
-    status.textContent = '¡Gracias! Te vamos a contactar pronto.';
-    status.classList.add('status-ok');
-    form.reset();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    try {
+      await submitToNewsletter({ nombre, email, instagram, tema });
+      status.textContent = '¡Gracias! Te vamos a contactar pronto.';
+      status.classList.add('status-ok');
+      form.reset();
+    } catch {
+      status.textContent = 'Algo salió mal. Escribinos por Instagram.';
+      status.classList.add('status-error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Quiero participar →';
+    }
   });
 };
 

@@ -843,6 +843,163 @@ em {
   }
 }
 
+.episodios-section {
+  border-top: 1px solid var(--border);
+}
+
+.episodios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 3rem;
+}
+
+.episodio-card {
+  background: var(--bg-card);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background var(--transition);
+}
+
+.episodio-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ep-badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 255, 0, 0.2);
+  border-radius: 100px;
+  padding: 0.2rem 0.65rem;
+  width: fit-content;
+}
+
+.ep-tag {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ep-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.ep-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.ep-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--accent);
+  transition: gap var(--transition);
+  margin-top: 0.5rem;
+}
+
+.ep-link:hover {
+  gap: 0.6rem;
+}
+
+.episodios-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.faq-section {
+  border-top: 1px solid var(--border);
+}
+
+.faq-list {
+  margin-top: 3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item summary {
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+  transition: color var(--transition);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform var(--transition);
+  line-height: 1;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item[open] summary {
+  color: var(--accent);
+}
+
+.faq-answer {
+  padding: 0 2rem 1.75rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.spotify-embed {
+  margin-top: 2.5rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.spotify-embed iframe {
+  display: block;
+}
+
 @media (max-width: 1024px) {
   .que-es-grid {
     grid-template-columns: 1fr;
@@ -856,6 +1013,10 @@ em {
   .contacto-inner {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+
+  .episodios-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -906,6 +1067,14 @@ em {
   .porque-item {
     padding: 1.75rem;
     gap: 1.25rem;
+  }
+
+  .faq-item summary {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.25rem;
   }
 
   .hero-actions {
