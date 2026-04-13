@@ -89,3 +89,8 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "the section 'queres ser el proximo invitado' add it to the 'para invitados' part"
 **Output:** Replaced the g-cta CTA button in guest.html with the full application form (nombre, email, instagram, tema fields). Added form input styles to guest.css. Added null guards to navbarScroll/mobileNav in script.js (they'd throw on guest.html which lacks .header/.nav-toggle). Added &lt;script src="script.js"&gt; to guest.html to reuse the existing formHandler.
+
+---
+
+**Prompt:** "also delete the part from the principal page"
+**Output:** Removed the entire contacto section from index.html. Updated all three #contacto links (navbar, hero button, footer) to point to guest.html instead. Removed dead form CSS from styles.css (contacto-section, contacto-inner, contacto-form, form-group/label/input/textarea/error/status, btn-full). Committed and pushed.
