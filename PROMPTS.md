@@ -99,3 +99,28 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "this looks pretty bad, do it more aesthetic / same with the apple podcast one" [screenshot: YouTube tab panel]
 **Output:** Redesigned both YouTube and Apple Podcasts platform cards. New layout: centered column with colored glow blob, platform-colored icon box, handle/username tag, title, desc, and colored pill button. YouTube uses red (#FF4444) accent; Apple uses purple (#BC5CFF). Replaced generic btn-ghost with platform-specific platform-card-btn style.
+
+---
+
+**Prompt:** "turn this into a single button" [screenshot of two footer links]
+**Output:** Replaced the two footer links ("Para invitados" + "Spotify") with a single lime `.btn.btn-primary.footer-cta` button "Quiero ser invitado →" linking to guest.html. Removed footer-links/footer-link CSS and added footer-cta sizing styles.
+
+---
+
+**Prompt:** "1. delete the section 'para invitados' in the top 2. put a button in the bottom left (like the whatsapp one) but for the guests information"
+**Output:** (1) Removed "Para invitados" link from navbar. (2) Added a second FAB (.guest-fab) fixed to bottom-left, lime (#C8FF00) background, linking to guest.html with a person SVG icon. Matched WhatsApp FAB sizing. Added guest-fab CSS in styles.css.
+
+---
+
+**Prompt:** "I want the button to say 'Quiero ser invitado?' / 'Quiero ser invitado' and a better arrow / change the arrow to the bottom button / delete the button we just did and put it in the place the 'quiero participar' button is / do it more visually attractive"
+**Output:** Multiple iterations. Final result: removed the guest FAB entirely. Replaced the navbar "Quiero participar" link with a solid lime `.nav-cta` button "Quiero ser invitado →" (with SVG arrow) linking to guest.html.
+
+---
+
+**Prompt:** "commit all changes to github"
+**Output:** Discovered a nested pw-e-commerce/ CRA scaffold directory (untracked). Asked user how to handle it.
+
+---
+
+**Prompt:** "yes, commit everything but first turn all this page to react js"
+**Output:** Full migration from static HTML/CSS/JS to Create React App. Created: public/index.html (shell with all meta tags), src/index.js, src/App.js (useState-based SPA routing + navigate prop), src/hooks/useScrollReveal.js (custom hook with IntersectionObserver), src/components/Nav.js (menuOpen state, scroll ref), src/components/WhatsAppFab.js (presentational), src/components/ListenTabs.js (activeTab state + ARIA tabs), src/components/GuestForm.js (controlled form with validation), src/pages/HomePage.js (full home, stats counter useEffect), src/pages/GuestPage.js (full guest page, imports guest.css). Moved node_modules and package.json to root. Created .gitignore and vercel.json.

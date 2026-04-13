@@ -272,3 +272,117 @@ An element with `position: fixed` stays in the same spot on screen regardless of
   z-index: 200; /* stays on top of all other content */
 }
 ```
+
+---
+
+## React
+
+### Component
+A JavaScript function that returns JSX (HTML-like markup). The building block of every React app. Components start with a capital letter so React can tell them apart from plain HTML tags.
+```jsx
+function Button({ label }) {
+  return <button className="btn">{label}</button>;
+}
+```
+
+### JSX
+A syntax extension that lets you write HTML-like code inside JavaScript. Under the hood it compiles to `React.createElement(...)` calls. Key differences from HTML:
+- `class` → `className` (class is a reserved word in JS)
+- `for` → `htmlFor` (same reason)
+- All tags must be closed: `<img />`, `<br />`
+- Event names are camelCase: `onClick`, `onChange`, `onKeyDown`
+- Inline styles use objects: `style={{ color: 'red' }}`
+
+### Props
+Data passed from a parent component to a child, like HTML attributes. The child receives them as a single `props` object (or you can destructure them directly).
+```jsx
+// Parent
+<Nav navigate={navigate} />
+
+// Child
+function Nav({ navigate }) { ... }
+```
+Props flow **down** — a child cannot change its parent's props.
+
+### `useState`
+A React hook that adds state (memory) to a functional component. Returns a pair: the current value and a setter function. Calling the setter triggers a re-render.
+```jsx
+const [count, setCount] = useState(0);
+// count = current value
+// setCount(1) = update to 1 and re-render
+```
+Used in this project for: `page` (current route), `menuOpen` (mobile nav), `activeTab` (listen tabs), `form` (input values), `errors`, `status`, `submitting`.
+
+### `useEffect`
+A React hook for side effects — anything that touches the outside world (DOM, timers, event listeners, fetch calls). Runs *after* the component renders.
+```jsx
+useEffect(() => {
+  // code that runs after render
+  return () => { /* cleanup runs before next effect or unmount */ };
+}, [dependency]); // re-runs only when `dependency` changes
+```
+Empty array `[]` = runs once (like componentDidMount). No array = runs after every render.
+
+### `useRef`
+A React hook that holds a mutable value that does NOT trigger re-renders when changed. Also used to get a direct reference to a DOM element.
+```jsx
+const headerRef = useRef(null);
+// In JSX: <header ref={headerRef}>
+// In JS:  headerRef.current.classList.add('scrolled')
+```
+Used instead of `document.querySelector()` — safer in React because components can mount/unmount.
+
+### Custom Hooks
+A function that starts with `use` and calls other hooks inside. It extracts repeated logic so multiple components can share it.
+```js
+// src/hooks/useScrollReveal.js
+function useScrollReveal() {
+  useEffect(() => {
+    // IntersectionObserver setup...
+  }, []);
+}
+// Any component can call: useScrollReveal();
+```
+
+### SPA Routing (without react-router)
+Single Page Application navigation using only `useState`. The app never reloads the browser — it just swaps which component renders.
+```jsx
+const [page, setPage] = useState('home');
+const navigate = (target) => { setPage(target); window.scrollTo(0, 0); };
+
+{page === 'home' ? <HomePage navigate={navigate} /> : <GuestPage navigate={navigate} />}
+```
+`navigate` is passed as a prop so child components can trigger page changes.
+
+### Controlled Inputs
+In React, form inputs are "controlled" when their value is driven by state. Every keystroke updates state, and state sets the value — React owns the input.
+```jsx
+const [form, setForm] = useState({ nombre: '' });
+const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+<input name="nombre" value={form.nombre} onChange={handleChange} />
+```
+`[e.target.name]` is computed property syntax — it dynamically uses the input's name attribute as the key.
+
+### CRA Project Structure
+Create React App generates a standard layout:
+- `public/index.html` — the shell HTML page; React injects the app into `<div id="root">`
+- `src/index.js` — the entry point that calls `ReactDOM.createRoot().render()`
+- `src/App.js` — the root component (conventionally)
+- `%PUBLIC_URL%` — a CRA variable in `public/index.html` that resolves to the public folder path
+
+### `key` Prop in Lists
+When rendering a list with `.map()`, React needs a unique `key` on each element to track which items changed.
+```jsx
+{episodes.map((ep) => (
+  <article key={ep.id}>...</article>
+))}
+```
+Never use the array index as a key if items can be reordered — use a stable unique ID.
+
+### Conditional Rendering
+JSX supports rendering content conditionally using `&&` (render if true) or ternary `? :`.
+```jsx
+{errors.nombre && <span className="form-error">{errors.nombre}</span>}
+{submitting ? 'Enviando...' : 'Quiero participar →'}
+```
