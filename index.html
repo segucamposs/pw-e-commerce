@@ -1,272 +1,335 @@
 <!DOCTYPE html>
-<html lang="es-AR">
-
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="SWAP Podcast — Conversaciones reales para jóvenes que quieren crecer. Salud, productividad, desarrollo personal, carrera, emprendimiento, IA y mentalidad.">
-  <title>SWAP Podcast</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>SWAP Podcast — Sé parte de la conversación</title>
+  <meta name="description" content="SWAP es el podcast para jóvenes ambiciosos de Argentina y LATAM. Salud, productividad, emprendimiento, IA y mindset. ¿Querés ser invitado?">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-  <!-- ======== HEADER / NAV ======== -->
-  <header class="site-header" id="site-header">
-    <nav class="nav-container" aria-label="Navegación principal">
-      <a href="#hero" class="nav-logo">
-        <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast logo" width="50" height="50">
+  <header class="header" role="banner">
+    <nav class="nav container" aria-label="Navegación principal">
+      <a href="#" class="nav-logo" aria-label="SWAP Podcast — Inicio">
+        <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast" class="nav-logo-img">
       </a>
-
-      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú de navegación">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
       </button>
-
-      <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="#que-es">Qué es SWAP</a></li>
-        <li><a href="#temas">Temas</a></li>
-        <li><a href="#experiencia">Experiencia</a></li>
-        <li><a href="#escuchanos">Escuchanos</a></li>
-        <li><a href="#contacto" class="nav-cta btn-magnetic">Quiero participar</a></li>
+      <ul class="nav-menu" id="nav-menu" role="list">
+        <li><a href="#que-es" class="nav-link">Qué es SWAP</a></li>
+        <li><a href="#temas" class="nav-link">Temas</a></li>
+        <li><a href="#proceso" class="nav-link">El proceso</a></li>
+        <li><a href="#contacto" class="nav-link nav-cta">Quiero participar</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
-    <!-- ======== HERO ======== -->
-    <section id="hero" class="hero" aria-labelledby="hero-heading">
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
       <div class="hero-bg" aria-hidden="true">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
       </div>
-      <div class="hero-content">
-        <h1 id="hero-heading" class="hero-title">
-          <span class="text-reveal"><span>SWAP</span></span>
-          <span class="text-reveal"><span>PODCAST</span></span>
+      <div class="container hero-content">
+        <p class="eyebrow reveal">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          Podcast · Argentina &amp; LATAM
+        </p>
+        <h1 class="hero-title" id="hero-heading">
+          <span class="hero-line reveal">¿Querés</span>
+          <span class="hero-line reveal reveal--delay-1">ser parte</span>
+          <span class="hero-line reveal reveal--delay-2">de <em>SWAP</em>?</span>
         </h1>
-        <p class="hero-subtitle reveal">Conversaciones reales para jóvenes que quieren crecer.</p>
-        <a href="#contacto" class="btn btn-primary btn-magnetic reveal">Sé parte</a>
+        <p class="hero-sub reveal reveal--delay-3">
+          Conversaciones reales sobre salud, productividad, emprendimiento, IA y mindset.
+          Para jóvenes que están construyendo algo.
+        </p>
+        <div class="hero-actions reveal reveal--delay-4">
+          <a href="#contacto" class="btn btn-primary">Quiero ser invitado</a>
+          <a href="#que-es" class="btn btn-ghost">Conocé el podcast</a>
+        </div>
+        <div class="hero-hosts reveal reveal--delay-5">
+          <div class="host-avatars" aria-hidden="true">
+            <div class="host-avatar">S</div>
+            <div class="host-avatar">F</div>
+          </div>
+          <span class="host-label">Segu &amp; Francisco · hosts</span>
+        </div>
       </div>
-      <div class="scroll-indicator" aria-hidden="true">
-        <span>SCROLL</span>
-        <div class="scroll-line"></div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>SALUD</span><span aria-hidden="true">·</span>
+          <span>PRODUCTIVIDAD</span><span aria-hidden="true">·</span>
+          <span>EMPRENDIMIENTO</span><span aria-hidden="true">·</span>
+          <span>INTELIGENCIA ARTIFICIAL</span><span aria-hidden="true">·</span>
+          <span>MINDSET</span><span aria-hidden="true">·</span>
+          <span>CARRERA</span><span aria-hidden="true">·</span>
+          <span>SALUD</span><span aria-hidden="true">·</span>
+          <span>PRODUCTIVIDAD</span><span aria-hidden="true">·</span>
+          <span>EMPRENDIMIENTO</span><span aria-hidden="true">·</span>
+          <span>INTELIGENCIA ARTIFICIAL</span><span aria-hidden="true">·</span>
+          <span>MINDSET</span><span aria-hidden="true">·</span>
+          <span>CARRERA</span><span aria-hidden="true">·</span>
+        </div>
       </div>
     </section>
 
-    <!-- ======== DUAL SPLIT — QUÉ ES SWAP ======== -->
-    <section id="que-es" class="split-section" aria-labelledby="about-heading">
-      <div class="split-left">
-        <div class="split-text">
-          <h2 id="about-heading" class="split-heading reveal">
-            NO SOMOS<br>EXPERTOS.<br>
-            <span class="text-accent">SOMOS<br>CURIOSOS.</span>
+    <section class="section" id="que-es" aria-labelledby="que-es-heading">
+      <div class="container que-es-grid">
+        <div class="que-es-text">
+          <p class="section-label reveal">Qué es SWAP</p>
+          <h2 class="section-title reveal reveal--delay-1" id="que-es-heading">
+            Un podcast para los que están <em>construyendo</em> su versión
           </h2>
+          <p class="section-body reveal reveal--delay-2">
+            SWAP es una conversación sin filtros entre jóvenes que están en el proceso — no los que ya llegaron. Hablamos de lo que está pasando de verdad: los fracasos, los aprendizajes, las herramientas que funcionan.
+          </p>
+          <p class="section-body reveal reveal--delay-3">
+            Cada episodio trae una perspectiva distinta. Tu historia puede ser la que alguien necesita escuchar.
+          </p>
         </div>
-      </div>
-      <div class="split-right">
-        <div class="split-card reveal">
-          <span class="split-card-label">EL PODCAST</span>
-          <p>SWAP es un podcast en español para jóvenes de 16 a 25 años que quieren sacarle el máximo jugo a su vida. Hablamos de salud, productividad, desarrollo personal, carrera, emprendimiento, inteligencia artificial y mentalidad.</p>
-        </div>
-        <div class="split-card reveal">
-          <span class="split-card-label">EL FORMATO</span>
-          <p>Conversacional, no entrevista. Somos dos pibes curiosos teniendo charlas reales con personas que tienen algo valioso para compartir. Entre pares, no de arriba hacia abajo.</p>
-        </div>
-        <div class="split-card reveal">
-          <span class="split-card-label">LA DURACIÓN</span>
-          <p>Episodios con invitados de 60 a 90 minutos. Episodios solos de hasta 30 minutos. Sin apuro, sin guión rígido — la conversación fluye.</p>
-        </div>
-        <div class="split-card reveal">
-          <span class="split-card-label">EL VIBE</span>
-          <p>Auténtico, sin filtros, casual y cercano. No fingimos saber todo. Compartimos el viaje, las dudas y los aprendizajes tal como son.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======== HORIZONTAL SCROLL — TEMAS ======== -->
-    <section id="temas" class="horizontal-section" aria-labelledby="topics-heading">
-      <div class="horizontal-sticky">
-        <div class="horizontal-header">
-          <h2 id="topics-heading" class="section-title reveal">DE QUÉ HABLAMOS</h2>
-          <p class="section-subtitle reveal">Si suma valor, es tema de SWAP.</p>
-        </div>
-        <div class="horizontal-track" id="horizontal-track">
-          <article class="topic-card">
-            <span class="topic-number">01</span>
-            <h3>SALUD</h3>
-            <p>Bienestar físico y mental, hábitos, nutrición, deporte y todo lo que te hace sentir bien.</p>
-          </article>
-          <article class="topic-card">
-            <span class="topic-number">02</span>
-            <h3>PRODUCTIVIDAD</h3>
-            <p>Sistemas, rutinas, gestión del tiempo y energía para hacer más de lo que importa.</p>
-          </article>
-          <article class="topic-card">
-            <span class="topic-number">03</span>
-            <h3>DESARROLLO PERSONAL</h3>
-            <p>Autoconocimiento, propósito, claridad mental y crecimiento continuo.</p>
-          </article>
-          <article class="topic-card">
-            <span class="topic-number">04</span>
-            <h3>CARRERA</h3>
-            <p>Decisiones profesionales, primer laburo, estudios y cómo encontrar tu camino.</p>
-          </article>
-          <article class="topic-card">
-            <span class="topic-number">05</span>
-            <h3>EMPRENDIMIENTO</h3>
-            <p>Crear proyectos, mentalidad emprendedora, fracasos y aprendizajes reales.</p>
-          </article>
-          <article class="topic-card">
-            <span class="topic-number">06</span>
-            <h3>IA Y TECNOLOGÍA</h3>
-            <p>Cómo la tecnología está cambiando todo y cómo aprovecharla siendo joven.</p>
-          </article>
+        <div class="stats-grid" aria-label="Estadísticas del podcast">
+          <div class="stat-card reveal">
+            <span class="stat-number" data-target="50">0</span>
+            <span class="stat-label">episodios</span>
+          </div>
+          <div class="stat-card reveal reveal--delay-1">
+            <span class="stat-number" data-target="16">0</span>
+            <span class="stat-label">a 25 años</span>
+          </div>
+          <div class="stat-card reveal reveal--delay-2">
+            <span class="stat-number" data-target="5">0</span>
+            <span class="stat-label">países</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ======== STATS ======== -->
-    <section class="stats-section" aria-labelledby="stats-heading">
+    <section class="section temas-section" id="temas" aria-labelledby="temas-heading">
       <div class="container">
-        <h2 id="stats-heading" class="visually-hidden">SWAP en números</h2>
-        <div class="stats-grid">
-          <div class="stat-item reveal">
-            <span class="stat-number">13</span>
-            <span class="stat-label">EPISODIOS</span>
-          </div>
-          <div class="stat-item reveal">
-            <span class="stat-number">2</span>
-            <span class="stat-label">HOSTS</span>
-          </div>
-          <div class="stat-item reveal">
-            <span class="stat-number">5</span>
-            <span class="stat-label">PLATAFORMAS</span>
-          </div>
-          <div class="stat-item reveal">
-            <span class="stat-number">&infin;</span>
-            <span class="stat-label">TEMAS</span>
-          </div>
-        </div>
+        <p class="section-label reveal">De qué hablamos</p>
+        <h2 class="section-title reveal reveal--delay-1" id="temas-heading">Los temas que nos mueven</h2>
+        <ul class="temas-grid" role="list">
+          <li class="tema-card reveal" style="--tema-color: #C8FF00">
+            <span class="tema-icon" aria-hidden="true">⚡</span>
+            <h3 class="tema-name">Productividad</h3>
+            <p class="tema-desc">Sistemas reales para hacer más con menos fricción.</p>
+          </li>
+          <li class="tema-card reveal reveal--delay-1" style="--tema-color: #FF6B6B">
+            <span class="tema-icon" aria-hidden="true">🧠</span>
+            <h3 class="tema-name">Mindset</h3>
+            <p class="tema-desc">La mentalidad detrás de quienes construyen cosas.</p>
+          </li>
+          <li class="tema-card reveal reveal--delay-2" style="--tema-color: #4ECDC4">
+            <span class="tema-icon" aria-hidden="true">🚀</span>
+            <h3 class="tema-name">Emprendimiento</h3>
+            <p class="tema-desc">Proyectos reales, desde cero, sin romanticismo.</p>
+          </li>
+          <li class="tema-card reveal reveal--delay-3" style="--tema-color: #A78BFA">
+            <span class="tema-icon" aria-hidden="true">🤖</span>
+            <h3 class="tema-name">Inteligencia Artificial</h3>
+            <p class="tema-desc">Cómo los jóvenes usan IA para moverse más rápido.</p>
+          </li>
+          <li class="tema-card reveal reveal--delay-4" style="--tema-color: #F59E0B">
+            <span class="tema-icon" aria-hidden="true">💪</span>
+            <h3 class="tema-name">Salud &amp; Energía</h3>
+            <p class="tema-desc">El cuerpo y la mente como base de todo lo demás.</p>
+          </li>
+          <li class="tema-card reveal reveal--delay-5" style="--tema-color: #34D399">
+            <span class="tema-icon" aria-hidden="true">🎯</span>
+            <h3 class="tema-name">Carrera</h3>
+            <p class="tema-desc">Cómo posicionarte en el mercado que viene.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ======== EXPERIENCIA DEL INVITADO ======== -->
-    <section id="experiencia" class="experience-section" aria-labelledby="experience-heading">
+    <section class="section porque-section" aria-labelledby="porque-heading">
       <div class="container">
-        <h2 id="experience-heading" class="section-title reveal">CÓMO ES SER INVITADO</h2>
-        <div class="experience-grid">
-          <div class="experience-item reveal">
-            <span class="experience-number">01</span>
-            <div class="experience-content">
-              <h3>CONVERSACIÓN, NO INTERROGATORIO</h3>
-              <p>No es una entrevista formal. Es una charla entre pares donde fluyen las ideas. Te vas a sentir cómodo desde el minuto uno.</p>
+        <p class="section-label reveal">Por qué aparecer</p>
+        <h2 class="section-title reveal reveal--delay-1" id="porque-heading">Tu historia tiene valor</h2>
+        <ul class="porque-list" role="list">
+          <li class="porque-item reveal">
+            <span class="porque-num" aria-hidden="true">01</span>
+            <div class="porque-text">
+              <h3 class="porque-item-title">Amplificá tu voz</h3>
+              <p class="porque-item-desc">Llegá a miles de jóvenes argentinos y latinoamericanos que están buscando exactamente lo que vos tenés para contar.</p>
             </div>
-          </div>
-          <div class="experience-item reveal">
-            <span class="experience-number">02</span>
-            <div class="experience-content">
-              <h3>VOS ELEGÍS DE QUÉ HABLAR</h3>
-              <p>Nos adaptamos a lo que te apasiona. Si te copa, a la audiencia le va a copar.</p>
+          </li>
+          <li class="porque-item reveal reveal--delay-1">
+            <span class="porque-num" aria-hidden="true">02</span>
+            <div class="porque-text">
+              <h3 class="porque-item-title">Conversación real</h3>
+              <p class="porque-item-desc">No es una entrevista de PR. Es una charla entre pares — sin guión, sin respuestas ensayadas.</p>
             </div>
-          </div>
-          <div class="experience-item reveal">
-            <span class="experience-number">03</span>
-            <div class="experience-content">
-              <h3>SETUP PROFESIONAL</h3>
-              <p>3 cámaras, audio profesional, edición cuidada. Tu mensaje se escucha y se ve como merece.</p>
+          </li>
+          <li class="porque-item reveal reveal--delay-2">
+            <span class="porque-num" aria-hidden="true">03</span>
+            <div class="porque-text">
+              <h3 class="porque-item-title">Contenido que queda</h3>
+              <p class="porque-item-desc">El episodio se publica en Spotify, YouTube y redes. Tu historia sigue llegando a gente nueva mucho después de grabarlo.</p>
             </div>
-          </div>
-          <div class="experience-item reveal">
-            <span class="experience-number">04</span>
-            <div class="experience-content">
-              <h3>SIN PRESIÓN, CON VALOR</h3>
-              <p>No necesitás ser famoso ni experto. Si tenés algo valioso para compartir, queremos escucharte.</p>
-            </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ======== ESCUCHANOS ======== -->
-    <section id="escuchanos" class="listen-section" aria-labelledby="listen-heading">
+    <section class="section" id="proceso" aria-labelledby="proceso-heading">
       <div class="container">
-        <h2 id="listen-heading" class="section-title reveal">ESCUCHANOS</h2>
-        <p class="section-subtitle reveal">Elegí tu plataforma y conocé de qué se trata.</p>
-        <div class="listen-grid">
-          <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY" target="_blank" rel="noopener noreferrer"
-            class="listen-link btn-magnetic reveal" aria-label="Escuchar en Spotify">
-            <span class="listen-name">Spotify</span>
-            <span class="listen-arrow">&rarr;</span>
+        <p class="section-label reveal">Cómo funciona</p>
+        <h2 class="section-title reveal reveal--delay-1" id="proceso-heading">El proceso, paso a paso</h2>
+        <ol class="proceso-steps" role="list">
+          <li class="proceso-step reveal">
+            <div class="paso-marker" aria-hidden="true">01</div>
+            <div class="paso-content">
+              <h3 class="paso-title">Mandanos tu info</h3>
+              <p class="paso-desc">Completá el formulario de abajo. Contanos quién sos y de qué podrías hablar.</p>
+            </div>
+          </li>
+          <li class="proceso-step reveal reveal--delay-1">
+            <div class="paso-marker" aria-hidden="true">02</div>
+            <div class="paso-content">
+              <h3 class="paso-title">Nos ponemos en contacto</h3>
+              <p class="paso-desc">Si el tema encaja, te escribimos para coordinar fecha y hora. Remoto o presencial en Buenos Aires.</p>
+            </div>
+          </li>
+          <li class="proceso-step reveal reveal--delay-2">
+            <div class="paso-marker" aria-hidden="true">03</div>
+            <div class="paso-content">
+              <h3 class="paso-title">Grabamos</h3>
+              <p class="paso-desc">Una hora de conversación. Sin preparación formal. Vos sos el experto en tu propia historia.</p>
+            </div>
+          </li>
+          <li class="proceso-step reveal reveal--delay-3">
+            <div class="paso-marker" aria-hidden="true">04</div>
+            <div class="paso-content">
+              <h3 class="paso-title">Sale al aire</h3>
+              <p class="paso-desc">Editamos, subimos y distribuimos. Vos recibís todo el contenido para compartir en tus redes.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section escuchanos-section" id="escuchanos" aria-labelledby="escuchanos-heading">
+      <div class="container escuchanos-inner">
+        <p class="section-label reveal">Dónde encontrarnos</p>
+        <h2 class="section-title reveal reveal--delay-1" id="escuchanos-heading">Escuchanos antes de sumarte</h2>
+        <div class="plataformas reveal reveal--delay-2">
+          <a href="#" class="plataforma-btn" aria-label="Escuchar SWAP en Spotify">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            Spotify
           </a>
-          <a href="https://www.youtube.com/@SwapPodcast" target="_blank" rel="noopener noreferrer"
-            class="listen-link btn-magnetic reveal" aria-label="Ver en YouTube">
-            <span class="listen-name">YouTube</span>
-            <span class="listen-arrow">&rarr;</span>
+          <a href="#" class="plataforma-btn" aria-label="Ver SWAP en YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            YouTube
           </a>
-          <a href="https://podcasts.apple.com/ar/podcast/swap-podcast/id1830727081?l=en-GB" target="_blank"
-            rel="noopener noreferrer" class="listen-link btn-magnetic reveal" aria-label="Escuchar en Apple Podcasts">
-            <span class="listen-name">Apple Podcasts</span>
-            <span class="listen-arrow">&rarr;</span>
-          </a>
-          <a href="https://www.instagram.com/swapodcast" target="_blank" rel="noopener noreferrer"
-            class="listen-link btn-magnetic reveal" aria-label="Seguir en Instagram">
-            <span class="listen-name">Instagram</span>
-            <span class="listen-arrow">&rarr;</span>
-          </a>
-          <a href="https://www.tiktok.com/@swappodcast" target="_blank" rel="noopener noreferrer"
-            class="listen-link btn-magnetic reveal" aria-label="Seguir en TikTok">
-            <span class="listen-name">TikTok</span>
-            <span class="listen-arrow">&rarr;</span>
+          <a href="#" class="plataforma-btn" aria-label="Seguir SWAP en Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            Instagram
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ======== CTA / CONTACTO ======== -->
-    <section id="contacto" class="cta-section" aria-labelledby="cta-heading">
-      <div class="cta-bg" aria-hidden="true">
-        <div class="orb orb-cta-1"></div>
-        <div class="orb orb-cta-2"></div>
-      </div>
-      <div class="container cta-content">
-        <h2 id="cta-heading" class="cta-title reveal">¿QUERÉS<br>SER PARTE?</h2>
-        <p class="cta-subtitle reveal">Si tenés algo valioso para compartir,<br>nos encantaría tenerte en SWAP.</p>
-        <a href="mailto:podcastswap@gmail.com" class="btn btn-primary btn-large btn-magnetic reveal">ESCRIBINOS</a>
-        <p class="cta-email reveal">podcastswap@gmail.com</p>
+    <section class="section contacto-section" id="contacto" aria-labelledby="contacto-heading">
+      <div class="container contacto-inner">
+        <div class="contacto-text">
+          <p class="section-label reveal">Sumate</p>
+          <h2 class="section-title reveal reveal--delay-1" id="contacto-heading">¿Querés ser el próximo invitado?</h2>
+          <p class="section-body reveal reveal--delay-2">
+            Contanos quién sos. No hace falta que seas famoso ni que tengas todo resuelto. Solo necesitás tener algo genuino para contar.
+          </p>
+        </div>
+        <form
+          class="contacto-form reveal reveal--delay-3"
+          id="contacto-form"
+          novalidate
+          aria-label="Formulario para postularse como invitado de SWAP Podcast"
+        >
+          <div class="form-group">
+            <label for="nombre" class="form-label">Nombre completo <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="form-input"
+              placeholder="Tu nombre"
+              required
+              autocomplete="name"
+              aria-required="true"
+            >
+            <span class="form-error" id="nombre-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="tu@email.com"
+              required
+              autocomplete="email"
+              aria-required="true"
+            >
+            <span class="form-error" id="email-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="form-group">
+            <label for="instagram" class="form-label">Instagram <span class="form-optional">(opcional)</span></label>
+            <input
+              type="text"
+              id="instagram"
+              name="instagram"
+              class="form-input"
+              placeholder="@usuario"
+              autocomplete="off"
+            >
+          </div>
+          <div class="form-group">
+            <label for="tema" class="form-label">¿De qué hablarías? <span aria-hidden="true">*</span></label>
+            <textarea
+              id="tema"
+              name="tema"
+              class="form-input form-textarea"
+              placeholder="Contanos brevemente tu historia y el tema que traerías al podcast..."
+              required
+              rows="4"
+              aria-required="true"
+            ></textarea>
+            <span class="form-error" id="tema-error" role="alert" aria-live="polite"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Quiero participar →</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
 
   </main>
 
-  <!-- ======== FOOTER ======== -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast" width="40" height="40">
-        <span class="footer-tagline">Conversaciones reales. Valor real.</span>
-      </div>
-      <nav class="footer-links" aria-label="Redes sociales">
-        <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY" target="_blank"
-          rel="noopener noreferrer">Spotify</a>
-        <a href="https://www.youtube.com/@SwapPodcast" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://www.instagram.com/swapodcast" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://www.tiktok.com/@swappodcast" target="_blank" rel="noopener noreferrer">TikTok</a>
-      </nav>
-      <p class="footer-copy">&copy; 2026 SWAP Podcast</p>
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <img src="assets/swap-logo-transparent.png" alt="SWAP Podcast" class="footer-logo">
+      <p class="footer-copy">© 2026 SWAP Podcast · Argentina</p>
+      <p class="footer-tagline">Para los que están construyendo su versión.</p>
     </div>
   </footer>
 
   <script src="script.js"></script>
-
 </body>
-
 </html>

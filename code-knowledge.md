@@ -6,221 +6,213 @@ A plain-language glossary of every new concept used in this project. Organized b
 
 ## HTML
 
-- **`<!DOCTYPE html>`** — Le dice al navegador que el archivo es HTML5. Siempre va en la primera línea.
+### Semantic Tags
+HTML5 tags that describe what the content *is*, not just how it looks. The browser and screen readers use these to understand the page structure.
+- `<header>` — the top part of the page (logo, nav)
+- `<nav>` — a block of navigation links
+- `<main>` — the primary content of the page (only one per page)
+- `<section>` — a thematic chunk of content, usually with a heading
+- `<footer>` — the bottom of the page (copyright, links)
+- `<form>` — an interactive area where users fill in data
 
-- **`<html lang="es-AR">`** — El elemento raíz que contiene todo el HTML. El atributo `lang` le dice al navegador y a lectores de pantalla que el contenido está en español argentino.
+### ARIA Attributes
+"Accessible Rich Internet Applications" — extra attributes that tell screen readers things HTML alone can't express.
+- `aria-label="..."` — gives a name to an element that has no visible text label
+- `aria-expanded="true/false"` — tells screen readers whether a toggle (like a menu) is open or closed
+- `aria-controls="id"` — says "this button controls that element"
+- `aria-required="true"` — marks a form field as required for assistive tech
+- `aria-live="polite"` — tells screen readers to announce changes to this element (used for form error messages)
+- `role="list"` — needed when a `<ul>` has `list-style: none` in CSS (otherwise Safari VoiceOver won't announce it as a list)
+- `role="alert"` — announces the content immediately to screen readers (used for errors)
+- `role="status"` — announces content politely (used for success messages)
 
-- **`<head>`** — Sección invisible que contiene metadatos: configuración del documento, título, links a estilos, etc. No se muestra en la página.
+### `<meta>` Tags
+Tags inside `<head>` that give browsers and search engines information about the page.
+- `charset="UTF-8"` — tells the browser what character encoding to use (supports Spanish characters like ñ, á, é)
+- `name="viewport"` — controls how the page scales on mobile devices
+- `name="description"` — the text that appears under the page title in Google search results
 
-- **`<meta charset="UTF-8">`** — Define la codificación de caracteres. UTF-8 soporta tildes, eñes y caracteres especiales.
+### Form Elements
+- `<label for="id">` — links a text label to an input; clicking the label focuses the input
+- `<input type="text">` — single-line text field
+- `<input type="email">` — email field; mobile keyboards show @ automatically; browsers do basic format validation
+- `<textarea>` — multi-line text field
+- `novalidate` on `<form>` — disables the browser's built-in validation so we can do our own custom validation in JS
+- `autocomplete="name"` — tells the browser to offer saved values for this field
 
-- **`<meta name="viewport">`** — Hace que la página se adapte al ancho del dispositivo. Sin esto, los celulares mostrarían la versión desktop achicada.
-
-- **`<meta name="description">`** — Texto que aparece en los resultados de Google debajo del título. Sirve para SEO (posicionamiento en buscadores).
-
-- **`<header>`** — Etiqueta semántica para el encabezado del sitio. Le dice al navegador "esto es la barra de navegación principal".
-
-- **`<nav>`** — Etiqueta semántica que indica un bloque de navegación. Los lectores de pantalla la usan para que usuarios con discapacidad visual salten directo a los links.
-
-- **`<main>`** — Contiene el contenido principal de la página. Solo debe haber un `<main>` por página.
-
-- **`<section>`** — Agrupa contenido temáticamente relacionado. Cada sección de nuestra landing es un `<section>`.
-
-- **`<article>`** — Representa contenido independiente que tiene sentido por sí solo. Lo usamos para cada tarjeta de tema.
-
-- **`<footer>`** — Etiqueta semántica para el pie de página.
-
-- **`<h1>` a `<h3>`** — Títulos jerárquicos. `<h1>` es el más importante (solo uno por página), `<h2>` para secciones, `<h3>` para subtemas. Esta jerarquía es clave para accesibilidad y SEO.
-
-- **`<ul>` y `<li>`** — Lista desordenada (`ul` = unordered list) con ítems (`li` = list item).
-
-- **`<a href="...">`** — Enlace (anchor). `href` es la dirección a donde te lleva. Con `#id` apunta a un elemento dentro de la misma página.
-
-- **`<img src="..." alt="...">`** — Imagen. `src` es la ruta del archivo, `alt` es el texto alternativo que se muestra si la imagen no carga y que los lectores de pantalla leen en voz alta.
-
-- **`target="_blank"`** — Abre el enlace en una pestaña nueva del navegador.
-
-- **`rel="noopener noreferrer"`** — Seguridad: cuando abrís un link en nueva pestaña, esto evita que la página destino pueda acceder a información de tu página.
-
-- **`aria-label`** — Atributo de accesibilidad que le da un nombre descriptivo a un elemento para lectores de pantalla, cuando el contenido visual no es suficiente.
-
-- **`aria-labelledby`** — Similar a `aria-label`, pero en vez de texto directo, apunta al `id` de otro elemento que ya tiene el texto (como un `<h2>`).
-
-- **`aria-hidden="true"`** — Le dice a los lectores de pantalla que ignoren ese elemento (lo usamos en íconos decorativos).
-
-- **`role="list"`** — Refuerza explícitamente que un `<ul>` es una lista. Algunos navegadores pierden la semántica de lista cuando le sacás los bullets con CSS.
-
-- **`width` y `height` en `<img>`** — Reservan el espacio de la imagen antes de que cargue, evitando que la página "salte" cuando aparece.
-
-- **`<button>`** — Elemento interactivo para acciones. A diferencia de `<a>` (que navega a otra página/sección), `<button>` ejecuta una acción en la misma página. Lo usamos para el botón hamburguesa del menú mobile. Siempre debe tener un `aria-label` si no tiene texto visible.
-
-- **`aria-expanded`** — Atributo de accesibilidad que indica si un elemento colapsable (como un menú) está abierto (`true`) o cerrado (`false`). Los lectores de pantalla lo anuncian para que usuarios ciegos sepan el estado del menú.
+### Skip Link
+A visually hidden link at the very top of the page. When a keyboard user hits Tab, the first thing they can focus is "Skip to main content", which jumps past the navigation. Required for WCAG compliance.
 
 ---
 
 ## CSS
 
-- **`<link rel="stylesheet" href="styles.css">`** — Conecta el archivo CSS externo con el HTML. Separar estilos del HTML es una buena práctica (separación de responsabilidades).
+### Custom Properties (CSS Variables)
+Values stored with a name so you can reuse them throughout the file. Defined inside `:root` (the whole document). Changed in one place → updates everywhere.
+```css
+:root { --accent: #C8FF00; }
+.button { background: var(--accent); }
+```
 
-- **CSS Custom Properties (variables)** — Se definen con `--nombre: valor` dentro de `:root` y se usan con `var(--nombre)`. Permiten cambiar un color o tamaño en un solo lugar y que se actualice en toda la página.
+### `clamp(min, preferred, max)`
+A function that sets a value that scales fluidly between a minimum and maximum. Used for responsive font sizes without media queries.
+```css
+font-size: clamp(4rem, 11vw, 9.5rem);
+/* → never smaller than 4rem, never bigger than 9.5rem, scales with viewport */
+```
 
-- **`:root`** — Selector que apunta al elemento raíz del documento (`<html>`). Se usa para definir variables CSS globales.
+### CSS Grid
+A two-dimensional layout system. You define rows and columns, and place children inside the grid cells.
+```css
+display: grid;
+grid-template-columns: 1fr 1fr; /* two equal columns */
+gap: 5rem;                       /* space between cells */
+```
 
-- **`box-sizing: border-box`** — Hace que el `width` y `height` de un elemento incluyan el padding y borde. Sin esto, un `div` de 200px con 20px de padding mediría 240px.
+### Flexbox
+A one-dimensional layout system. Arranges children in a row or column. Used for nav, buttons, cards, and anything that needs alignment.
+```css
+display: flex;
+align-items: center;   /* vertical alignment */
+justify-content: space-between; /* horizontal spacing */
+```
 
-- **`*` (selector universal)** — Selecciona todos los elementos. Lo usamos en el reset (`* { margin: 0; padding: 0; }`) para arrancar con estilos limpios.
+### CSS Transitions
+Smoothly animate a property from one value to another when something changes (like a hover or a class being added).
+```css
+transition: background 0.3s ease, transform 0.3s ease;
+```
+The three parts: *what property*, *how long*, *the timing curve* (ease = starts fast, slows down).
 
-- **`::before` y `::after`** — Pseudo-elementos que crean contenido antes o después del contenido real de un elemento. Los usamos para los guiones en la lista del formato.
+### CSS Animations (`@keyframes`)
+Define a sequence of states that play automatically (not triggered by hover/click). Used for the floating orbs and the marquee ticker.
+```css
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee-scroll 30s linear infinite; }
+```
 
-- **`scroll-behavior: smooth`** — Hace que cuando hacés clic en un link interno (`#seccion`), la página se desplace suavemente en vez de saltar.
+### `transform`
+Visually moves, scales, or rotates an element *without* affecting surrounding layout. Much more performant than changing `top`/`left`.
+- `translateY(-2px)` — move 2px up
+- `translateX(-50%)` — move left by 50% of the element's own width
 
-- **Flexbox (`display: flex`)** — Sistema de layout unidimensional (una fila o una columna). Lo usamos para el nav, los links de plataformas, y el footer.
-  - `align-items` — Alinea los elementos en el eje perpendicular (vertical si es fila).
-  - `justify-content` — Distribuye los elementos en el eje principal (horizontal si es fila).
-  - `gap` — Espacio entre los elementos flex.
-  - `flex-wrap: wrap` — Permite que los elementos pasen a la siguiente línea si no entran.
+### `filter: blur()`
+Applies a blur effect. Used on the background orbs to create a soft, glowing gradient effect.
 
-- **CSS Grid (`display: grid`)** — Sistema de layout bidimensional (filas Y columnas a la vez). Lo usamos para las tarjetas de temas, stats, y secciones con 2 columnas.
-  - `grid-template-columns` — Define cuántas columnas y de qué tamaño. `repeat(3, 1fr)` crea 3 columnas iguales.
-  - `1fr` — Unidad fraccional: reparte el espacio disponible proporcionalmente.
+### `backdrop-filter: blur()`
+Blurs everything *behind* the element. Used on the navbar when it's scrolled, creating the frosted-glass effect.
 
-- **`position: fixed`** — Fija el elemento en la pantalla; no se mueve cuando scrolleás. Lo usamos para el nav.
+### `position: fixed`
+Locks an element relative to the viewport — it stays in place as you scroll. Used for the navbar.
 
-- **`position: relative` y `position: absolute`** — `relative` hace que un elemento sea el punto de referencia, y `absolute` posiciona un hijo respecto a ese padre. Lo usamos para los "—" de la lista.
+### `position: absolute`
+Positions an element relative to its nearest positioned ancestor. Used for the hero background orbs.
 
-- **`z-index`** — Controla qué elemento se muestra "encima" de cuál. Número más alto = más arriba.
+### `overflow: hidden`
+Hides anything that sticks out beyond the element's box. Used on the marquee so the text clips at the edges.
 
-- **`backdrop-filter: blur()`** — Aplica un efecto de desenfoque al fondo que se ve detrás del elemento. Lo usamos en el nav para que al scrollear se vea un blur elegante.
+### `prefers-reduced-motion`
+A media query that detects if the user has enabled "Reduce Motion" in their OS accessibility settings. We disable all animations for these users.
+```css
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; }
+}
+```
 
-- **`rgba(0, 0, 0, 0.85)`** — Color con transparencia. El cuarto valor (0.85) es la opacidad: 1 = sólido, 0 = invisible.
+### Scoped CSS Variables
+Custom properties can be set on a specific element using `style="--var: value"` in HTML. Each topic card has its own color this way:
+```html
+<li class="tema-card" style="--tema-color: #C8FF00">
+```
+```css
+.tema-card { border-top: 3px solid var(--tema-color); }
+```
 
-- **`transition`** — Anima suavemente un cambio de propiedad CSS (ej: cambio de color al hacer hover). Se define la propiedad a animar y la duración.
-
-- **`transform: translateY(-2px)`** — Mueve un elemento visualmente sin afectar el layout. Lo usamos para el efecto de "elevación" en hover.
-
-- **`border-radius`** — Redondea las esquinas de un elemento. Con `50%` se hace un círculo perfecto.
-
-- **`min-height: 100vh`** — `vh` = viewport height (alto de la ventana). `100vh` significa que el elemento ocupa al menos toda la pantalla.
-
-- **`max-width`** — Ancho máximo. El contenido puede ser más chico, pero nunca más ancho. Lo usamos en `.container` para que en pantallas grandes el contenido no se estire infinitamente.
-
-- **`text-transform: uppercase`** — Muestra el texto en mayúsculas sin cambiar el HTML.
-
-- **`letter-spacing`** — Espacio entre letras. Lo usamos en las etiquetas de stats para un look más espaciado.
-
-- **`@media (max-width: 768px)`** — Media query: aplica estilos solo cuando el ancho de pantalla es 768px o menos (tablets y celulares). Es la base del diseño responsive.
-
-- **`display: none`** — Oculta completamente un elemento. Lo usamos para esconder el nav en mobile.
-
-- **`.visually-hidden`** — Técnica de accesibilidad: oculta un elemento visualmente pero lo mantiene accesible para lectores de pantalla. A diferencia de `display: none`, los lectores de pantalla SÍ lo leen.
-
-- **`:hover`** — Pseudo-clase que aplica estilos cuando el mouse está encima del elemento.
-
-- **`:focus-visible`** — Pseudo-clase que aplica estilos cuando un elemento recibe foco por teclado (Tab). Importante para accesibilidad — permite a usuarios que navegan sin mouse ver dónde están.
-
-- **Google Fonts** — Servicio gratuito de tipografías web. Con `<link>` en el HTML cargamos las fuentes (Bebas Neue para títulos, Inter para cuerpo) y con `font-family` las aplicamos.
-
-- **`position: sticky`** — Combinación de `relative` y `fixed`. El elemento scrollea normalmente hasta que llega a una posición definida con `top`, y ahí se "pega" a la pantalla. Lo usamos para que el texto de la sección "Qué es SWAP" quede fijo mientras las tarjetas de la derecha pasan.
-
-- **`overflow: hidden`** — Oculta el contenido que se sale del borde del elemento. Lo usamos en el efecto de "text reveal" (el texto sube desde abajo, y el overflow esconde la parte que todavía no apareció).
-
-- **`inset: 0`** — Atajo para `top: 0; right: 0; bottom: 0; left: 0`. Hace que un elemento absolute/fixed ocupe todo el espacio del padre.
-
-- **`clamp(min, preferred, max)`** — Función CSS que define un tamaño fluido. Por ejemplo `clamp(3rem, 8vw, 6rem)` significa: "como mínimo 3rem, idealmente 8% del ancho de pantalla, como máximo 6rem". Perfecto para tipografía responsive sin media queries.
-
-- **`will-change: transform`** — Le avisa al navegador que un elemento va a cambiar su `transform` pronto, para que optimice el rendimiento. Se usa en elementos con animaciones.
-
-- **`pointer-events: none`** — Hace que un elemento sea "transparente" a los clics. Lo usamos en el overlay de ruido para que no bloquee la interacción con la página.
-
-- **`@keyframes`** — Define una animación CSS paso a paso. Le das un nombre y los estados (desde `0%` hasta `100%`). Lo usamos para la línea del scroll indicator que sube y baja continuamente.
-
-- **`animation`** — Aplica una `@keyframes` a un elemento. Podés definir duración, velocidad, repeticiones, etc. `infinite` hace que se repita para siempre.
-
-- **`cubic-bezier()`** — Curva de velocidad personalizada para transiciones/animaciones. Controla cómo acelera y desacelera el movimiento. `cubic-bezier(0.16, 1, 0.3, 1)` crea un efecto que arranca rápido y frena suave.
-
-- **`filter: blur(100px)`** — Aplica un desenfoque gaussiano a un elemento. Lo usamos en los "orbs" (círculos de color) para crear un efecto de luz difusa.
-
-- **`flex-shrink: 0`** — En flexbox, le dice al elemento que NO se achique cuando falta espacio. Lo usamos en las topic cards del scroll horizontal para que mantengan su ancho fijo.
-
-- **SVG en CSS (noise overlay)** — Usamos un SVG inline en el `background-image` (como data URI) para generar un patrón de ruido visual. `feTurbulence` es un filtro SVG que crea textura fractal. Le da profundidad y textura "analógica" al sitio.
-
-- **`@media (prefers-reduced-motion: reduce)`** — Media query de accesibilidad que detecta si el usuario tiene activada la opción "reducir movimiento" en su sistema operativo. Si es así, desactivamos todas las animaciones para no causar mareos o molestias.
+### `max-width` + `margin: 0 auto`
+The standard pattern for centering a block of content with a maximum width. Used for `.container`.
 
 ---
 
 ## JavaScript
 
-- **`<script src="script.js">`** — Conecta un archivo JavaScript externo con el HTML, similar a cómo `<link>` conecta CSS. Va al final del `<body>` para que el HTML ya esté cargado cuando el script se ejecute.
+### `querySelector` / `querySelectorAll`
+Methods to select HTML elements from JS using CSS selectors.
+- `document.querySelector('.header')` — returns the first matching element
+- `document.querySelectorAll('.reveal')` — returns all matching elements (a NodeList)
 
-- **`var`** — Declara una variable. Una variable es un "contenedor" con nombre donde guardás un valor (un número, un texto, un elemento de la página, etc.) para usarlo después.
+### `classList`
+An object that lets you add, remove, and toggle CSS classes on an element from JS.
+- `el.classList.add('revealed')` — adds the class
+- `el.classList.remove('scrolled')` — removes the class
+- `el.classList.toggle('open')` — adds if absent, removes if present; returns true/false
 
-- **`document.querySelectorAll('.clase')`** — Busca TODOS los elementos del HTML que tengan esa clase y devuelve una lista (NodeList). Es como decir "dame todos los elementos que tengan esta clase".
+### Event Listeners
+Functions that run when something happens (user clicks, scrolls, etc.).
+```js
+button.addEventListener('click', () => { ... });
+window.addEventListener('scroll', () => { ... }, { passive: true });
+```
+`passive: true` on scroll tells the browser we won't call `preventDefault()`, allowing it to scroll more smoothly.
 
-- **`document.querySelector('.clase')`** — Igual que `querySelectorAll` pero devuelve solo el PRIMER elemento que encuentre.
+### `IntersectionObserver`
+An API that watches elements and calls a function when they enter or leave the viewport. Much more efficient than listening to the scroll event and checking element positions manually.
+```js
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) { /* element is visible */ }
+  });
+}, { threshold: 0.1 }); // fires when 10% of element is visible
 
-- **`document.getElementById('id')`** — Busca un elemento por su `id`. Más rápido que `querySelector` cuando buscás por id.
+observer.observe(element);    // start watching
+observer.unobserve(element);  // stop watching (used after first reveal)
+```
 
-- **`IntersectionObserver`** — API del navegador que vigila elementos y te avisa cuando entran o salen de la pantalla (el "viewport"). Es mucho más eficiente que estar chequeando posiciones constantemente con scroll. Lo usamos para las animaciones de aparición: cuando un elemento entra en pantalla, le agregamos la clase "revealed".
-  - `threshold: 0.15` — Se activa cuando el 15% del elemento es visible.
-  - `rootMargin` — Ajusta los bordes de detección (como un padding invisible).
-  - `observe(element)` — Empieza a vigilar un elemento.
-  - `unobserve(element)` — Deja de vigilar un elemento (ahorra recursos).
+### `requestAnimationFrame`
+Asks the browser to call a function just before the next screen repaint (~60 times per second). Used for the stats counter animation so it syncs with the display refresh rate and never wastes resources.
 
-- **`entry.isIntersecting`** — Propiedad booleana (true/false) que indica si el elemento observado está visible en la pantalla.
+### `performance.now()`
+Returns the time (in milliseconds) since the page loaded. Used to track how long the counter animation has been running.
 
-- **`element.classList`** — Permite manipular las clases CSS de un elemento sin reescribir todo el atributo `class`.
-  - `.add('clase')` — Agrega una clase.
-  - `.remove('clase')` — Saca una clase.
-  - `.toggle('clase')` — Si la clase está, la saca. Si no está, la agrega. Devuelve `true` si la agregó.
+### `dataset`
+Lets JS read `data-*` attributes from HTML elements.
+```html
+<span data-target="50">0</span>
+```
+```js
+const target = parseInt(el.dataset.target, 10); // → 50
+```
 
-- **`window.addEventListener('scroll', function)`** — Ejecuta una función cada vez que el usuario scrollea. El "evento" `scroll` se dispara continuamente mientras la página se mueve.
+### `parseInt(value, 10)`
+Converts a string to an integer. The `10` specifies base-10 (decimal). Always include the base to avoid bugs.
 
-- **`addEventListener('click', function)`** — Ejecuta una función cuando el usuario hace clic en el elemento. Los "event listeners" son la forma principal de reaccionar a acciones del usuario.
+### `event.preventDefault()`
+Stops the browser's default behavior for an event. Used on form submit to prevent the page from reloading — we handle the data in JS instead.
 
-- **`addEventListener('mousemove', function)`** — Se ejecuta cuando el mouse se mueve dentro del elemento. Lo usamos para el efecto de botones magnéticos.
+### `String.trim()`
+Removes whitespace from both ends of a string. Used to clean up form input before validating.
+```js
+"  Segu  ".trim() // → "Segu"
+```
 
-- **`addEventListener('mouseleave', function)`** — Se ejecuta cuando el mouse sale del elemento.
+### Arrow Functions `() => {}`
+A shorter syntax for writing functions in modern JavaScript (ES6+).
+```js
+const greet = (name) => `Hola, ${name}`;
+```
 
-- **`window.scrollY`** — Número que indica cuántos píxeles scrolleó el usuario desde arriba. Si estás al tope de la página, es 0.
+### `const` / `let`
+- `const` — declares a variable that won't be reassigned. Use by default.
+- `let` — declares a variable that *can* be reassigned.
+Both are block-scoped (only exist within the `{}` they're declared in). Never use `var`.
 
-- **`element.offsetTop`** — Distancia en píxeles desde el tope del documento hasta el elemento.
+### Template Literals
+Strings that can embed expressions using backticks and `${}`.
+```js
+const msg = `Hola, ${nombre}!`;
+```
 
-- **`element.offsetHeight`** — Altura total del elemento en píxeles.
-
-- **`window.innerHeight`** — Altura de la ventana visible del navegador en píxeles.
-
-- **`element.getBoundingClientRect()`** — Devuelve un objeto con la posición y tamaño del elemento relativo a la ventana visible. Útil para calcular dónde está el mouse respecto a un elemento.
-
-- **`element.scrollWidth`** — Ancho total del contenido de un elemento, incluyendo lo que no se ve (lo que está fuera del overflow).
-
-- **`element.style.transform = '...'`** — Modifica el CSS `transform` del elemento directamente desde JavaScript. Lo usamos para mover los orbs (parallax) y los botones magnéticos.
-
-- **`element.setAttribute('aria-expanded', valor)`** — Cambia un atributo HTML del elemento. Lo usamos para actualizar atributos de accesibilidad cuando abrimos/cerramos el menú mobile.
-
-- **`Math.max()` y `Math.min()`** — Funciones matemáticas. `Math.max(0, valor)` asegura que el resultado nunca sea menor a 0. `Math.min(1, valor)` asegura que nunca sea mayor a 1. Combinados, "clampean" un valor entre 0 y 1.
-
-- **`forEach(function)`** — Ejecuta una función para cada elemento de una lista. Es como un loop que recorre todos los items uno por uno.
-
-- **`window.matchMedia('(max-width: 768px)').matches`** — Consulta desde JavaScript si se cumple una media query CSS. Devuelve `true` o `false`. Lo usamos para desactivar el scroll horizontal en mobile.
-
-- **`'ontouchstart' in window`** — Forma de detectar si el dispositivo tiene pantalla táctil. Si existe el evento `touchstart`, es un dispositivo touch. Lo usamos para desactivar el efecto de botones magnéticos en celulares (no tienen mouse).
-
----
-
-## React
-
-*(concepts will be added as we build)*
-
----
-
-## Next.js
-
-*(concepts will be added as we build)*
-
----
-
-## CI/CD & Deployment
-
-*(concepts will be added as we build)*
-
----
+### Module Pattern (IIFE-style functions)
+Each feature (scrollReveal, navbarScroll, etc.) is wrapped in its own function and called at the bottom of the file. This keeps the code organized and avoids variables from different features colliding.
