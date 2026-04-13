@@ -44,3 +44,8 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "are you saving the prompts?"
 **Output:** Fixed PROMPTS.md — corrected order and added all missing prompt entries.
+
+---
+
+**Prompt:** "add the links of youtube, tiktok, instagram, etc. + add Apple Podcasts"
+**Output:** Updated platform links in index.html and guest.html — real URLs for YouTube, TikTok, Instagram, Apple Podcasts. Removed Spotify placeholder (no link provided). Added TikTok and Apple Podcasts buttons with SVG icons. All links open in new tab with rel="noopener noreferrer".
