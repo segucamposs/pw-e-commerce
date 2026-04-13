@@ -705,22 +705,7 @@ em {
   opacity: 0.8;
 }
 
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
-.footer-link {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  transition: color var(--transition);
-}
-
-.footer-link:hover {
-  color: var(--accent);
-}
 
 .footer-copy {
   font-size: 0.8rem;
