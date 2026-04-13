@@ -884,43 +884,112 @@ em {
 }
 
 .platform-card {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  text-align: center;
+  gap: 0.6rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 3rem;
+  padding: 3rem 2.5rem;
+  overflow: hidden;
 }
 
+.platform-card--youtube { border-color: rgba(255, 60, 60, 0.2); }
+.platform-card--apple   { border-color: rgba(188, 92, 255, 0.2); }
+
+.platform-card-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 200px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+  opacity: 0.18;
+}
+
+.platform-card--youtube .platform-card-glow { background: #FF3C3C; }
+.platform-card--apple   .platform-card-glow { background: #BC5CFF; }
+
 .platform-card-icon {
-  flex-shrink: 0;
   width: 72px;
   height: 72px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-dim);
+  margin-bottom: 0.5rem;
 }
+
+.platform-card--youtube .platform-card-icon {
+  background: rgba(255, 60, 60, 0.12);
+  border: 1px solid rgba(255, 60, 60, 0.25);
+  color: #FF4444;
+}
+
+.platform-card--apple .platform-card-icon {
+  background: rgba(188, 92, 255, 0.12);
+  border: 1px solid rgba(188, 92, 255, 0.25);
+  color: #BC5CFF;
+}
+
+.platform-card-handle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.platform-card--youtube .platform-card-handle { color: rgba(255, 60, 60, 0.7); }
+.platform-card--apple   .platform-card-handle { color: rgba(188, 92, 255, 0.7); }
 
 .platform-card-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--text);
-  margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
+  margin-top: 0.2rem;
 }
 
 .platform-card-desc {
   font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.7;
-  margin-bottom: 1.5rem;
-  max-width: 48ch;
+  max-width: 40ch;
+  margin-bottom: 0.75rem;
+}
+
+.platform-card-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+}
+
+.platform-card--youtube .platform-card-btn {
+  background: rgba(255, 60, 60, 0.12);
+  border: 1px solid rgba(255, 60, 60, 0.3);
+  color: #FF6666;
+}
+
+.platform-card--apple .platform-card-btn {
+  background: rgba(188, 92, 255, 0.12);
+  border: 1px solid rgba(188, 92, 255, 0.3);
+  color: #CC7AFF;
+}
+
+.platform-card-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 .plataformas--social {
@@ -1018,13 +1087,6 @@ em {
   .porque-item {
     padding: 1.75rem;
     gap: 1.25rem;
-  }
-
-  .platform-card {
-    flex-direction: column;
-    padding: 2rem;
-    gap: 1.5rem;
-    align-items: flex-start;
   }
 
   .listen-tabs {

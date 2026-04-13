@@ -94,3 +94,8 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "also delete the part from the principal page"
 **Output:** Removed the entire contacto section from index.html. Updated all three #contacto links (navbar, hero button, footer) to point to guest.html instead. Removed dead form CSS from styles.css (contacto-section, contacto-inner, contacto-form, form-group/label/input/textarea/error/status, btn-full). Committed and pushed.
+
+---
+
+**Prompt:** "this looks pretty bad, do it more aesthetic / same with the apple podcast one" [screenshot: YouTube tab panel]
+**Output:** Redesigned both YouTube and Apple Podcasts platform cards. New layout: centered column with colored glow blob, platform-colored icon box, handle/username tag, title, desc, and colored pill button. YouTube uses red (#FF4444) accent; Apple uses purple (#BC5CFF). Replaced generic btn-ghost with platform-specific platform-card-btn style.
