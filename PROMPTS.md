@@ -57,5 +57,30 @@ All prompts sent during the development of this project, with date and time.
 
 ---
 
+**Prompt:** "Add spotify: https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY?si=3f041e502d6c4350"
+**Output:** Added real Spotify show URL to platform buttons in index.html and guest.html.
+
+---
+
+**Prompt:** "use the official image for apple podcast and then commit changes to github"
+**Output:** Replaced Apple Podcasts button with the official Apple Podcasts SVG icon (rounded square path). Committed and pushed to origin/main.
+
+---
+
+**Prompt:** "[screenshot of browser tab] make this part of the website say only SWAP Podcast and add the logo"
+**Output:** Updated `<title>` to "SWAP Podcast" in index.html and guest.html. Added `<link rel="icon" type="image/png" href="assets/swap-logo.png">` favicon to both pages.
+
+---
+
+**Prompt:** "add a brief README.md and commit changes to github"
+**Output:** Created README.md with project description, pages table (index.html + guest.html), tech stack progressive roadmap, Vercel deploy info, and all 5 platform links. Committed and pushed.
+
+---
+
 **Prompt:** "1. I think that the 'Todo lo que necesitas saber' part has to go to the 'Para invitados' section, what do you think? 2. Let the user choose which podcast to hear, don't leave only one option. 3. Add the whatsapp button to the bottom right part of the screen on every moment (doesn't has to be functional yet)."
 **Output:** (1) Moved FAQ section from index.html to guest.html (before the CTA block), with adapted styles in guest.css. (2) Replaced single Spotify embed in escuchanos section with a 3-tab system (Spotify iframe / YouTube card / Apple Podcasts card) using ARIA tablist pattern; added `listenTabs()` JS module with keyboard navigation; TikTok and Instagram kept as social buttons below tabs. (3) Added WhatsApp FAB (fixed, bottom-right, #25D366) to both index.html and guest.html, with styles in styles.css and guest.css.
+
+---
+
+**Prompt:** "ok, can you save all the prompts till now please"
+**Output:** Reviewed PROMPTS.md and added 4 missing entries from the previous session (Spotify link, Apple Podcasts icon, tab title/favicon fix, README creation).
