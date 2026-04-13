@@ -1023,7 +1023,7 @@ em {
   border-radius: 100px;
   z-index: 200;
   box-shadow: 0 4px 20px var(--accent-glow);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), opacity 0.3s ease;
   white-space: nowrap;
 }
 

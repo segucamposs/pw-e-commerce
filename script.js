@@ -197,9 +197,23 @@ const listenTabs = () => {
   });
 };
 
+const guestFab = () => {
+  const fab = document.querySelector('.guest-fab');
+  const footerCta = document.querySelector('.footer-cta');
+  if (!fab || !footerCta) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    fab.style.opacity = entries[0].isIntersecting ? '0' : '1';
+    fab.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+  }, { threshold: 0.5 });
+
+  observer.observe(footerCta);
+};
+
 scrollReveal();
 navbarScroll();
 mobileNav();
 statsCounter();
 formHandler();
+guestFab();
 listenTabs();
