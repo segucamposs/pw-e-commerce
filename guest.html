@@ -146,10 +146,70 @@
     </section>
 
     <section class="g-cta" aria-labelledby="cta-title">
-      <p class="cta-label">¿Te interesa participar?</p>
-      <h2 class="cta-title" id="cta-title">Sé el próximo invitado de SWAP</h2>
-      <p class="cta-sub">No necesitás tener todo resuelto. Solo necesitás tener algo genuino para contar.</p>
-      <a href="index.html#contacto" class="cta-btn">Quiero ser invitado →</a>
+      <p class="cta-label">Sumate</p>
+      <h2 class="cta-title" id="cta-title">¿Querés ser el próximo invitado?</h2>
+      <p class="cta-sub">Contanos quién sos. No hace falta que seas famoso ni que tengas todo resuelto. Solo necesitás tener algo genuino para contar.</p>
+      <form
+        class="g-form"
+        id="contacto-form"
+        novalidate
+        aria-label="Formulario para postularse como invitado de SWAP Podcast"
+      >
+        <div class="form-group">
+          <label for="nombre" class="form-label">Nombre completo <span aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            class="form-input"
+            placeholder="Tu nombre"
+            required
+            autocomplete="name"
+            aria-required="true"
+          >
+          <span class="form-error" id="nombre-error" role="alert" aria-live="polite"></span>
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email <span aria-hidden="true">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            placeholder="tu@email.com"
+            required
+            autocomplete="email"
+            aria-required="true"
+          >
+          <span class="form-error" id="email-error" role="alert" aria-live="polite"></span>
+        </div>
+        <div class="form-group">
+          <label for="instagram" class="form-label">Instagram <span class="form-optional">(opcional)</span></label>
+          <input
+            type="text"
+            id="instagram"
+            name="instagram"
+            class="form-input"
+            placeholder="@usuario"
+            autocomplete="off"
+          >
+        </div>
+        <div class="form-group">
+          <label for="tema" class="form-label">¿De qué hablarías? <span aria-hidden="true">*</span></label>
+          <textarea
+            id="tema"
+            name="tema"
+            class="form-input form-textarea"
+            placeholder="Contanos brevemente tu historia y el tema que traerías al podcast..."
+            required
+            rows="4"
+            aria-required="true"
+          ></textarea>
+          <span class="form-error" id="tema-error" role="alert" aria-live="polite"></span>
+        </div>
+        <button type="submit" class="cta-btn g-form-submit">Quiero participar →</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
     </section>
 
     <footer class="g-footer">
@@ -165,5 +225,6 @@
     </svg>
   </a>
 
+  <script src="script.js"></script>
 </body>
 </html>

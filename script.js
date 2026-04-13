@@ -18,6 +18,7 @@ const scrollReveal = () => {
 
 const navbarScroll = () => {
   const header = document.querySelector('.header');
+  if (!header) return;
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -31,6 +32,7 @@ const navbarScroll = () => {
 const mobileNav = () => {
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.querySelector('.nav-menu');
+  if (!toggle || !menu) return;
 
   toggle.addEventListener('click', () => {
     const isOpen = menu.classList.toggle('nav-menu--open');

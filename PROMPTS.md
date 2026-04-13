@@ -84,3 +84,8 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "ok, can you save all the prompts till now please"
 **Output:** Reviewed PROMPTS.md and added 4 missing entries from the previous session (Spotify link, Apple Podcasts icon, tab title/favicon fix, README creation).
+
+---
+
+**Prompt:** "the section 'queres ser el proximo invitado' add it to the 'para invitados' part"
+**Output:** Replaced the g-cta CTA button in guest.html with the full application form (nombre, email, instagram, tema fields). Added form input styles to guest.css. Added null guards to navbarScroll/mobileNav in script.js (they'd throw on guest.html which lacks .header/.nav-toggle). Added &lt;script src="script.js"&gt; to guest.html to reuse the existing formHandler.
