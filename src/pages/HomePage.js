@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Nav from '../components/Nav';
 import ListenTabs from '../components/ListenTabs';
+import NewsletterForm from '../components/NewsletterForm';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 function HomePage({ navigate }) {
@@ -267,6 +268,24 @@ function HomePage({ navigate }) {
         </section>
 
       </main>
+
+      {/* ── Newsletter ───────────────────────────────────── */}
+        <section className="section newsletter-section" aria-labelledby="newsletter-heading">
+          <div className="container newsletter-inner">
+            <div className="newsletter-text reveal">
+              <p className="section-label">Comunidad SWAP</p>
+              <h2 className="section-title" id="newsletter-heading">
+                Sé el primero en enterarte
+              </h2>
+              <p className="section-body">
+                Nuevo episodio cada semana. Sin spam — solo el contenido que vale la pena.
+              </p>
+            </div>
+            <div className="reveal reveal--delay-2">
+              <NewsletterForm />
+            </div>
+          </div>
+        </section>
 
       {/* ── Footer ───────────────────────────────────────── */}
       <footer className="footer" role="contentinfo">

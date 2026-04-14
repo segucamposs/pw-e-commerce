@@ -124,3 +124,20 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "yes, commit everything but first turn all this page to react js"
 **Output:** Full migration from static HTML/CSS/JS to Create React App. Created: public/index.html (shell with all meta tags), src/index.js, src/App.js (useState-based SPA routing + navigate prop), src/hooks/useScrollReveal.js (custom hook with IntersectionObserver), src/components/Nav.js (menuOpen state, scroll ref), src/components/WhatsAppFab.js (presentational), src/components/ListenTabs.js (activeTab state + ARIA tabs), src/components/GuestForm.js (controlled form with validation), src/pages/HomePage.js (full home, stats counter useEffect), src/pages/GuestPage.js (full guest page, imports guest.css). Moved node_modules and package.json to root. Created .gitignore and vercel.json.
+
+---
+
+## 2026-04-14
+
+**Prompt:** "do a deep research of all the websites of the best podcasts of the world and give me all the information I need to have the best features for my website. [...] add what you think gives the most ROI. Prioritize adding a newsletter subscription place"
+**Output:** Scraped Huberman Lab, Lex Fridman, Tim Ferriss, SmartLess, Crime Junkie, Art of Charm, Overcast and podcast website roundups. Added 3 high-ROI features: (1) NewsletterForm component on HomePage — controlled email input with idle/submitting/success state, positioned as a full-width section before footer. (2) Spotify embedded player on GuestPage — compact iframe so QR-scan visitors can hear the show immediately. (3) Listener testimonials section on GuestPage — 3 quote cards with star rating for social proof. New styles in styles.css (newsletter) and guest.css (testimonials, embed). New concepts in code-knowledge.md: controlled form, multi-step state, conditional rendering, sr-only, iframe, blockquote.
+
+---
+
+**Prompt:** "/init" (analyze codebase and update CLAUDE.md)
+**Output:** Updated CLAUDE.md Current Phase section — reflected migration to Create React App (React 19). Updated dev commands to `npm start` / `npm run build` / `npm test`. Replaced static File Structure with React architecture (src/pages, src/components, src/hooks). Noted legacy static files at root.
+
+---
+
+**Prompt:** "can we add the direct link to the whatsapp icon now?" + number: +54 9 2355 463731
+**Output:** Added `href="https://wa.me/5492355463731"` with `target="_blank" rel="noopener noreferrer"` to: src/components/WhatsAppFab.js, src/pages/GuestPage.js (inline button), guest.html, and index.html (user was testing static files via Live Server).

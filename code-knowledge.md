@@ -386,3 +386,50 @@ JSX supports rendering content conditionally using `&&` (render if true) or tern
 {errors.nombre && <span className="form-error">{errors.nombre}</span>}
 {submitting ? 'Enviando...' : 'Quiero participar →'}
 ```
+
+### Multi-Step Form State
+Instead of a boolean `submitted`, use a string `status` to represent multiple phases:
+```jsx
+const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+```
+This is cleaner than multiple booleans because each phase is mutually exclusive — it's impossible to be both "submitting" and "success" at the same time. Used in `NewsletterForm.js`.
+
+### `<iframe>` — Embedding Third-Party Content
+`<iframe>` lets you embed another webpage or player inside your page. Common uses: YouTube/Spotify embeds, maps.
+```jsx
+<iframe
+  src="https://open.spotify.com/embed/show/..."
+  width="100%" height="152"
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy"
+  title="SWAP Podcast en Spotify"
+></iframe>
+```
+- `allow` — grants the iframe specific browser permissions (autoplay, clipboard, etc.)
+- `loading="lazy"` — defers loading until the iframe is near the viewport (performance)
+- `title` is required for accessibility (screen readers announce it)
+- `frameBorder="0"` removes the default browser border
+
+### `sr-only` — Visually Hidden but Accessible
+A CSS pattern to hide an element visually while keeping it in the DOM for screen readers. Used for form labels when the label is redundant with the placeholder.
+```css
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+```
+Never use `display: none` or `visibility: hidden` to "hide" labels — that makes the form inaccessible.
+
+### `<blockquote>` + `<footer>` — Semantic Quotes
+The correct HTML for a pull quote or testimonial is `<blockquote>` (the quote) + `<footer>` (the attribution). This tells screen readers and search engines "this is a citation."
+```html
+<blockquote>
+  <p>"Cada episodio me da algo para aplicar."</p>
+  <footer>Rodrigo M. · Buenos Aires</footer>
+</blockquote>
+```
