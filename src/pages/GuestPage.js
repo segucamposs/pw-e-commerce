@@ -28,7 +28,7 @@ function GuestPage({ navigate }) {
 
       <section className="g-section" aria-labelledby="temas-title">
         <h2 className="g-section-title" id="temas-title">De qué hablamos</h2>
-        <ul className="topics-list" role="list">
+        <ul className="topics-list">
           {[
             { color: '#C8FF00', label: '⚡ Productividad' },
             { color: '#FF6B6B', label: '🧠 Mindset' },
@@ -62,7 +62,7 @@ function GuestPage({ navigate }) {
 
       <section className="g-section" aria-labelledby="numeros-title">
         <h2 className="g-section-title" id="numeros-title">SWAP en números</h2>
-        <div className="numbers-row" role="list">
+        <div className="numbers-row">
           <div className="number-item" role="listitem">
             <span className="number-val">+50</span>
             <span className="number-label">episodios</span>

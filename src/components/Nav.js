@@ -56,17 +56,17 @@ function Nav({ navigate }) {
           <span className="nav-toggle-bar"></span>
         </button>
 
-        <ul className={`nav-menu${menuOpen ? ' nav-menu--open' : ''}`} id="nav-menu" role="list">
+        <ul className={`nav-menu${menuOpen ? ' nav-menu--open' : ''}`} id="nav-menu">
           <li><a href="#que-es" className="nav-link" onClick={closeMenu}>Qué es SWAP</a></li>
           <li><a href="#temas" className="nav-link" onClick={closeMenu}>Temas</a></li>
           <li><a href="#proceso" className="nav-link" onClick={closeMenu}>El proceso</a></li>
           <li>
-            <a href="#" className="nav-link nav-cta" onClick={goToGuest}>
+            <button className="nav-link nav-cta" onClick={goToGuest}>
               Quiero ser invitado
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M2 8h12M9 3l5 5-5 5" />
               </svg>
-            </a>
+            </button>
           </li>
         </ul>
       </nav>

@@ -79,7 +79,7 @@ function HomePage({ navigate }) {
               Para jóvenes que están construyendo algo.
             </p>
             <div className="hero-actions reveal reveal--delay-4">
-              <a href="#" className="btn btn-primary" onClick={goToGuest}>Quiero ser invitado</a>
+              <button className="btn btn-primary" onClick={goToGuest}>Quiero ser invitado</button>
               <a href="#que-es" className="btn btn-ghost">Conocé el podcast</a>
             </div>
             <div className="hero-hosts reveal reveal--delay-5">
@@ -145,7 +145,7 @@ function HomePage({ navigate }) {
           <div className="container">
             <p className="section-label reveal">De qué hablamos</p>
             <h2 className="section-title reveal reveal--delay-1" id="temas-heading">Los temas que nos mueven</h2>
-            <ul className="temas-grid" role="list">
+            <ul className="temas-grid">
               {[
                 { color: '#C8FF00', icon: '⚡', name: 'Productividad', desc: 'Sistemas reales para hacer más con menos fricción.' },
                 { color: '#FF6B6B', icon: '🧠', name: 'Mindset', desc: 'La mentalidad detrás de quienes construyen cosas.' },
@@ -199,7 +199,7 @@ function HomePage({ navigate }) {
           <div className="container">
             <p className="section-label reveal">Por qué aparecer</p>
             <h2 className="section-title reveal reveal--delay-1" id="porque-heading">Tu historia tiene valor</h2>
-            <ul className="porque-list" role="list">
+            <ul className="porque-list">
               {[
                 { num: '01', title: 'Amplificá tu voz', desc: 'Llegá a miles de jóvenes argentinos y latinoamericanos que están buscando exactamente lo que vos tenés para contar.' },
                 { num: '02', title: 'Conversación real', desc: 'No es una entrevista de PR. Es una charla entre pares — sin guión, sin respuestas ensayadas.' },
@@ -222,7 +222,7 @@ function HomePage({ navigate }) {
           <div className="container">
             <p className="section-label reveal">Cómo funciona</p>
             <h2 className="section-title reveal reveal--delay-1" id="proceso-heading">El proceso, paso a paso</h2>
-            <ol className="proceso-steps" role="list">
+            <ol className="proceso-steps">
               {[
                 { num: '01', title: 'Mandanos tu info', desc: 'Completá el formulario. Contanos quién sos y de qué podrías hablar.' },
                 { num: '02', title: 'Nos ponemos en contacto', desc: 'Si el tema encaja, te escribimos para coordinar fecha y hora. Remoto o presencial en Buenos Aires.' },
@@ -291,12 +291,12 @@ function HomePage({ navigate }) {
       <footer className="footer" role="contentinfo">
         <div className="container footer-inner">
           <img src="/assets/swap-logo-transparent.png" alt="SWAP Podcast" className="footer-logo" />
-          <a href="#" className="btn btn-primary footer-cta" onClick={goToGuest}>
+          <button className="btn btn-primary footer-cta" onClick={goToGuest}>
             Quiero ser invitado
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M2 8h12M9 3l5 5-5 5" />
             </svg>
-          </a>
+          </button>
           <p className="footer-copy">© 2026 SWAP Podcast · Argentina</p>
           <p className="footer-tagline">Para los que están construyendo su versión.</p>
         </div>
