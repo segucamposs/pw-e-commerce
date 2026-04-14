@@ -14,8 +14,6 @@ function ListenTabs() {
     }
   };
 
-  const tabIds = ['spotify', 'youtube', 'apple'];
-
   return (
     <div>
       <div className="listen-tabs" role="tablist" aria-label="Elegí dónde escuchar">
