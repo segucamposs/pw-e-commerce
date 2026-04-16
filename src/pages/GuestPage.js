@@ -30,7 +30,7 @@ function GuestPage({ navigate }) {
         <h2 className="g-section-title" id="temas-title">De qué hablamos</h2>
         <ul className="topics-list">
           {[
-            { color: '#C8FF00', label: '⚡ Productividad' },
+            { color: '#FF6600', label: '⚡ Productividad' },
             { color: '#FF6B6B', label: '🧠 Mindset' },
             { color: '#4ECDC4', label: '🚀 Emprendimiento' },
             { color: '#A78BFA', label: '🤖 Inteligencia Artificial' },

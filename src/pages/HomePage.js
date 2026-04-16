@@ -147,7 +147,7 @@ function HomePage({ navigate }) {
             <h2 className="section-title reveal reveal--delay-1" id="temas-heading">Los temas que nos mueven</h2>
             <ul className="temas-grid">
               {[
-                { color: '#C8FF00', icon: '⚡', name: 'Productividad', desc: 'Sistemas reales para hacer más con menos fricción.' },
+                { color: '#FF6600', icon: '⚡', name: 'Productividad', desc: 'Sistemas reales para hacer más con menos fricción.' },
                 { color: '#FF6B6B', icon: '🧠', name: 'Mindset', desc: 'La mentalidad detrás de quienes construyen cosas.' },
                 { color: '#4ECDC4', icon: '🚀', name: 'Emprendimiento', desc: 'Proyectos reales, desde cero, sin romanticismo.' },
                 { color: '#A78BFA', icon: '🤖', name: 'Inteligencia Artificial', desc: 'Cómo los jóvenes usan IA para moverse más rápido.' },
