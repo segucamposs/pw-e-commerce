@@ -77,6 +77,8 @@ function TiendaView() {
       <Nav />
 
       <main className="tienda-page">
+        <div className="container">
+
         <section className="tienda-hero">
           <h1 className="tienda-title">Tienda SWAP</h1>
           <p className="tienda-subtitle">
@@ -135,6 +137,8 @@ function TiendaView() {
             ))}
           </ul>
         )}
+
+        </div>{/* end .container */}
       </main>
 
       {/* CartDrawer receives all cart data as props — it doesn't own the state */}

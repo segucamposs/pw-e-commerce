@@ -41,14 +41,13 @@ function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQ
 
   return (
     <>
-      {/* Semi-transparent overlay behind the drawer */}
-      {isOpen && (
-        <div
-          className="cart-overlay"
-          onClick={onClose}
-          aria-hidden="true"
-        />
-      )}
+      {/* Overlay — always in the DOM so the CSS opacity transition works.
+          The --open class makes it visible; without it, it's invisible + non-interactive. */}
+      <div
+        className={`cart-overlay${isOpen ? ' cart-overlay--open' : ''}`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
 
       {/* The drawer itself — slides in from the right via CSS transform */}
       <aside
@@ -138,7 +137,7 @@ function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQ
               <span>${cartTotal.toLocaleString('es-AR')}</span>
             </div>
             {/* Checkout disabled — Mercado Pago integration comes in E6 */}
-            <button className="cart-checkout-btn" disabled>
+            <button className="btn btn-primary cart-checkout-btn" disabled>
               Ir al checkout (próximamente)
             </button>
           </div>

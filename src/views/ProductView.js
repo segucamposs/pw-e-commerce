@@ -80,7 +80,9 @@ function ProductView({ productId }) {
       <>
         <Nav />
         <main className="tienda-page">
-          <p className="tienda-loading" aria-live="polite">Cargando producto...</p>
+          <div className="container">
+            <p className="tienda-loading" aria-live="polite">Cargando producto...</p>
+          </div>
         </main>
       </>
     );
@@ -91,11 +93,13 @@ function ProductView({ productId }) {
       <>
         <Nav />
         <main className="tienda-page">
-          <div className="tienda-empty" role="status">
-            <p>Producto no encontrado.</p>
-            <Link href="/tienda" className="btn btn-primary">
-              ← Volver a la tienda
-            </Link>
+          <div className="container">
+            <div className="tienda-empty" role="status">
+              <p>Producto no encontrado.</p>
+              <Link href="/tienda" className="btn btn-primary">
+                ← Volver a la tienda
+              </Link>
+            </div>
           </div>
         </main>
       </>
@@ -107,6 +111,8 @@ function ProductView({ productId }) {
       <Nav />
 
       <main className="tienda-page">
+        <div className="container">
+
         {/* Breadcrumb navigation */}
         <nav className="product-breadcrumb" aria-label="Migas de pan">
           <Link href="/tienda">← Volver a la tienda</Link>
@@ -214,6 +220,8 @@ function ProductView({ productId }) {
             </p>
           </div>
         </div>
+
+        </div>{/* end .container */}
       </main>
 
       <CartDrawer
