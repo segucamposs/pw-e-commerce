@@ -1,9 +1,8 @@
+'use client';
+// NewsletterForm manages controlled input state — requires 'use client'.
+
 import { useState } from 'react';
 
-// NewsletterForm is a controlled form component.
-// "Controlled" means React state manages the input value at all times —
-// the displayed value always reflects what's in state, not raw DOM.
-// status drives what the user sees: the form, a loading state, or a success message.
 function NewsletterForm() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success'
@@ -20,7 +19,6 @@ function NewsletterForm() {
     setError('');
     setStatus('submitting');
 
-    // Simulated async call — will connect to a real endpoint in E5.
     setTimeout(() => {
       setStatus('success');
     }, 800);

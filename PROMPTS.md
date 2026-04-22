@@ -4,6 +4,20 @@ All prompts sent during the development of this project, with date and time.
 
 ---
 
+## 2026-04-22 (2)
+
+**Prompt:** "now, I want to build a merch store in the website. This is just for the uni subject, not for production in real life, so I would like to build this on a new branch, can we do that?"
+**Output:** Created branch feature/e4-merch-store. Built full E4 merch store: mock product data (src/data/products.js), API route handler (GET /api/products with category+search params), useCart hook with localStorage persistence, /tienda catalog (search + filter + product grid), /tienda/[id] product detail (dynamic route), ProductCard and CartDrawer components, merch.css, Nav update (Tienda link + fixed hash links). Build passes clean.
+
+---
+
+## 2026-04-22
+
+**Prompt:** "turn all the page into next.js"
+**Output:** Migrated from Create React App to Next.js 15 App Router. Created src/app/ with layout.js, globals.css, page.js, and invitado/page.js. Moved page components to src/views/. Added 'use client' to all interactive components. Replaced state-based navigate() prop with useRouter from next/navigation and Link from next/link. Deleted CRA entry files (App.js, index.js, src/styles.css, src/pages/, public/index.html). Updated package.json scripts (dev/build/start), vercel.json (framework: nextjs), added next.config.js and jsconfig.json. Routes: / → HomeView, /invitado → GuestView. Build passes clean.
+
+---
+
 ## 2026-04-13
 
 **Prompt:** "can you erase this project to start it all from scratch"

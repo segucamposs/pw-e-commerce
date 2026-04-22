@@ -1,0 +1,111 @@
+// products.js — mock product data for the SWAP merch store.
+// This is a plain JS module with no React or hooks — it can be imported
+// anywhere: API route handlers (server), client components, server components.
+//
+// In E5, this array will be replaced by a Supabase database query.
+// The shape of each object stays the same so nothing else needs to change.
+
+export const CATEGORIES = ['todos', 'remeras', 'buzos', 'accesorios', 'digital'];
+
+export const products = [
+  {
+    id: 'swap-tee-negra',
+    name: 'Remera SWAP — Negro',
+    category: 'remeras',
+    price: 8500,
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 20,
+    badge: 'Más vendido',
+    description: 'La remera oficial de SWAP. 100% algodón peinado, corte unisex. Diseño con el logo SWAP en el pecho.',
+  },
+  {
+    id: 'swap-tee-naranja',
+    name: 'Remera SWAP — Naranja',
+    category: 'remeras',
+    price: 8500,
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 15,
+    badge: null,
+    description: 'La remera SWAP en nuestro naranja icónico. 100% algodón peinado, corte unisex con logo en el pecho.',
+  },
+  {
+    id: 'swap-hoodie',
+    name: 'Hoodie SWAP Clásico',
+    category: 'buzos',
+    price: 18000,
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 10,
+    badge: 'Nuevo',
+    description: 'Buzo con capucha, frisa adentro. Bordado con el logo SWAP en el pecho izquierdo. Ideal para grabar episodios.',
+  },
+  {
+    id: 'swap-crewneck',
+    name: 'Crewneck SWAP',
+    category: 'buzos',
+    price: 15000,
+    sizes: ['S', 'M', 'L', 'XL'],
+    stock: 8,
+    badge: null,
+    description: 'Buzo cuello redondo con diseño minimalista. Frisa adentro, logo SWAP bordado en el pecho.',
+  },
+  {
+    id: 'swap-gorra',
+    name: 'Gorra SWAP — Dad Hat',
+    category: 'accesorios',
+    price: 6500,
+    sizes: null,
+    stock: 30,
+    badge: null,
+    description: 'Gorra estilo dad hat, ajuste con hebilla. Bordado "SWAP" en frente. Talle único.',
+  },
+  {
+    id: 'swap-tote',
+    name: 'Tote Bag SWAP',
+    category: 'accesorios',
+    price: 5500,
+    sizes: null,
+    stock: 25,
+    badge: 'Más vendido',
+    description: 'Bolsa de tela 100% algodón. Serigrafia con el logo SWAP. Ideal para la facu o el gym.',
+  },
+  {
+    id: 'swap-stickers',
+    name: 'Pack de Stickers x5',
+    category: 'accesorios',
+    price: 2500,
+    sizes: null,
+    stock: 50,
+    badge: null,
+    description: 'Pack de 5 stickers con diseños exclusivos de SWAP. Resistentes al agua. Para la laptop, termo o donde quieras.',
+  },
+  {
+    id: 'swap-mate',
+    name: 'Mate Térmico SWAP',
+    category: 'accesorios',
+    price: 12000,
+    sizes: null,
+    stock: 12,
+    badge: 'Nuevo',
+    description: 'Mate térmico de acero inoxidable con logo SWAP grabado. Mantiene la temperatura. 350ml.',
+  },
+  {
+    id: 'swap-wallpapers',
+    name: 'Wallpapers SWAP — Pack Digital',
+    category: 'digital',
+    price: 1500,
+    sizes: null,
+    stock: 999,
+    badge: null,
+    description: '10 wallpapers exclusivos en alta resolución para celular y PC. Diseños del universo visual de SWAP.',
+  },
+  {
+    id: 'swap-presets',
+    name: 'Pack de Presets Lightroom',
+    category: 'digital',
+    price: 2000,
+    sizes: null,
+    stock: 999,
+    badge: null,
+    description: '8 presets de Lightroom con la estética de SWAP. Descarga directa en formato XMP compatible con mobile y desktop.',
+  },
+];

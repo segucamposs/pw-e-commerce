@@ -1,14 +1,21 @@
-import { useEffect } from 'react';
-import Nav from '../components/Nav';
-import ListenTabs from '../components/ListenTabs';
-import NewsletterForm from '../components/NewsletterForm';
-import useScrollReveal from '../hooks/useScrollReveal';
+'use client';
+// 'use client' tells Next.js this component runs in the browser (not on the server).
+// It's required here because we use React hooks (useEffect, useState) and browser APIs
+// like IntersectionObserver. Server Components can't use any of these.
 
-function HomePage({ navigate }) {
-  // Activate scroll reveal animations for all .reveal elements.
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Nav from '@/components/Nav';
+import ListenTabs from '@/components/ListenTabs';
+import NewsletterForm from '@/components/NewsletterForm';
+import useScrollReveal from '@/hooks/useScrollReveal';
+
+function HomeView() {
+  // useRouter gives us programmatic navigation — the Next.js equivalent of navigate().
+  const router = useRouter();
+
   useScrollReveal();
 
-  // Animate the stat numbers when they scroll into view.
   useEffect(() => {
     const numbers = document.querySelectorAll('.stat-number');
     if (!numbers.length) return;
@@ -47,14 +54,15 @@ function HomePage({ navigate }) {
 
   const goToGuest = (e) => {
     e.preventDefault();
-    navigate('guest');
+    // router.push() navigates client-side — no full page reload, like a SPA.
+    router.push('/invitado');
   };
 
   return (
     <>
       <a href="#main" className="skip-link">Saltar al contenido principal</a>
 
-      <Nav navigate={navigate} />
+      <Nav />
 
       <main id="main">
 
@@ -270,22 +278,22 @@ function HomePage({ navigate }) {
       </main>
 
       {/* ── Newsletter ───────────────────────────────────── */}
-        <section className="section newsletter-section" aria-labelledby="newsletter-heading">
-          <div className="container newsletter-inner">
-            <div className="newsletter-text reveal">
-              <p className="section-label">Comunidad SWAP</p>
-              <h2 className="section-title" id="newsletter-heading">
-                Sé el primero en enterarte
-              </h2>
-              <p className="section-body">
-                Nuevo episodio cada semana. Sin spam — solo el contenido que vale la pena.
-              </p>
-            </div>
-            <div className="reveal reveal--delay-2">
-              <NewsletterForm />
-            </div>
+      <section className="section newsletter-section" aria-labelledby="newsletter-heading">
+        <div className="container newsletter-inner">
+          <div className="newsletter-text reveal">
+            <p className="section-label">Comunidad SWAP</p>
+            <h2 className="section-title" id="newsletter-heading">
+              Sé el primero en enterarte
+            </h2>
+            <p className="section-body">
+              Nuevo episodio cada semana. Sin spam — solo el contenido que vale la pena.
+            </p>
           </div>
-        </section>
+          <div className="reveal reveal--delay-2">
+            <NewsletterForm />
+          </div>
+        </div>
+      </section>
 
       {/* ── Footer ───────────────────────────────────────── */}
       <footer className="footer" role="contentinfo">
@@ -305,4 +313,4 @@ function HomePage({ navigate }) {
   );
 }
 
-export default HomePage;
+export default HomeView;

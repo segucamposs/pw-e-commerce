@@ -1,3 +1,8 @@
+/* globals.css — design tokens and all component styles.
+   Imported once in layout.js so every page inherits these styles.
+   --font-display and --font-body are set by next/font on the <html> element,
+   so they are NOT declared here — they come from layout.js via CSS custom properties. */
+
 :root {
   --bg:          #080808;
   --bg-surface:  #111111;
@@ -9,8 +14,6 @@
   --text-muted:  #666;
   --text-dim:    #999;
   --border:      rgba(255, 255, 255, 0.07);
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body:    'Poppins', sans-serif;
   --container:   1200px;
   --section-gap: 7rem;
   --radius:      12px;
@@ -431,10 +434,6 @@ em {
   white-space: nowrap;
 }
 
-.marquee-track span:not(:nth-child(6n)) {
-  color: var(--text-muted);
-}
-
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -709,8 +708,6 @@ em {
 .footer-logo:hover {
   opacity: 0.8;
 }
-
-
 
 .footer-copy {
   font-size: 0.8rem;
@@ -1015,7 +1012,6 @@ em {
   box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5);
 }
 
-/* ── Newsletter ──────────────────────────────────────── */
 .newsletter-section {
   background: linear-gradient(135deg, rgba(255, 102, 0, 0.06) 0%, transparent 60%);
   border-top: 1px solid var(--border);
@@ -1115,7 +1111,6 @@ em {
   flex-shrink: 0;
 }
 
-/* Visually hides an element but keeps it accessible for screen readers */
 .sr-only {
   position: absolute;
   width: 1px;

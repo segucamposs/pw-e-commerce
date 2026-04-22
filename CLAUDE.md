@@ -24,38 +24,58 @@ University project for **ITBA 71.38 - Programacion Web**. Solo e-commerce websit
 
 ## Current Phase
 
-**E2 complete — static HTML/CSS/JS site live on Vercel.** Open `index.html` or `guest.html` directly in browser to preview locally. Next.js will be introduced at deliverable E4.
+**E4 in progress — migrated to Next.js 15 App Router (React 19).** Static HTML/CSS/JS files at root are legacy reference only. Two real URL routes: `/` and `/invitado`.
 
 ```bash
-# After Next.js setup (E4):
-npm install
-npm run dev      # dev server on localhost:3000
-npm run build    # production build
+npm install          # install dependencies
+npm run dev          # dev server on localhost:3000
+npm run build        # production build (outputs to .next/)
+npm start            # run production build locally
 ```
+
+Vercel auto-detects Next.js — `vercel.json` only sets `"framework": "nextjs"`.
+
+## Architecture
+
+Next.js App Router with two routes. All navigation uses `useRouter` from `next/navigation` (programmatic) and `<Link>` from `next/link` (declarative). No `navigate` prop pattern.
+
+- **Server Components** (default): `layout.js`, `page.js` files, `WhatsAppFab.js` — rendered on the server, no JS sent to browser.
+- **Client Components** (`'use client'`): everything with `useState`/`useEffect`/event handlers — `HomeView`, `GuestView`, `Nav`, `GuestForm`, `ListenTabs`, `NewsletterForm`.
+
+```
+src/
+  app/
+    layout.js               # Root layout: fonts (next/font), globals.css, WhatsAppFab
+    globals.css             # Design tokens + all section styles
+    page.js                 # "/" route → renders HomeView
+    invitado/
+      page.js               # "/invitado" route → renders GuestView
+  views/
+    HomeView.js             # Full landing page ('use client')
+    GuestView.js            # QR-code guest page ('use client'), imports guest.css
+  components/
+    Nav.js                  # Navbar with mobile menu ('use client')
+    GuestForm.js            # Guest application form ('use client')
+    ListenTabs.js           # Tabbed "where to listen" section ('use client')
+    NewsletterForm.js       # Newsletter signup form ('use client')
+    WhatsAppFab.js          # Fixed WhatsApp FAB — Server Component, rendered in layout
+  hooks/
+    useScrollReveal.js      # Intersection Observer hook for scroll animations
+  guest.css                 # Guest page styles — imported in GuestView.js
+public/
+  assets/                   # swap-logo.png, swap-logo-transparent.png
+```
+
+Legacy static files at root (`index.html`, `guest.html`, `styles.css`, `script.js`, `guest.css`) are kept as reference only.
 
 ## Design System
 
-CSS custom properties defined in `:root` of `styles.css` (shared via `guest.css` too):
+CSS custom properties defined in `:root` of `src/styles.css`:
 
-- **Colors:** `--bg` (#080808 dark), `--accent` (#C8FF00 lime), `--text` (#EFEFEF), `--text-muted` (#666)
-- **Fonts:** `--font-display: 'Syne'` (headings), `--font-body: 'DM Sans'` (body) — loaded via Google Fonts
-- **Layout:** `--container: 1200px`, `--section-gap: 7rem`, `--radius: 12px`
-- `guest.css` is standalone (not imported from `styles.css`) but uses the same token names
-
-## File Structure
-
-```
-index.html          # Main landing page (guest application, full sections)
-styles.css          # Styles for index.html — design tokens + all section styles
-script.js           # JS for index.html — 5 modules: scroll reveal, navbar, mobile nav, stats counter, form handler
-guest.html          # QR code page — mobile-first podcast overview for potential guests
-guest.css           # Styles for guest.html — standalone, shares same design tokens
-assets/
-  swap-logo.png
-  swap-logo-transparent.png
-PROMPTS.md          # MANDATORY: log every prompt here
-code-knowledge.md   # MANDATORY: document every new concept here (oral exam reference)
-```
+- **Colors:** `--bg` (#080808), `--bg-surface` (#111), `--bg-card` (#0d0d0d), `--accent` (#FF6600 orange), `--accent-dim`, `--accent-glow`, `--text` (#EFEFEF), `--text-muted` (#666), `--text-dim` (#999), `--border` (rgba white 7%)
+- **Fonts:** `--font-display: 'Space Grotesk'` (headings), `--font-body: 'Poppins'` (body) — loaded via Google Fonts in `public/index.html`
+- **Layout:** `--container: 1200px`, `--section-gap: 7rem`, `--radius: 12px`, `--transition: 0.3s ease`
+- `src/guest.css` uses the same token names but is not imported from `styles.css`
 
 ## Tech Stack (Progressive)
 

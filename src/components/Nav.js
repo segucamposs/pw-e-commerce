@@ -1,19 +1,21 @@
+'use client';
+// Nav uses useState, useEffect, and useRef — all browser-only APIs.
+// 'use client' is required for any component that uses React hooks or event handlers.
+
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-// Nav manages two pieces of state:
-//   menuOpen — whether the mobile hamburger menu is visible
-//   scrolled  — handled via a ref + DOM class (not state, to avoid re-renders)
-function Nav({ navigate }) {
+function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const headerRef = useRef(null); // direct reference to the <header> DOM node
+  const headerRef = useRef(null);
+  const router = useRouter();
 
-  // Lock body scroll when mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  // Add "scrolled" class to header when the user scrolls past 50px.
   useEffect(() => {
     const handleScroll = () => {
       if (headerRef.current) {
@@ -26,23 +28,19 @@ function Nav({ navigate }) {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const goToGuest = (e) => {
-    e.preventDefault();
+  const goToGuest = () => {
     closeMenu();
-    navigate('guest');
+    // router.push() is Next.js's programmatic navigation — replaces the old navigate() prop.
+    router.push('/invitado');
   };
 
   return (
     <header className="header" role="banner" ref={headerRef}>
       <nav className="nav container" aria-label="Navegación principal">
-        <a
-          href="/"
-          className="nav-logo"
-          aria-label="SWAP Podcast — Inicio"
-          onClick={(e) => { e.preventDefault(); navigate('home'); }}
-        >
+        {/* Link from next/link handles client-side navigation without a page reload. */}
+        <Link href="/" className="nav-logo" aria-label="SWAP Podcast — Inicio">
           <img src="/assets/swap-logo-transparent.png" alt="SWAP Podcast" className="nav-logo-img" />
-        </a>
+        </Link>
 
         <button
           className="nav-toggle"
@@ -57,9 +55,11 @@ function Nav({ navigate }) {
         </button>
 
         <ul className={`nav-menu${menuOpen ? ' nav-menu--open' : ''}`} id="nav-menu">
-          <li><a href="#que-es" className="nav-link" onClick={closeMenu}>Qué es SWAP</a></li>
-          <li><a href="#temas" className="nav-link" onClick={closeMenu}>Temas</a></li>
-          <li><a href="#proceso" className="nav-link" onClick={closeMenu}>El proceso</a></li>
+          {/* Hash links use /#section so they work from any route, not just "/" */}
+          <li><a href="/#que-es" className="nav-link" onClick={closeMenu}>Qué es SWAP</a></li>
+          <li><a href="/#temas" className="nav-link" onClick={closeMenu}>Temas</a></li>
+          <li><a href="/#proceso" className="nav-link" onClick={closeMenu}>El proceso</a></li>
+          <li><Link href="/tienda" className="nav-link" onClick={closeMenu}>Tienda</Link></li>
           <li>
             <button className="nav-link nav-cta" onClick={goToGuest}>
               Quiero ser invitado

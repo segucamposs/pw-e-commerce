@@ -1,13 +1,15 @@
+'use client';
+// GuestForm manages its own state — inputs, validation errors, submit status.
+// Any component that calls useState must be a Client Component.
+
 import { useState } from 'react';
 
-// GuestForm holds all the form state in one object and handles validation.
 function GuestForm() {
   const [form, setForm] = useState({ nombre: '', email: '', instagram: '', tema: '' });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  // One handler for all fields — reads the field name from the event.
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -33,8 +35,6 @@ function GuestForm() {
 
     setSubmitting(true);
     try {
-      // Newsletter integration point — replace with your service.
-      // await fetch('/api/subscribe', { method: 'POST', body: JSON.stringify(form) });
       setStatus('ok');
       setForm({ nombre: '', email: '', instagram: '', tema: '' });
     } catch {
