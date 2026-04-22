@@ -2,64 +2,70 @@
 // ProductCard — displays a single product in the catalog grid.
 //
 // Props:
-//   product    — product object from the API
+//   product     — product object from the API
 //   onAddToCart — function(product, size, qty) from useCart in the parent
 //
-// Quick-add logic:
-//   - Apparel (product.sizes !== null): clicking the button navigates to the
-//     detail page where the user picks a size. We never add without a size.
-//   - Non-apparel (product.sizes === null): adds directly to cart with size=null.
+// Navigation:
+//   Clicking anywhere on the card (image or text) navigates to the detail page.
+//   The footer button is separate from the link:
+//     - Apparel: "Ver opciones" also navigates to the detail page (size must be chosen there).
+//     - Non-apparel: "+ Agregar" adds directly to cart without leaving the catalog.
+//   e.stopPropagation() on the button prevents the card click from also firing.
 //
 // This component does NOT call useCart() itself — it receives the function as a prop.
 // This keeps data flow unidirectional: TiendaView (owner) → ProductCard (consumer).
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 function ProductCard({ product, onAddToCart }) {
-  const router = useRouter();
-
-  const handleAdd = () => {
-    if (product.sizes) {
-      // Has sizes — send to detail page to pick one first.
-      router.push(`/tienda/${product.id}`);
-    } else {
-      // No sizes — add directly to cart.
-      onAddToCart(product, null, 1);
-    }
+  const handleQuickAdd = (e) => {
+    // Stop the click from bubbling up — we don't want the card Link to fire too.
+    e.preventDefault();
+    e.stopPropagation();
+    onAddToCart(product, null, 1);
   };
 
   return (
     <li className="product-card">
-      {/* Image placeholder — CSS gradient based on category via data-category attribute */}
-      <div className="product-card-img" data-category={product.category} aria-hidden="true">
-        <span className="product-card-icon">{getCategoryIcon(product.category)}</span>
-      </div>
-
       {product.badge && (
         <span className="product-badge">{product.badge}</span>
       )}
 
-      <div className="product-card-body">
-        <span className="product-category">{product.category}</span>
-        <h2 className="product-name">{product.name}</h2>
-        <p className="product-description">{product.description}</p>
+      {/* Link wraps the image + text — clicking anywhere here goes to the detail page */}
+      <Link href={`/tienda/${product.id}`} className="product-card-link" aria-label={`Ver ${product.name}`}>
+        <div className="product-card-img" data-category={product.category} aria-hidden="true">
+          <span className="product-card-icon">{getCategoryIcon(product.category)}</span>
+        </div>
 
-        <div className="product-card-footer">
-          <span className="product-price">
-            ${product.price.toLocaleString('es-AR')}
-          </span>
+        <div className="product-card-body">
+          <span className="product-category">{product.category}</span>
+          <h2 className="product-name">{product.name}</h2>
+          <p className="product-description">{product.description}</p>
+        </div>
+      </Link>
+
+      {/* Footer sits outside the Link so the button click doesn't trigger navigation */}
+      <div className="product-card-footer">
+        <span className="product-price">
+          ${product.price.toLocaleString('es-AR')}
+        </span>
+        {product.sizes ? (
+          <Link
+            href={`/tienda/${product.id}`}
+            className="product-add-btn"
+            aria-label={`Ver opciones de ${product.name}`}
+          >
+            Ver opciones
+          </Link>
+        ) : (
           <button
             className="product-add-btn"
-            onClick={handleAdd}
-            aria-label={
-              product.sizes
-                ? `Ver opciones de ${product.name}`
-                : `Agregar ${product.name} al carrito`
-            }
+            onClick={handleQuickAdd}
+            aria-label={`Agregar ${product.name} al carrito`}
           >
-            {product.sizes ? 'Ver opciones' : '+ Agregar'}
+            + Agregar
           </button>
-        </div>
+        )}
       </div>
     </li>
   );
