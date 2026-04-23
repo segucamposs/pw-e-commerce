@@ -174,13 +174,14 @@
   flex-direction: column;
 }
 
-/* Image area — square placeholder with category gradient */
+/* Image area — square, clips the zoom-on-hover effect */
 .product-card-img {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 }
 
 .product-card-img[data-category="remeras"]    { background: linear-gradient(135deg, #FF6600 0%, #cc3300 100%); }
@@ -188,10 +189,16 @@
 .product-card-img[data-category="accesorios"] { background: linear-gradient(135deg, #0f0f0f 0%, rgba(255,102,0,0.3) 100%); }
 .product-card-img[data-category="digital"]    { background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 100%); }
 
-.product-card-icon {
-  font-size: 3.5rem;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
-  user-select: none;
+.product-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.product-card-link:hover .product-card-photo {
+  transform: scale(1.04);
 }
 
 /* Badge (positioned over the image) */
@@ -622,10 +629,12 @@
 .product-detail-img[data-category="accesorios"] { background: linear-gradient(135deg, #0f0f0f 0%, rgba(255,102,0,0.35) 100%); }
 .product-detail-img[data-category="digital"]    { background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 100%); }
 
-.product-detail-icon {
-  font-size: 6rem;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
-  user-select: none;
+.product-detail-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
 }
 
 .product-detail-info {

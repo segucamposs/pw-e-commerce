@@ -119,9 +119,13 @@ function ProductView({ productId }) {
         </nav>
 
         <div className="product-detail-grid">
-          {/* Left column: product image placeholder */}
-          <div className="product-detail-img" data-category={product.category} aria-hidden="true">
-            <span className="product-detail-icon">{getCategoryIcon(product.category)}</span>
+          {/* Left column: product image */}
+          <div className="product-detail-img" data-category={product.category}>
+            <img
+              src={`/assets/products/${product.id}.png`}
+              alt={product.name}
+              className="product-detail-photo"
+            />
           </div>
 
           {/* Right column: product info */}
@@ -249,16 +253,6 @@ function ProductView({ productId }) {
       </button>
     </>
   );
-}
-
-function getCategoryIcon(category) {
-  const icons = {
-    remeras: '👕',
-    buzos: '🧥',
-    accesorios: '🎩',
-    digital: '💻',
-  };
-  return icons[category] ?? '📦';
 }
 
 export default ProductView;

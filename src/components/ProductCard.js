@@ -33,8 +33,12 @@ function ProductCard({ product, onAddToCart }) {
 
       {/* Link wraps the image + text — clicking anywhere here goes to the detail page */}
       <Link href={`/tienda/${product.id}`} className="product-card-link" aria-label={`Ver ${product.name}`}>
-        <div className="product-card-img" data-category={product.category} aria-hidden="true">
-          <span className="product-card-icon">{getCategoryIcon(product.category)}</span>
+        <div className="product-card-img" data-category={product.category}>
+          <img
+            src={`/assets/products/${product.id}.png`}
+            alt={product.name}
+            className="product-card-photo"
+          />
         </div>
 
         <div className="product-card-body">
@@ -69,17 +73,6 @@ function ProductCard({ product, onAddToCart }) {
       </div>
     </li>
   );
-}
-
-// Returns a text emoji/symbol for the category image placeholder.
-function getCategoryIcon(category) {
-  const icons = {
-    remeras: '👕',
-    buzos: '🧥',
-    accesorios: '🎩',
-    digital: '💻',
-  };
-  return icons[category] ?? '📦';
 }
 
 export default ProductCard;
