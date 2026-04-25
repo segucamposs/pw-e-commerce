@@ -1,7 +1,8 @@
 'use client';
-// 'use client' is required because this component uses hooks (useScrollReveal)
+// 'use client' is required because this component uses hooks (useScrollReveal, useState, useEffect)
 // and browser-specific behavior (click handlers on the logo).
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import '../guest.css';
 import GuestForm from '@/components/GuestForm';
@@ -9,6 +10,17 @@ import useScrollReveal from '@/hooks/useScrollReveal';
 
 function GuestView() {
   useScrollReveal();
+
+  // episodeCount starts at null so we can show a loading state.
+  // Once /api/episodes responds, we update it with the real count.
+  const [episodeCount, setEpisodeCount] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/episodes')
+      .then((res) => res.json())
+      .then((data) => setEpisodeCount(data.count))
+      .catch(() => setEpisodeCount(14)); // fallback if fetch fails
+  }, []);
 
   return (
     <div className="page-wrap">
@@ -20,15 +32,15 @@ function GuestView() {
             src="/assets/swap-logo-transparent.png" alt="SWAP Podcast" className="g-logo"
           />
         </Link>
-        <p className="g-handle">@swappodcast</p>
+        <p className="g-handle">@swapodcast</p>
       </header>
 
       <section className="g-hero" aria-labelledby="g-hero-title">
         <h1 className="g-hero-title" id="g-hero-title">
-          Para los que están<br />en el <em>proceso</em>.
+          Construiste algo.<br /><em>Contálo.</em>
         </h1>
         <p className="g-hero-sub">
-          No buscamos expertos ni figuras públicas. Buscamos jóvenes de 16 a 25 con algo genuino para contar — aunque no tengan todo resuelto.
+          No buscamos expertos ni figuras públicas. Buscamos gente con algo genuino para contar — aunque no tengan todo resuelto.
         </p>
       </section>
 
@@ -45,6 +57,7 @@ function GuestView() {
           ].map((t) => (
             <li key={t.label} className="topic-pill" style={{ '--t': t.color }}>{t.label}</li>
           ))}
+          <li className="topic-pill topic-pill--more">y más...</li>
         </ul>
       </section>
 
@@ -70,16 +83,15 @@ function GuestView() {
         <h2 className="g-section-title" id="numeros-title">SWAP en números</h2>
         <div className="numbers-row">
           <div className="number-item" role="listitem">
-            <span className="number-val">14</span>
+            <span className="number-val">
+              {episodeCount === null ? '—' : episodeCount}
+            </span>
             <span className="number-label">episodios</span>
           </div>
           <div className="number-item" role="listitem">
-            <span className="number-val">16–25</span>
-            <span className="number-label">años, nuestro público</span>
-          </div>
-          <div className="number-item" role="listitem">
-            <span className="number-val">LATAM</span>
-            <span className="number-label">alcance</span>
+            <span className="number-cadence-label">Nuevo episodio todos los...</span>
+            <span className="number-cadence-day">viernes 19hs</span>
+            <span className="number-cadence-dot" aria-hidden="true"></span>
           </div>
         </div>
       </section>
@@ -103,7 +115,7 @@ function GuestView() {
           {[
             { icon: '🎙', title: 'Sin preparación formal', desc: 'Te hacemos preguntas, vos respondés desde tu experiencia. No hay guión ni respuestas correctas.' },
             { icon: '🤝', title: 'Vos manejás el ritmo', desc: 'Si hay algo que preferís no tocar, lo saltamos. La conversación sigue tu comodidad.' },
-            { icon: '📍', title: 'Remoto o presencial', desc: 'Por videollamada desde donde estés, o en persona si estás en Buenos Aires.' },
+            { icon: '📍', title: 'Presencial', desc: 'Grabamos en persona en Buenos Aires. Podemos organizar virtual si estás en otro lado del mundo.' },
             { icon: '✂️', title: 'Nosotros editamos todo', desc: 'Solo tenés que aparecer y hablar. El resto lo manejamos nosotros.' },
           ].map((item) => (
             <div key={item.title} className="g-testimonial">
@@ -156,7 +168,7 @@ function GuestView() {
         <div className="g-faq">
           {[
             { q: '¿Cuánto dura la grabación?', a: 'Alrededor de 1 hora. Editamos y nos quedamos con lo mejor de la conversación.' },
-            { q: '¿Puedo grabar de forma remota?', a: 'Sí, por videollamada. Si estás en Buenos Aires, también podemos hacerlo presencial.' },
+            { q: '¿Puedo grabar de forma remota?', a: 'Sí, por videollamada. Preferimos presencialidad si estás en Buenos Aires porque es mejor la dinámica.' },
             { q: '¿Necesito preparación previa?', a: 'No. Te hacemos preguntas, vos respondés desde tu experiencia. No hay guión ni respuestas correctas.' },
             { q: '¿Cuándo se publica el episodio?', a: 'Generalmente entre 1 y 2 semanas después de grabar. Te avisamos y te enviamos todo el material para compartir.' },
             { q: '¿Necesito ser conocido o tener muchos seguidores?', a: 'Para nada. Lo que importa es tu historia y perspectiva, no tus métricas. No buscamos influencers — buscamos conversaciones genuinas.' },

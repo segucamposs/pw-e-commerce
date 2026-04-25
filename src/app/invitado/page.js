@@ -3,7 +3,7 @@
 import GuestView from '@/views/GuestView';
 
 export const metadata = {
-  title: 'Sé invitado',
+  title: { absolute: 'SWAP Podcast' },
   description:
     'Compartí tu historia en SWAP Podcast. Completá el formulario y te contactamos para coordinar un episodio.',
   openGraph: {

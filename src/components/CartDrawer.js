@@ -17,6 +17,7 @@
 //   autoFocus on close button          — moves focus into the dialog when it opens
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQty, onClear }) {
@@ -77,6 +78,15 @@ function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQ
               <ul className="cart-items" aria-label="Productos en el carrito">
                 {cartItems.map((item) => (
                   <li key={`${item.id}-${item.size ?? 'no-size'}`} className="cart-item">
+                    <Image
+                      src={`/assets/products/${item.id}.png`}
+                      alt={item.name}
+                      width={64}
+                      height={64}
+                      className="cart-item-img"
+                    />
+
+                    <div className="cart-item-body">
                     <div className="cart-item-info">
                       <span className="cart-item-name">{item.name}</span>
                       {item.size && (
@@ -120,6 +130,7 @@ function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQ
                     <span className="cart-item-subtotal">
                       ${(item.price * item.quantity).toLocaleString('es-AR')}
                     </span>
+                    </div>
                   </li>
                 ))}
               </ul>

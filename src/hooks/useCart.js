@@ -12,33 +12,37 @@
 import { useState, useEffect } from 'react';
 
 function useCart() {
-  // useState with a lazy initializer — the function runs only on the first render.
-  // We use it here to read localStorage once on mount without re-reading on every render.
-  // typeof window !== 'undefined' guards against server-side rendering (SSR):
-  // localStorage doesn't exist on the server, so we return [] as default.
-  const [cartItems, setCartItems] = useState(() => {
-    if (typeof window === 'undefined') return [];
+  // Always start with [] so the server render and the first client render
+  // produce identical HTML — this prevents React hydration errors.
+  // We load the real cart from localStorage in a useEffect after hydration.
+  const [cartItems, setCartItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  // `loaded` becomes true after the initial localStorage read so the sync
+  // effect never overwrites stored data with the empty default [].
+  const [loaded, setLoaded] = useState(false);
+
+  // Load cart from localStorage once, after the component mounts on the client.
+  useEffect(() => {
     try {
       const stored = localStorage.getItem('swap-cart');
-      return stored ? JSON.parse(stored) : [];
+      if (stored) setCartItems(JSON.parse(stored));
     } catch {
-      return [];
+      // Ignore parse errors — start with an empty cart.
     }
-  });
+    setLoaded(true);
+  }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Sync cart state to localStorage every time it changes.
-  // The dependency array [cartItems] means this effect runs after every render
-  // where cartItems changed — not on every render.
+  // Sync cart state to localStorage every time it changes, but only after
+  // the initial load so we don't overwrite the stored cart with [].
   useEffect(() => {
+    if (!loaded) return;
     try {
       localStorage.setItem('swap-cart', JSON.stringify(cartItems));
     } catch {
       // localStorage can fail in private browsing or when storage is full.
       // We fail silently — the cart still works in memory for the session.
     }
-  }, [cartItems]);
+  }, [cartItems, loaded]);
 
   // Add a product to the cart.
   // If the same product+size combo already exists, increment the quantity.
@@ -94,6 +98,7 @@ function useCart() {
 
   return {
     cartItems,
+    cartLoaded: loaded,
     isOpen,
     setIsOpen,
     addToCart,

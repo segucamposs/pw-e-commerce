@@ -3,17 +3,36 @@
 // It's required here because we use React hooks (useEffect, useState) and browser APIs
 // like IntersectionObserver. Server Components can't use any of these.
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 import ListenTabs from '@/components/ListenTabs';
 import NewsletterForm from '@/components/NewsletterForm';
 import useScrollReveal from '@/hooks/useScrollReveal';
 
 function HomeView() {
-  // useRouter gives us programmatic navigation — the Next.js equivalent of navigate().
   useScrollReveal();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // episodeCount is null until /api/episodes responds.
+  // The animation effect depends on this value — it only runs once the count is known.
+  const [episodeCount, setEpisodeCount] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/episodes')
+      .then((res) => res.json())
+      .then((data) => setEpisodeCount(data.count))
+      .catch(() => setEpisodeCount(14));
+  }, []);
+
+  // Animation runs after episodeCount is set so data-target has the real value.
+  // Adding episodeCount to the dependency array means the observer is re-created
+  // once the count arrives, which triggers the animation for visible elements.
+  useEffect(() => {
+    if (episodeCount === null) return;
+
     const numbers = document.querySelectorAll('.stat-number');
     if (!numbers.length) return;
 
@@ -47,12 +66,10 @@ function HomeView() {
 
     numbers.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [episodeCount]);
 
   return (
     <>
-      <a href="#main" className="skip-link">Saltar al contenido principal</a>
-
       <Nav />
 
       <main id="main">
@@ -64,28 +81,28 @@ function HomeView() {
             <div className="orb orb--2"></div>
           </div>
           <div className="container hero-content">
-            <p className="eyebrow reveal">
+            <p className="eyebrow">
               <span className="eyebrow-dot" aria-hidden="true"></span>
               Podcast · Argentina &amp; LATAM
             </p>
             <h1 className="hero-title" id="hero-heading">
-              <span className="hero-line reveal">Aprende de</span>
-              <span className="hero-line reveal reveal--delay-1">quienes están</span>
-              <span className="hero-line reveal reveal--delay-2">en el <em>proceso</em>.</span>
+              <span className="hero-line">Aprende de</span>
+              <span className="hero-line">quienes están</span>
+              <span className="hero-line">en el <em>proceso</em>.</span>
             </h1>
-            <p className="hero-sub reveal reveal--delay-3">
-              SWAP es el podcast en español donde jóvenes de 16 a 25 hablan de salud, carrera, emprendimiento e IA — sin postureo, sin guión. Conversaciones reales que te dan algo para aplicar.
+            <p className="hero-sub">
+              SWAP es el podcast en español sobre salud, carrera, emprendimiento e IA — sin postureo, sin guión. Para los que están construyendo algo y todavía no tienen todo claro.
             </p>
-            <div className="hero-actions reveal reveal--delay-4">
+            <div className="hero-actions">
               <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY?si=3f041e502d6c4350" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Escuchar en Spotify</a>
               <a href="#que-es" className="btn btn-ghost">Conocé el podcast</a>
             </div>
-            <div className="hero-hosts reveal reveal--delay-5">
+            <div className="hero-hosts">
               <div className="host-avatars" aria-hidden="true">
                 <div className="host-avatar">S</div>
                 <div className="host-avatar">F</div>
               </div>
-              <span className="host-label">Segu &amp; Francisco · hosts</span>
+              <span className="host-label">Segu Campos &amp; Fran Bottaro · hosts</span>
             </div>
           </div>
           <div className="marquee" aria-hidden="true">
@@ -115,24 +132,21 @@ function HomeView() {
                 Una <em>conversación</em>, no una entrevista
               </h2>
               <p className="section-body reveal reveal--delay-2">
-                SWAP no es un podcast de grandes figuras hablando desde arriba. Es una conversación entre pares — jóvenes que están en el proceso, compartiendo lo que realmente está pasando.
+                SWAP no es un podcast donde el invitado llega con todo resuelto. Son dos pibes hablando con gente que construyó algo — y que cuenta cómo fue de verdad.
               </p>
               <p className="section-body reveal reveal--delay-3">
-                Hablamos de salud, carrera, emprendimiento e IA desde la experiencia real: los errores, las dudas, las herramientas que funcionan. Hosts y audiencia aprendemos juntos.
+                Hablamos de salud, carrera, emprendimiento e IA desde la experiencia real: los errores, las dudas, las herramientas que funcionan. No importa en qué etapa estés — acá todos seguimos aprendiendo.
               </p>
             </div>
             <div className="stats-grid" aria-label="Estadísticas del podcast">
               <div className="stat-card reveal">
-                <span className="stat-number" data-target="14">0</span>
+                <span className="stat-number" data-target={episodeCount ?? 14}>0</span>
                 <span className="stat-label">episodios</span>
               </div>
               <div className="stat-card reveal reveal--delay-1">
-                <span className="stat-number" data-target="16">0</span>
-                <span className="stat-label">a 25 años</span>
-              </div>
-              <div className="stat-card reveal reveal--delay-2">
-                <span className="stat-number" data-target="4">0</span>
-                <span className="stat-label">plataformas</span>
+                <span className="stat-cadence-label">Nuevo episodio todos los...</span>
+                <span className="stat-cadence-day">viernes 19hs</span>
+                <span className="stat-cadence-dot" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -160,55 +174,6 @@ function HomeView() {
                   <span className="tema-icon" aria-hidden="true">{tema.icon}</span>
                   <h3 className="tema-name">{tema.name}</h3>
                   <p className="tema-desc">{tema.desc}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* ── Episodios ────────────────────────────────────── */}
-        <section className="section episodios-section" id="episodios" aria-labelledby="episodios-heading">
-          <div className="container">
-            <p className="section-label reveal">Episodios recientes</p>
-            <h2 className="section-title reveal reveal--delay-1" id="episodios-heading">Lo que estamos hablando</h2>
-            <div className="episodios-grid">
-              {[
-                { num: '01', tag: '💪 Salud & Energía', title: 'Cuerpo y rendimiento: lo que nadie te dice sobre entrenar', desc: 'Hablamos con un coach de fitness sobre los mitos del entrenamiento y por qué la mayoría abandona antes de ver resultados.' },
-                { num: '02', tag: '🎯 Carrera', title: 'Crear contenido para marcas: el negocio que nadie enseña', desc: 'Una creadora de UGC nos cuenta cómo construyó su carrera sin audiencia propia — solo habilidad, sistema y consistencia.' },
-                { num: '03', tag: '⚡ Productividad', title: 'Las herramientas que usamos para hacer más con menos', desc: 'Los sistemas y apps que cambiaron nuestra forma de trabajar — y por qué la productividad no es lo que te vendieron.' },
-              ].map((ep, i) => (
-                <article key={ep.num} className={`episodio-card reveal${i > 0 ? ` reveal--delay-${i}` : ''}`}>
-                  <span className="ep-badge">Ep. {ep.num}</span>
-                  <span className="ep-tag">{ep.tag}</span>
-                  <h3 className="ep-title">{ep.title}</h3>
-                  <p className="ep-desc">{ep.desc}</p>
-                  <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY?si=3f041e502d6c4350" target="_blank" rel="noopener noreferrer" className="ep-link">Escuchar →</a>
-                </article>
-              ))}
-            </div>
-            <div className="episodios-footer reveal">
-              <a href="https://open.spotify.com/show/1t25iC8KdPXDZ9BUr1KgxY?si=3f041e502d6c4350" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Ver todos los episodios →</a>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Por qué escucharnos ──────────────────────────── */}
-        <section className="section porque-section" aria-labelledby="porque-heading">
-          <div className="container">
-            <p className="section-label reveal">Por qué escucharnos</p>
-            <h2 className="section-title reveal reveal--delay-1" id="porque-heading">Lo que te llevás</h2>
-            <ul className="porque-list">
-              {[
-                { num: '01', title: 'Perspectivas desde adentro', desc: 'Hablamos con gente que está en el proceso real, no gurús con respuestas armadas. Lo que dicen, lo vivieron.' },
-                { num: '02', title: 'Algo para aplicar, siempre', desc: 'Después de cada episodio tenés al menos una idea, herramienta o perspectiva nueva. No solo motivación — acción.' },
-                { num: '03', title: 'Una comunidad que entiende', desc: 'No sos el único que está construyendo algo sin tener todo claro. En SWAP, eso es exactamente el punto.' },
-              ].map((item, i) => (
-                <li key={item.num} className={`porque-item reveal${i > 0 ? ` reveal--delay-${i}` : ''}`}>
-                  <span className="porque-num" aria-hidden="true">{item.num}</span>
-                  <div className="porque-text">
-                    <h3 className="porque-item-title">{item.title}</h3>
-                    <p className="porque-item-desc">{item.desc}</p>
-                  </div>
                 </li>
               ))}
             </ul>

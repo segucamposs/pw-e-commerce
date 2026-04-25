@@ -34,14 +34,15 @@ const SHIPPING_COST = 3500;
 
 function CheckoutView() {
   const router = useRouter();
-  const { cartItems, cartTotal } = useCart();
+  const { cartItems, cartTotal, cartLoaded, updateQuantity, removeFromCart } = useCart();
 
-  // If the cart is empty, send the user back to the store.
+  // Only redirect once the cart has been loaded from localStorage.
+  // Without this guard, the initial empty [] would always redirect.
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cartLoaded && cartItems.length === 0) {
       router.push('/tienda');
     }
-  }, [cartItems, router]);
+  }, [cartLoaded, cartItems, router]);
 
   // Controlled form state — one object for all fields.
   // When E6 connects Mercado Pago, handleSubmit receives this object as-is.
@@ -74,8 +75,8 @@ function CheckoutView() {
   const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
   const total = cartTotal + shipping;
 
-  // Don't render the page content while redirecting (empty cart)
-  if (cartItems.length === 0) return null;
+  // Don't render until localStorage has loaded, and redirect if truly empty.
+  if (!cartLoaded || cartItems.length === 0) return null;
 
   return (
     <>
@@ -275,6 +276,24 @@ function CheckoutView() {
                       {item.size && (
                         <span className="checkout-item-size">Talle: {item.size}</span>
                       )}
+                      <div className="checkout-item-controls">
+                        <button
+                          className="checkout-qty-btn"
+                          onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
+                          aria-label={`Reducir cantidad de ${item.name}`}
+                        >−</button>
+                        <span className="checkout-qty-display">{item.quantity}</span>
+                        <button
+                          className="checkout-qty-btn"
+                          onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
+                          aria-label={`Aumentar cantidad de ${item.name}`}
+                        >+</button>
+                        <button
+                          className="checkout-remove-btn"
+                          onClick={() => removeFromCart(item.id, item.size)}
+                          aria-label={`Eliminar ${item.name}`}
+                        >🗑</button>
+                      </div>
                     </div>
                     <span className="checkout-item-price">
                       ${(item.price * item.quantity).toLocaleString('es-AR')}
