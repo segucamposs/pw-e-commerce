@@ -35,24 +35,26 @@ function Nav() {
   };
 
   return (
-    <header className="header" role="banner" ref={headerRef}>
+    <header className={`header${menuOpen ? ' menu-open' : ''}`} role="banner" ref={headerRef}>
       <nav className="nav container" aria-label="Navegación principal">
-        {/* Link from next/link handles client-side navigation without a page reload. */}
-        <Link href="/" className="nav-logo" aria-label="SWAP Podcast — Inicio">
-          <img src="/assets/swap-logo-transparent.png" alt="SWAP Podcast" className="nav-logo-img" />
-        </Link>
+        <div className="nav-top">
+          {/* Link from next/link handles client-side navigation without a page reload. */}
+          <Link href="/" className="nav-logo" aria-label="SWAP Podcast — Inicio">
+            <img src="/assets/swap-logo-transparent.png" alt="SWAP Podcast" className="nav-logo-img" />
+          </Link>
 
-        <button
-          className="nav-toggle"
-          aria-expanded={menuOpen}
-          aria-controls="nav-menu"
-          aria-label={menuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span className="nav-toggle-bar"></span>
-          <span className="nav-toggle-bar"></span>
-          <span className="nav-toggle-bar"></span>
-        </button>
+          <button
+            className="nav-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="nav-menu"
+            aria-label={menuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span className="nav-toggle-bar"></span>
+            <span className="nav-toggle-bar"></span>
+            <span className="nav-toggle-bar"></span>
+          </button>
+        </div>
 
         <ul className={`nav-menu${menuOpen ? ' nav-menu--open' : ''}`} id="nav-menu">
           {/* Hash links use /#section so they work from any route, not just "/" */}
