@@ -433,3 +433,74 @@ The correct HTML for a pull quote or testimonial is `<blockquote>` (the quote) +
   <footer>Rodrigo M. · Buenos Aires</footer>
 </blockquote>
 ```
+
+---
+
+## SEO (Search Engine Optimization)
+
+### metadata export (Next.js)
+Next.js reads a special `export const metadata = {...}` from any `page.js` or `layout.js` and injects those values into the `<head>` of the HTML automatically. You don't write `<meta>` tags by hand — you export a plain object and Next.js handles the rest.
+```js
+export const metadata = {
+  title: 'Tienda',
+  description: 'Merch oficial de SWAP Podcast.',
+};
+```
+
+### metadataBase
+A URL you set once in `layout.js` so Next.js knows the full domain of the site. It's required whenever you use relative paths like `/assets/image.png` in Open Graph image tags — without it, the OG image URL would be incomplete and social previews would break.
+```js
+metadataBase: new URL('https://pw-e-commerce.vercel.app'),
+```
+
+### title template
+A pattern like `'%s | SWAP Podcast'` set in layout.js. When a page exports `title: 'Tienda'`, Next.js automatically produces `'Tienda | SWAP Podcast'` in the browser tab. Avoids repeating the brand name manually in every page.
+
+### Open Graph (OG) tags
+Meta tags read by social platforms (WhatsApp, Twitter, LinkedIn, Facebook) to build link previews. Without them, sharing a URL shows nothing useful. Key OG properties: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`.
+
+### Twitter Card tags
+Similar to Open Graph but specific to X/Twitter. `twitter:card: 'summary_large_image'` means the link preview shows a big image banner. Falls back to OG tags for properties not explicitly set.
+
+### robots.txt
+A plain text file at the root of your site (`/robots.txt`) that tells web crawlers (Googlebot, Bingbot, etc.) which pages they're allowed to index. In Next.js, you export a function from `src/app/robots.js` instead of writing the file manually.
+
+### sitemap.xml
+An XML file that lists every URL on the site with metadata (last modified date, priority). Google uses it to discover pages efficiently. In Next.js, you export a function from `src/app/sitemap.js` that returns an array of URL objects — Next.js converts them to XML automatically.
+
+### generateMetadata (Next.js)
+An async function exported from a dynamic route's `page.js` that receives `params` and returns different metadata per page. Used instead of the static `export const metadata = {...}` when the title/description depend on the URL.
+```js
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
+  return { title: product.name, description: product.description };
+}
+```
+
+### generateStaticParams (Next.js)
+A function exported from a dynamic route's `page.js` that tells Next.js which URL values exist. Next.js pre-renders one HTML file per item at build time (SSG — Static Site Generation) instead of rendering on demand. This means Google gets a real HTML page instantly, which is faster and better for SEO.
+```js
+export function generateStaticParams() {
+  return products.map((product) => ({ id: product.id }));
+}
+```
+
+### JSON-LD / Structured Data (Schema.org)
+A JSON object embedded in a `<script type="application/ld+json">` tag in the HTML that describes the content to Google in a machine-readable format. Google uses it to show "rich results" — enhanced SERP listings with images, prices, ratings, episode lists, etc.
+
+Common schema types used in this project:
+- `PodcastSeries` — tells Google the homepage is a podcast, enabling "listen" links in search
+- `Product` — price, availability, and image for product pages → enables price snippets in search
+- `BreadcrumbList` — shows the navigation path (Inicio > Tienda > Product) in the Google snippet
+- `CollectionPage` — marks the `/tienda` page as a product catalog
+
+In React, you use `dangerouslySetInnerHTML` to embed the JSON without it being escaped:
+```jsx
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+/>
+```
+This is safe because we write the data ourselves — no user input is involved.
+```

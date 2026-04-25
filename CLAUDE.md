@@ -24,7 +24,7 @@ University project for **ITBA 71.38 - Programacion Web**. Solo e-commerce websit
 
 ## Current Phase
 
-**E4 in progress — migrated to Next.js 15 App Router (React 19).** Static HTML/CSS/JS files at root are legacy reference only. Two real URL routes: `/` and `/invitado`.
+**E4 complete — Next.js 15 App Router (React 19) with SWAP merch store.** Static HTML/CSS/JS files at root are legacy reference only. Four URL routes: `/`, `/invitado`, `/tienda`, `/tienda/[id]`.
 
 ```bash
 npm install          # install dependencies
@@ -37,10 +37,11 @@ Vercel auto-detects Next.js — `vercel.json` only sets `"framework": "nextjs"`.
 
 ## Architecture
 
-Next.js App Router with two routes. All navigation uses `useRouter` from `next/navigation` (programmatic) and `<Link>` from `next/link` (declarative). No `navigate` prop pattern.
+Next.js App Router with four routes. All navigation uses `useRouter` from `next/navigation` (programmatic) and `<Link>` from `next/link` (declarative). No `navigate` prop pattern.
 
 - **Server Components** (default): `layout.js`, `page.js` files, `WhatsAppFab.js` — rendered on the server, no JS sent to browser.
-- **Client Components** (`'use client'`): everything with `useState`/`useEffect`/event handlers — `HomeView`, `GuestView`, `Nav`, `GuestForm`, `ListenTabs`, `NewsletterForm`.
+- **Client Components** (`'use client'`): everything with `useState`/`useEffect`/event handlers — all views, `Nav`, `GuestForm`, `ListenTabs`, `NewsletterForm`, `ProductCard`, `CartDrawer`.
+- **API Route Handlers**: `src/app/api/products/route.js` — exports named `GET` function, no JSX, returns `NextResponse.json(...)`.
 
 ```
 src/
@@ -50,18 +51,33 @@ src/
     page.js                 # "/" route → renders HomeView
     invitado/
       page.js               # "/invitado" route → renders GuestView
+    tienda/
+      page.js               # "/tienda" route → renders TiendaView (merch catalog)
+      [id]/
+        page.js             # "/tienda/[id]" route → renders ProductView (detail page)
+    api/
+      products/
+        route.js            # GET /api/products?category=&search= → filters products array
   views/
     HomeView.js             # Full landing page ('use client')
     GuestView.js            # QR-code guest page ('use client'), imports guest.css
+    TiendaView.js           # Merch store catalog with search/filter ('use client')
+    ProductView.js          # Single product detail page ('use client')
   components/
     Nav.js                  # Navbar with mobile menu ('use client')
     GuestForm.js            # Guest application form ('use client')
     ListenTabs.js           # Tabbed "where to listen" section ('use client')
     NewsletterForm.js       # Newsletter signup form ('use client')
+    ProductCard.js          # Merch product card, entire card is clickable ('use client')
+    CartDrawer.js           # Slide-in shopping cart drawer ('use client')
     WhatsAppFab.js          # Fixed WhatsApp FAB — Server Component, rendered in layout
   hooks/
     useScrollReveal.js      # Intersection Observer hook for scroll animations
+  data/
+    products.js             # Mock product array + CATEGORIES constant — plain JS, no React
+                            # In E5 this will be replaced by Supabase queries
   guest.css                 # Guest page styles — imported in GuestView.js
+  merch.css                 # Merch store styles — imported in TiendaView.js / ProductView.js
 public/
   assets/                   # swap-logo.png, swap-logo-transparent.png
 ```
@@ -70,12 +86,12 @@ Legacy static files at root (`index.html`, `guest.html`, `styles.css`, `script.j
 
 ## Design System
 
-CSS custom properties defined in `:root` of `src/styles.css`:
+CSS custom properties defined in `:root` of `src/app/globals.css`:
 
 - **Colors:** `--bg` (#080808), `--bg-surface` (#111), `--bg-card` (#0d0d0d), `--accent` (#FF6600 orange), `--accent-dim`, `--accent-glow`, `--text` (#EFEFEF), `--text-muted` (#666), `--text-dim` (#999), `--border` (rgba white 7%)
-- **Fonts:** `--font-display: 'Space Grotesk'` (headings), `--font-body: 'Poppins'` (body) — loaded via Google Fonts in `public/index.html`
+- **Fonts:** `--font-display: 'Space Grotesk'` (headings), `--font-body: 'Poppins'` (body) — loaded via `next/font/google` in `layout.js`
 - **Layout:** `--container: 1200px`, `--section-gap: 7rem`, `--radius: 12px`, `--transition: 0.3s ease`
-- `src/guest.css` uses the same token names but is not imported from `styles.css`
+- `src/guest.css` and `src/merch.css` use the same token names but are standalone files, not imported from `globals.css`
 
 ## Tech Stack (Progressive)
 

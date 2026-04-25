@@ -199,7 +199,7 @@ em {
 }
 
 .nav-logo-img {
-  height: 36px;
+  height: 110px;
   width: auto;
 }
 
@@ -214,6 +214,9 @@ em {
   font-weight: 500;
   color: var(--text-dim);
   transition: color var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-display);
 }
 
 .nav-link:hover {
@@ -231,6 +234,9 @@ em {
   border-radius: 100px;
   border: none;
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-display);
 }
 
 .nav-cta:hover {

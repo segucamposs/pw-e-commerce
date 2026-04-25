@@ -59,7 +59,7 @@ function Nav() {
           <li><a href="/#que-es" className="nav-link" onClick={closeMenu}>Qué es SWAP</a></li>
           <li><a href="/#temas" className="nav-link" onClick={closeMenu}>Temas</a></li>
           <li><a href="/#proceso" className="nav-link" onClick={closeMenu}>El proceso</a></li>
-          <li><Link href="/tienda" className="nav-link" onClick={closeMenu}>Tienda</Link></li>
+          <li><Link href="/tienda" className="nav-link" onClick={closeMenu}>Merch</Link></li>
           <li>
             <button className="nav-link nav-cta" onClick={goToGuest}>
               Quiero ser invitado

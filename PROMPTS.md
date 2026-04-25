@@ -4,6 +4,13 @@ All prompts sent during the development of this project, with date and time.
 
 ---
 
+## 2026-04-24
+
+**Prompt:** "now I want to optimize the SEO of the website. So use /seo-audit skill and any other skill you feel useful."
+**Output:** Full SEO implementation. Created robots.js (→ /robots.txt) and sitemap.js (→ /sitemap.xml with all 13 URLs). Added metadataBase + title template to layout.js. Added full Open Graph + Twitter Card metadata to all 4 pages. Replaced static metadata on /tienda/[id] with generateMetadata (dynamic per-product title/description/OG image). Added generateStaticParams so all 10 product pages are pre-rendered at build time (SSG). Added JSON-LD structured data: PodcastSeries on homepage, CollectionPage on /tienda, Product + BreadcrumbList on each product page. Documented all new SEO concepts in code-knowledge.md. Build passes clean — 19 static pages generated.
+
+---
+
 ## 2026-04-22 (2)
 
 **Prompt:** "now, I want to build a merch store in the website. This is just for the uni subject, not for production in real life, so I would like to build this on a new branch, can we do that?"

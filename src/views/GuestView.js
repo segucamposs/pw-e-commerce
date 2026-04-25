@@ -25,11 +25,10 @@ function GuestView() {
 
       <section className="g-hero" aria-labelledby="g-hero-title">
         <h1 className="g-hero-title" id="g-hero-title">
-          Conversaciones reales.<br />Para jóvenes que construyen.
+          Para los que están<br />en el <em>proceso</em>.
         </h1>
         <p className="g-hero-sub">
-          SWAP es un podcast para los ambiciosos de 16 a 25 años de Argentina y LATAM.
-          Sin filtros, sin guiones — solo charlas que valen la pena.
+          No buscamos expertos ni figuras públicas. Buscamos jóvenes de 16 a 25 con algo genuino para contar — aunque no tengan todo resuelto.
         </p>
       </section>
 
@@ -71,7 +70,7 @@ function GuestView() {
         <h2 className="g-section-title" id="numeros-title">SWAP en números</h2>
         <div className="numbers-row">
           <div className="number-item" role="listitem">
-            <span className="number-val">+50</span>
+            <span className="number-val">14</span>
             <span className="number-label">episodios</span>
           </div>
           <div className="number-item" role="listitem">
@@ -98,19 +97,20 @@ function GuestView() {
         </div>
       </section>
 
-      <section className="g-section" aria-labelledby="testimonios-title">
-        <h2 className="g-section-title" id="testimonios-title">Lo que dicen los oyentes</h2>
+      <section className="g-section" aria-labelledby="como-es-title">
+        <h2 className="g-section-title" id="como-es-title">¿Cómo es grabar en SWAP?</h2>
         <div className="g-testimonials">
           {[
-            { text: '"Cada episodio me da algo para aplicar. Es el podcast que le recomiendo a cualquier pibe que quiere construir algo."', name: 'Rodrigo M.', city: 'Buenos Aires' },
-            { text: '"Me encanta que hablan desde la experiencia real, sin postureo. Se nota que son auténticos."', name: 'Valentina S.', city: 'Córdoba' },
-            { text: '"El episodio de productividad me cambió la rutina. Lo escucho mientras entreno."', name: 'Lucas P.', city: 'Rosario' },
-          ].map((t) => (
-            <blockquote key={t.name} className="g-testimonial">
-              <p className="g-testimonial-stars" aria-label="5 estrellas">★★★★★</p>
-              <p className="g-testimonial-text">{t.text}</p>
-              <footer className="g-testimonial-author">{t.name} · {t.city}</footer>
-            </blockquote>
+            { icon: '🎙', title: 'Sin preparación formal', desc: 'Te hacemos preguntas, vos respondés desde tu experiencia. No hay guión ni respuestas correctas.' },
+            { icon: '🤝', title: 'Vos manejás el ritmo', desc: 'Si hay algo que preferís no tocar, lo saltamos. La conversación sigue tu comodidad.' },
+            { icon: '📍', title: 'Remoto o presencial', desc: 'Por videollamada desde donde estés, o en persona si estás en Buenos Aires.' },
+            { icon: '✂️', title: 'Nosotros editamos todo', desc: 'Solo tenés que aparecer y hablar. El resto lo manejamos nosotros.' },
+          ].map((item) => (
+            <div key={item.title} className="g-testimonial">
+              <p className="g-testimonial-stars" aria-hidden="true">{item.icon}</p>
+              <p className="g-testimonial-text" style={{ fontStyle: 'normal', fontWeight: 600, color: 'var(--text)' }}>{item.title}</p>
+              <p className="g-testimonial-text" style={{ fontStyle: 'normal' }}>{item.desc}</p>
+            </div>
           ))}
         </div>
       </section>
@@ -159,7 +159,7 @@ function GuestView() {
             { q: '¿Puedo grabar de forma remota?', a: 'Sí, por videollamada. Si estás en Buenos Aires, también podemos hacerlo presencial.' },
             { q: '¿Necesito preparación previa?', a: 'No. Te hacemos preguntas, vos respondés desde tu experiencia. No hay guión ni respuestas correctas.' },
             { q: '¿Cuándo se publica el episodio?', a: 'Generalmente entre 1 y 2 semanas después de grabar. Te avisamos y te enviamos todo el material para compartir.' },
-            { q: '¿Necesito ser conocido o tener muchos seguidores?', a: 'Para nada. Lo que importa es tu historia y perspectiva, no tus métricas. Tenemos invitados con 200 seguidores y con 200.000.' },
+            { q: '¿Necesito ser conocido o tener muchos seguidores?', a: 'Para nada. Lo que importa es tu historia y perspectiva, no tus métricas. No buscamos influencers — buscamos conversaciones genuinas.' },
           ].map((item) => (
             <details key={item.q} className="faq-item">
               <summary className="faq-question">{item.q}</summary>

@@ -80,7 +80,7 @@ function TiendaView() {
         <div className="container">
 
         <section className="tienda-hero">
-          <h1 className="tienda-title">Tienda SWAP</h1>
+          <h1 className="tienda-title">SWAP Merch</h1>
           <p className="tienda-subtitle">
             Merch oficial del podcast. Llevate un pedazo de SWAP.
           </p>

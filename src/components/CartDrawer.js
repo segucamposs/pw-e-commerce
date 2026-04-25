@@ -17,6 +17,7 @@
 //   autoFocus on close button          — moves focus into the dialog when it opens
 
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQty, onClear }) {
   const closeButtonRef = useRef(null);
@@ -136,10 +137,17 @@ function CartDrawer({ isOpen, onClose, cartItems, cartTotal, onRemove, onUpdateQ
               <span>Total</span>
               <span>${cartTotal.toLocaleString('es-AR')}</span>
             </div>
-            {/* Checkout disabled — Mercado Pago integration comes in E6 */}
-            <button className="btn btn-primary cart-checkout-btn" disabled>
-              Ir al checkout (próximamente)
-            </button>
+            {/* Closes the drawer and navigates to the checkout page */}
+            <Link
+              href="/checkout"
+              className="btn btn-primary cart-checkout-btn"
+              onClick={onClose}
+            >
+              Ir al checkout
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M2 8h12M9 3l5 5-5 5" />
+              </svg>
+            </Link>
           </div>
         )}
       </aside>
