@@ -770,6 +770,19 @@ em {
   font-style: italic;
 }
 
+.footer-redes-link {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.45;
+  transition: opacity var(--transition);
+  margin-top: 0.25rem;
+}
+
+.footer-redes-link:hover {
+  opacity: 0.9;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

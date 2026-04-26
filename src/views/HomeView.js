@@ -4,6 +4,7 @@
 // like IntersectionObserver. Server Components can't use any of these.
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Nav from '@/components/Nav';
 import ListenTabs from '@/components/ListenTabs';
 import NewsletterForm from '@/components/NewsletterForm';
@@ -262,6 +263,7 @@ function HomeView() {
           </a>
           <p className="footer-copy">© 2026 SWAP Podcast · Argentina</p>
           <p className="footer-tagline">Para los que están construyendo su versión.</p>
+          <Link href="/redes" className="footer-redes-link">Redes Sociales de SWAP</Link>
         </div>
       </footer>
     </>
