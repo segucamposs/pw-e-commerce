@@ -35,9 +35,12 @@ export async function POST(request) {
       quantity:   item.quantity,
     }));
 
+    // .select() forces supabase-js to surface RLS errors. Without it, a
+    // blocked insert would return no error and we'd leave an orphan order.
     const { error: itemsError } = await supabase
       .from('order_items')
-      .insert(orderItems);
+      .insert(orderItems)
+      .select();
 
     if (itemsError) {
       // If items fail, delete the parent order to avoid orphaned rows.

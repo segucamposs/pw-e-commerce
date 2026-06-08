@@ -53,8 +53,11 @@ create table if not exists orders (
 alter table orders enable row level security;
 
 -- Browser can INSERT (to create an order) but cannot SELECT (protects PII).
+-- `to anon` is required: without it the policy targets PUBLIC, which excludes
+-- the anon role in Supabase's default role hierarchy and blocks the insert.
 create policy "Anon can insert orders"
   on orders for insert
+  to anon
   with check (true);
 
 -- ── order_items ───────────────────────────────────────────────────────────────
@@ -76,6 +79,7 @@ alter table order_items enable row level security;
 
 create policy "Anon can insert order items"
   on order_items for insert
+  to anon
   with check (true);
 
 -- ── guest_applications ────────────────────────────────────────────────────────
@@ -94,6 +98,7 @@ alter table guest_applications enable row level security;
 
 create policy "Anon can insert guest applications"
   on guest_applications for insert
+  to anon
   with check (true);
 
 -- ── newsletter_subscribers ────────────────────────────────────────────────────
@@ -113,6 +118,7 @@ alter table newsletter_subscribers enable row level security;
 
 create policy "Anon can insert newsletter subscribers"
   on newsletter_subscribers for insert
+  to anon
   with check (true);
 
 -- ── Seed: products ────────────────────────────────────────────────────────────

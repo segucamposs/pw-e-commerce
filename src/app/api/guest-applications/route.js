@@ -10,9 +10,12 @@ export async function POST(request) {
   try {
     const { nombre, email, instagram, tema } = await request.json();
 
+    // .select() is required so supabase-js surfaces RLS errors instead of
+    // silently returning success when the row was actually rejected.
     const { error } = await supabase
       .from('guest_applications')
-      .insert({ nombre, email, instagram, tema });
+      .insert({ nombre, email, instagram, tema })
+      .select();
 
     if (error) throw error;
 
