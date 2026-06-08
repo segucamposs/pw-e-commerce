@@ -35,6 +35,12 @@ function GuestForm() {
 
     setSubmitting(true);
     try {
+      const res = await fetch('/api/guest-applications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('Server error');
       setStatus('ok');
       setForm({ nombre: '', email: '', instagram: '', tema: '' });
     } catch {

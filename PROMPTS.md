@@ -4,6 +4,13 @@ All prompts sent during the development of this project, with date and time.
 
 ---
 
+## 2026-06-01
+
+**Prompt:** "i want to add a database of supabase to the website. lets plan it"
+**Output:** E5 Supabase integration. Installed @supabase/supabase-js. Created supabase/seed.sql with full schema (products, orders, order_items, guest_applications, newsletter_subscribers) + RLS policies + seed data. Created src/lib/supabase.js (anon client). Created src/data/categories.js (CATEGORIES lifted from deleted products.js). Updated GET /api/products to query Supabase with .eq() + .or(.ilike()). Updated tienda/[id]/page.js to query Supabase in generateStaticParams and generateMetadata and ProductPage. Updated sitemap.js to async + Supabase query. Created POST /api/orders, /api/guest-applications, /api/newsletter route handlers. Updated CheckoutView.js handleSubmit to POST to /api/orders, shows success screen. Updated GuestForm.js and NewsletterForm.js to POST to their respective API routes. Deleted src/data/products.js. Documented all new DB concepts in code-knowledge.md.
+
+---
+
 ## 2026-04-24
 
 **Prompt:** "now I want to optimize the SEO of the website. So use /seo-audit skill and any other skill you feel useful."

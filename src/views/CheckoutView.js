@@ -34,18 +34,23 @@ const SHIPPING_COST = 3500;
 
 function CheckoutView() {
   const router = useRouter();
-  const { cartItems, cartTotal, cartLoaded, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, cartTotal, cartLoaded, updateQuantity, removeFromCart, clearCart } = useCart();
 
-  // Only redirect once the cart has been loaded from localStorage.
-  // Without this guard, the initial empty [] would always redirect.
+  // Only redirect if the cart is empty AND the order hasn't just been placed.
+  // Without the orderPlaced guard, clearCart() after a successful order would
+  // immediately redirect away from the success screen.
   useEffect(() => {
-    if (cartLoaded && cartItems.length === 0) {
+    if (cartLoaded && cartItems.length === 0 && !orderPlaced) {
       router.push('/tienda');
     }
-  }, [cartLoaded, cartItems, router]);
+  }, [cartLoaded, cartItems, router, orderPlaced]);
 
   // Controlled form state — one object for all fields.
   // When E6 connects Mercado Pago, handleSubmit receives this object as-is.
+  const [submitting, setSubmitting] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [orderError, setOrderError] = useState('');
+
   const [form, setForm] = useState({
     nombre: '',
     email: '',
@@ -62,21 +67,76 @@ function CheckoutView() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // TODO E6: replace this stub with Mercado Pago preference creation + redirect.
-  // Expected flow:
-  //   1. POST /api/checkout with { form, cartItems }
-  //   2. Server creates an MP preference and returns { init_point: URL }
-  //   3. router.push(init_point) sends user to MP checkout
-  const handleSubmit = (e) => {
+  // Sends the order to /api/orders (Supabase insert).
+  // In E6, this will also create a Mercado Pago preference and redirect to MP.
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // placeholder — no action yet
+    setOrderError('');
+    setSubmitting(true);
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: form.nombre,
+          email: form.email,
+          telefono: form.telefono,
+          direccion: form.direccion,
+          departamento: form.departamento,
+          ciudad: form.ciudad,
+          provincia: form.provincia,
+          codigo_postal: form.codigoPostal,
+          items: cartItems.map((item) => ({
+            product_id: item.id,
+            name: item.name,
+            price: item.price,
+            size: item.size ?? null,
+            quantity: item.quantity,
+          })),
+          subtotal: cartTotal,
+          shipping,
+          total,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Error al crear el pedido');
+
+      clearCart();
+      setOrderPlaced(true);
+    } catch {
+      setOrderError('Hubo un error al procesar tu pedido. Intentá de nuevo.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
   const total = cartTotal + shipping;
 
-  // Don't render until localStorage has loaded, and redirect if truly empty.
-  if (!cartLoaded || cartItems.length === 0) return null;
+  if (!cartLoaded || (cartItems.length === 0 && !orderPlaced)) return null;
+
+  if (orderPlaced) {
+    return (
+      <>
+        <Nav />
+        <main className="checkout-page">
+          <div className="container">
+            <div className="checkout-success-screen">
+              <div className="checkout-success-icon" aria-hidden="true">✓</div>
+              <h1 className="checkout-success-title">¡Pedido recibido!</h1>
+              <p className="checkout-success-text">
+                Te vamos a contactar a <strong>{form.email}</strong> para coordinar el pago y el envío.
+              </p>
+              <Link href="/tienda" className="btn btn-primary">
+                Seguir comprando
+              </Link>
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
@@ -330,12 +390,19 @@ function CheckoutView() {
                 type="submit"
                 form="checkout-form"
                 className="btn btn-primary checkout-submit-btn"
+                disabled={submitting}
               >
-                Pagar con Mercado Pago
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M2 8h12M9 3l5 5-5 5" />
-                </svg>
+                {submitting ? 'Procesando...' : 'Confirmar pedido'}
+                {!submitting && (
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2 8h12M9 3l5 5-5 5" />
+                  </svg>
+                )}
               </button>
+
+              {orderError && (
+                <p className="checkout-order-error" role="alert">{orderError}</p>
+              )}
 
               <p className="checkout-secure-note">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

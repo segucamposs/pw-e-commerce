@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>SWAP — Arquitectura</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #eee;
+      padding: 36px 20px 56px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .sub {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #555;
+      margin-bottom: 36px;
+    }
+
+    /* ── ROWS ── */
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── BOXES ── */
+    .box {
+      border-radius: 8px;
+      padding: 9px 14px;
+      border: 1.5px solid;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Type colors */
+    .infra  { border-color: #444; color: #aaa; background: #141414; }
+    .server { border-color: #22c55e; color: #22c55e; background: rgba(34,197,94,0.08); }
+    .client { border-color: #60a5fa; color: #60a5fa; background: rgba(96,165,250,0.08); }
+    .api    { border-color: #f97316; color: #f97316; background: rgba(249,115,22,0.08); }
+    .hook   { border-color: #a78bfa; color: #a78bfa; background: rgba(167,139,250,0.08); }
+    .data   { border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,0.08); }
+    .css    { border-color: #f472b6; color: #f472b6; background: rgba(244,114,182,0.08); }
+
+    /* Full-width bar */
+    .bar {
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 8px;
+      padding: 11px 20px;
+      border: 1.5px solid;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* ── ARROW ── */
+    .arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 4px 0;
+    }
+    .arrow-stem {
+      width: 2px;
+      height: 22px;
+      background: #2a2a2a;
+    }
+    .arrow-head {
+      width: 0; height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 12px solid #2a2a2a;
+    }
+    .arrow-label {
+      font-size: 0.63rem;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 5px;
+    }
+
+    /* ── HORIZONTAL ARROWS (infra row) ── */
+    .h-arrow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .h-stem {
+      width: 30px;
+      height: 2px;
+      background: #2a2a2a;
+    }
+    .h-head {
+      width: 0; height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 11px solid #2a2a2a;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      text-align: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.67rem;
+      color: #555;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+    }
+
+    /* ── FETCH FLOW BOX ── */
+    .flow-box {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 10px;
+      padding: 14px 20px;
+    }
+    .flow-title {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #444;
+      margin-bottom: 12px;
+    }
+    .flow-chain {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .flow-chip {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: #161616;
+      border: 1px solid #222;
+      color: #888;
+    }
+    .flow-chip.c { color: #60a5fa; background: rgba(96,165,250,0.07); border-color: rgba(96,165,250,0.2); }
+    .flow-chip.o { color: #f97316; background: rgba(249,115,22,0.07); border-color: rgba(249,115,22,0.2); }
+    .flow-chip.y { color: #fbbf24; background: rgba(251,191,36,0.07); border-color: rgba(251,191,36,0.2); }
+    .flow-chip.p { color: #a78bfa; background: rgba(167,139,250,0.07); border-color: rgba(167,139,250,0.2); }
+    .flow-arrow-h { color: #333; font-size: 0.9rem; }
+    .flow-label { font-size: 0.67rem; color: #444; min-width: 120px; }
+  </style>
+</head>
+<body>
+
+<h1>SWAP — Arquitectura del Proyecto</h1>
+<p class="sub">Next.js 15 App Router · React 19 · E4</p>
+
+
+<!-- ═══════════════════════════
+     INFRA
+     ═══════════════════════════ -->
+<div class="section-label">Infraestructura</div>
+<div class="row" style="align-items:center;">
+  <div class="box infra">localhost</div>
+  <div class="h-arrow"><div class="h-stem"></div><div class="h-head"></div></div>
+  <div class="box infra">GitHub</div>
+  <div class="h-arrow"><div class="h-stem"></div><div class="h-head"></div></div>
+  <div class="box infra">Vercel</div>
+</div>
+
+<!-- arrow -->
+<div class="arrow">
+  <div class="arrow-stem"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">request HTTP</div>
+</div>
+
+<!-- ═══════════════════════════
+     LAYOUT
+     ═══════════════════════════ -->
+<div class="section-label">Layout global (Server Component)</div>
+<div class="bar server">layout.js &nbsp;→&nbsp; fuentes · favicon · &lt;Nav&gt; · &lt;WhatsAppFab&gt; · globals.css</div>
+
+<!-- arrow -->
+<div class="arrow">
+  <div class="arrow-stem"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">según la URL</div>
+</div>
+
+<!-- ═══════════════════════════
+     ROUTES
+     ═══════════════════════════ -->
+<div class="section-label">Rutas — page.js por URL</div>
+<div class="row">
+  <div class="box server">/</div>
+  <div class="box server">/invitado</div>
+  <div class="box server">/tienda</div>
+  <div class="box server">/tienda/[id]</div>
+  <div class="box server">/checkout</div>
+  <div class="box server">/redes</div>
+  <div class="box api">/api/products</div>
+  <div class="box api">/api/episodes</div>
+</div>
+
+<!-- arrow -->
+<div class="arrow">
+  <div class="arrow-stem"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">importa y renderiza</div>
+</div>
+
+<!-- ═══════════════════════════
+     VIEWS
+     ═══════════════════════════ -->
+<div class="section-label">Vistas — 'use client'</div>
+<div class="row">
+  <div class="box client">HomeView</div>
+  <div class="box client">GuestView</div>
+  <div class="box client">TiendaView</div>
+  <div class="box client">ProductView</div>
+  <div class="box client">CheckoutView</div>
+  <div class="box client">RedesView</div>
+</div>
+
+<!-- arrow -->
+<div class="arrow">
+  <div class="arrow-stem"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">compuesto por</div>
+</div>
+
+<!-- ═══════════════════════════
+     COMPONENTS
+     ═══════════════════════════ -->
+<div class="section-label">Componentes</div>
+<div class="row">
+  <div class="box client">Nav</div>
+  <div class="box client">ProductCard</div>
+  <div class="box client">CartDrawer</div>
+  <div class="box client">GuestForm</div>
+  <div class="box client">ListenTabs</div>
+  <div class="box client">NewsletterForm</div>
+  <div class="box server">WhatsAppFab</div>
+</div>
+
+<!-- arrow -->
+<div class="arrow">
+  <div class="arrow-stem"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">usa</div>
+</div>
+
+<!-- ═══════════════════════════
+     BASE
+     ═══════════════════════════ -->
+<div class="section-label">Hooks · Datos · Estilos</div>
+<div class="row">
+  <div class="box hook">useCart</div>
+  <div class="box hook">useScrollReveal</div>
+  <div class="box data">data/products.js</div>
+  <div class="box css">globals.css</div>
+  <div class="box css">merch.css</div>
+  <div class="box css">guest.css</div>
+  <div class="box css">redes.css</div>
+</div>
+
+
+<!-- ═══════════════════════════
+     FLOWS
+     ═══════════════════════════ -->
+<div class="arrow">
+  <div class="arrow-stem" style="height:32px"></div>
+</div>
+<div class="flow-box">
+  <div class="flow-title">Flujos de datos</div>
+
+  <div class="flow-chain">
+    <div class="flow-label">🛒 Carrito</div>
+    <span class="flow-chip c">ProductCard</span>
+    <span class="flow-arrow-h">→</span>
+    <span class="flow-chip p">useCart</span>
+    <span class="flow-arrow-h">→</span>
+    <span class="flow-chip c">CartDrawer</span>
+    <span class="flow-arrow-h">→</span>
+    <span class="flow-chip c">CheckoutView</span>
+  </div>
+
+  <div class="flow-chain">
+    <div class="flow-label">🔍 Filtrar tienda</div>
+    <span class="flow-chip c">TiendaView</span>
+    <span class="flow-arrow-h">→ fetch()</span>
+    <span class="flow-chip o">/api/products</span>
+    <span class="flow-arrow-h">→</span>
+    <span class="flow-chip y">data/products.js</span>
+    <span class="flow-arrow-h">→ JSON</span>
+    <span class="flow-chip c">grilla</span>
+  </div>
+
+  <div class="flow-chain" style="margin-bottom:0">
+    <div class="flow-label">✨ Scroll anim.</div>
+    <span class="flow-chip c">HomeView</span>
+    <span class="flow-arrow-h">→</span>
+    <span class="flow-chip p">useScrollReveal</span>
+    <span class="flow-arrow-h">→ Intersection Observer →</span>
+    <span class="flow-chip">CSS .revealed</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════
+     LEGEND
+     ═══════════════════════════ -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#22c55e"></div> Server Component
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#60a5fa"></div> Client Component
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#f97316"></div> API Route
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#a78bfa"></div> Custom Hook
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#fbbf24"></div> Datos mock
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#f472b6"></div> CSS
+  </div>
+</div>
+
+</body>
+</html>

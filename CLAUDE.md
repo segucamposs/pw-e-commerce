@@ -24,7 +24,7 @@ University project for **ITBA 71.38 - Programacion Web**. Solo e-commerce websit
 
 ## Current Phase
 
-**E4 complete — Next.js 15 App Router (React 19) with SWAP merch store.** Static HTML/CSS/JS files at root are legacy reference only. Four URL routes: `/`, `/invitado`, `/tienda`, `/tienda/[id]`.
+**E5 next — Next.js 15 App Router (React 19) with SWAP merch store, cart, and checkout.** E4 is complete. E5 will replace `src/data/products.js` with Supabase queries; the product shape and API surface stay the same. Static HTML/CSS/JS files at root are legacy reference only. Six URL routes: `/`, `/invitado`, `/tienda`, `/tienda/[id]`, `/checkout`, `/redes`.
 
 ```bash
 npm install          # install dependencies
@@ -37,11 +37,15 @@ Vercel auto-detects Next.js — `vercel.json` only sets `"framework": "nextjs"`.
 
 ## Architecture
 
-Next.js App Router with four routes. All navigation uses `useRouter` from `next/navigation` (programmatic) and `<Link>` from `next/link` (declarative). No `navigate` prop pattern.
+Next.js App Router with six routes. All navigation uses `useRouter` from `next/navigation` (programmatic) and `<Link>` from `next/link` (declarative). No `navigate` prop pattern.
+
+Import alias: `@/*` resolves to `./src/*` (configured in `jsconfig.json`).
 
 - **Server Components** (default): `layout.js`, `page.js` files, `WhatsAppFab.js` — rendered on the server, no JS sent to browser.
 - **Client Components** (`'use client'`): everything with `useState`/`useEffect`/event handlers — all views, `Nav`, `GuestForm`, `ListenTabs`, `NewsletterForm`, `ProductCard`, `CartDrawer`.
-- **API Route Handlers**: `src/app/api/products/route.js` — exports named `GET` function, no JSX, returns `NextResponse.json(...)`.
+- **API Route Handlers**: export named `GET`/`POST` functions, no JSX, return `NextResponse.json(...)`.
+
+**Cart pattern:** `useCart` is called once in the parent view (`TiendaView`, `ProductView`, `CheckoutView`). `ProductCard`, `CartDrawer`, and checkout receive cart data as props — they do NOT call `useCart` themselves. Cart is backed by `localStorage` key `swap-cart`. No React Context (intentionally — too complex for oral exam).
 
 ```
 src/
@@ -55,14 +59,24 @@ src/
       page.js               # "/tienda" route → renders TiendaView (merch catalog)
       [id]/
         page.js             # "/tienda/[id]" route → renders ProductView (detail page)
+    checkout/
+      page.js               # "/checkout" route → renders CheckoutView
+    redes/
+      page.js               # "/redes" route → renders RedesView (social links linktree)
+    robots.js               # Generates /robots.txt — uses NEXT_PUBLIC_SITE_URL env var
+    sitemap.js              # Generates /sitemap.xml — imports products array for dynamic routes
     api/
       products/
         route.js            # GET /api/products?category=&search= → filters products array
+      episodes/
+        route.js            # GET /api/episodes → { count: N } from iTunes API, 1h cache
   views/
     HomeView.js             # Full landing page ('use client')
     GuestView.js            # QR-code guest page ('use client'), imports guest.css
     TiendaView.js           # Merch store catalog with search/filter ('use client')
     ProductView.js          # Single product detail page ('use client')
+    CheckoutView.js         # Checkout form + order summary ('use client'); MP wired in E6
+    RedesView.js            # Social links page ('use client'), imports redes.css
   components/
     Nav.js                  # Navbar with mobile menu ('use client')
     GuestForm.js            # Guest application form ('use client')
@@ -72,14 +86,16 @@ src/
     CartDrawer.js           # Slide-in shopping cart drawer ('use client')
     WhatsAppFab.js          # Fixed WhatsApp FAB — Server Component, rendered in layout
   hooks/
+    useCart.js              # Cart state backed by localStorage — call once in parent view
     useScrollReveal.js      # Intersection Observer hook for scroll animations
   data/
     products.js             # Mock product array + CATEGORIES constant — plain JS, no React
                             # In E5 this will be replaced by Supabase queries
   guest.css                 # Guest page styles — imported in GuestView.js
-  merch.css                 # Merch store styles — imported in TiendaView.js / ProductView.js
+  merch.css                 # Merch store styles — imported in TiendaView.js / ProductView.js / CheckoutView.js
+  redes.css                 # Redes page styles — imported in RedesView.js
 public/
-  assets/                   # swap-logo.png, swap-logo-transparent.png
+  assets/                   # product images at /assets/products/[id].png, logos
 ```
 
 Legacy static files at root (`index.html`, `guest.html`, `styles.css`, `script.js`, `guest.css`) are kept as reference only.
@@ -91,7 +107,40 @@ CSS custom properties defined in `:root` of `src/app/globals.css`:
 - **Colors:** `--bg` (#080808), `--bg-surface` (#111), `--bg-card` (#0d0d0d), `--accent` (#FF6600 orange), `--accent-dim`, `--accent-glow`, `--text` (#EFEFEF), `--text-muted` (#666), `--text-dim` (#999), `--border` (rgba white 7%)
 - **Fonts:** `--font-display: 'Space Grotesk'` (headings), `--font-body: 'Poppins'` (body) — loaded via `next/font/google` in `layout.js`
 - **Layout:** `--container: 1200px`, `--section-gap: 7rem`, `--radius: 12px`, `--transition: 0.3s ease`
-- `src/guest.css` and `src/merch.css` use the same token names but are standalone files, not imported from `globals.css`
+- `src/guest.css`, `src/merch.css`, and `src/redes.css` use the same token names but are standalone files, not imported from `globals.css`
+
+## Environment Variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | No (has default) | Base URL used in `robots.js` and `sitemap.js`. Defaults to `https://pw-e-commerce.vercel.app` |
+
+Vercel sets `NEXT_PUBLIC_SITE_URL` automatically via project settings; for local dev the default is fine.
+
+## Data Shapes
+
+**Product** (from `src/data/products.js`, same shape expected in E5 Supabase):
+```js
+{ id, name, category, price, sizes, stock, badge, description }
+// sizes: string[] | null (null = one-size-fits-all, e.g. gorra, stickers)
+// badge: string | null
+```
+
+**Cart item** (stored in `localStorage` key `swap-cart`):
+```js
+{ id, name, price, size, quantity }
+// size: string | null (null when product.sizes === null)
+// Cart line key: `${id}-${size ?? 'no-size'}`
+```
+
+**`useCart` return values:**
+```js
+{ cartItems, cartLoaded, isOpen, setIsOpen,
+  addToCart(product, size, qty), removeFromCart(id, size),
+  updateQuantity(id, size, newQty), clearCart,
+  cartCount, cartTotal }
+```
+`cartLoaded` is `false` until the `useEffect` reads localStorage — use it to avoid rendering stale totals on first paint (hydration guard).
 
 ## Tech Stack (Progressive)
 

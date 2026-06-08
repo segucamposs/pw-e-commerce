@@ -504,3 +504,116 @@ In React, you use `dangerouslySetInnerHTML` to embed the JSON without it being e
 ```
 This is safe because we write the data ourselves — no user input is involved.
 ```
+
+---
+
+## Base de Datos (E5 — Supabase)
+
+### Base de datos relacional
+
+Una base de datos organiza información en **tablas** (como hojas de Excel). Cada tabla tiene **columnas** (los campos) y **filas** (los registros). Las tablas se pueden relacionar entre sí usando claves.
+
+- **Tabla** — una entidad (ej: `orders` guarda pedidos, `products` guarda productos)
+- **Columna** — un atributo (ej: `price`, `email`)
+- **Fila** — un registro concreto (ej: el pedido de Juan García)
+
+### Clave primaria (Primary Key)
+
+Un valor único que identifica cada fila en la tabla. En `products` usamos el slug de texto (`'swap-hoodie'`). En `orders` usamos un UUID generado automáticamente (`gen_random_uuid()`).
+
+### Clave foránea (Foreign Key)
+
+Un campo que apunta a la clave primaria de otra tabla. En `order_items`, `order_id` es una clave foránea que referencia a `orders(id)`. Esto crea una relación: "este ítem pertenece a ese pedido".
+
+`on delete cascade` significa: si se elimina un pedido, sus ítems se eliminan automáticamente.
+
+### Snapshot de datos en `order_items`
+
+`order_items` guarda `name` y `price` como copia al momento del pedido, no solo `product_id`. ¿Por qué? Porque si mañana cambiamos el precio de un producto, los pedidos históricos deben seguir mostrando el precio que el cliente pagó. Si solo guardáramos `product_id` y joineáramos, el precio histórico se perdería.
+
+### SQL básico
+
+SQL ("Structured Query Language") es el lenguaje para hablar con la base de datos.
+
+```sql
+-- Leer todos los productos
+select * from products;
+
+-- Leer solo remeras
+select * from products where category = 'remeras';
+
+-- Insertar un pedido
+insert into orders (nombre, email, total) values ('Juan', 'j@mail.com', 8500);
+```
+
+### Supabase y el cliente JavaScript
+
+Supabase es un servicio que nos da una base de datos PostgreSQL + una API HTTP automática. El cliente JS traduce llamadas a funciones en consultas SQL:
+
+```js
+// Equivale a: SELECT * FROM products WHERE category = 'remeras'
+supabase.from('products').select('*').eq('category', 'remeras')
+
+// .ilike() es LIKE case-insensitive (ignora mayúsculas/minúsculas)
+// %hoodie% significa "contiene 'hoodie' en cualquier posición"
+supabase.from('products').select('*').ilike('name', '%hoodie%')
+
+// .or() combina dos condiciones con OR
+supabase.from('products').select('*').or('name.ilike.%hoodie%,description.ilike.%hoodie%')
+
+// .single() espera exactamente una fila y la devuelve como objeto (no array)
+supabase.from('products').select('*').eq('id', 'swap-hoodie').single()
+```
+
+### Row Level Security (RLS)
+
+RLS es un sistema de permisos a nivel de fila en PostgreSQL. Define quién puede hacer qué con cada tabla.
+
+Sin RLS: cualquiera que tenga la URL de la API puede leer y escribir todo.
+Con RLS: cada tabla necesita una **policy** que autorice explícitamente cada operación.
+
+En este proyecto:
+- `products` → policy `for select using (true)` → cualquiera puede leer.
+- `orders` → policy `for insert with check (true)` → cualquiera puede insertar. **Sin SELECT policy** → nadie puede leer desde el browser (protege los datos de clientes).
+- Igual para `order_items`, `guest_applications`, `newsletter_subscribers`.
+
+La anon key (clave pública) que ponemos en el código está limitada por RLS. No es un riesgo de seguridad exponerla.
+
+### Variables de entorno
+
+Variables que cambian según el entorno (desarrollo vs producción) y nunca se hardcodean en el código.
+
+- En Next.js se definen en `.env.local` (local) y en Vercel (producción).
+- Las variables con prefijo `NEXT_PUBLIC_` son accesibles en el browser.
+- Las variables sin ese prefijo solo existen en el servidor (más seguras para secrets).
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://...supabase.co   → disponible en browser y server
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...              → disponible en browser y server
+```
+
+### Manejo de errores en Route Handlers
+
+Cuando usamos async/await para operaciones que pueden fallar (red, DB), envolvemos en try/catch:
+
+```js
+try {
+  const { data, error } = await supabase.from('orders').insert({...});
+  if (error) throw error;          // convierte el error de Supabase en excepción JS
+  return NextResponse.json({ ok: true });
+} catch (error) {
+  return NextResponse.json({ error: error.message }, { status: 500 });
+}
+```
+
+HTTP 500 significa "Internal Server Error" — le dice al cliente que algo falló en el servidor.
+
+### Código de error Postgres 23505
+
+Cuando intentamos insertar un email duplicado en `newsletter_subscribers` (que tiene `UNIQUE`), Postgres lanza el error con código `'23505'`. En la route, lo atrapamos y respondemos con 200 + `{ already: true }` en lugar de un error, porque re-suscribirse no es un fallo del usuario.
+
+```js
+if (error.code === '23505') {
+  return NextResponse.json({ ok: true, already: true });
+}
+```

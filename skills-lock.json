@@ -6,6 +6,11 @@
       "sourceType": "github",
       "computedHash": "6462f04969f59f771150e6410e6a11fa397f2934be0b51e8650f495feed1e28d"
     },
+    "architecture-diagram": {
+      "source": "cocoon-ai/architecture-diagram-generator",
+      "sourceType": "github",
+      "computedHash": "81fb7cdf808601a1a0670f8dbedb39ad55f0372012b96d40799288e40517d897"
+    },
     "colorize": {
       "source": "pbakaus/impeccable",
       "sourceType": "github",

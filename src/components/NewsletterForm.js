@@ -10,7 +10,7 @@ function NewsletterForm() {
   const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success'
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!nombre.trim()) { setError('Ingresá tu nombre.'); return; }
@@ -23,9 +23,24 @@ function NewsletterForm() {
     setError('');
     setStatus('submitting');
 
-    setTimeout(() => {
-      setStatus('success');
-    }, 800);
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, apellido, email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error('Server error');
+      if (data.already) {
+        setError('¡Ya estás suscripto! Gracias por sumarte a SWAP.');
+        setStatus('idle');
+      } else {
+        setStatus('success');
+      }
+    } catch {
+      setError('Algo salió mal. Intentá de nuevo.');
+      setStatus('idle');
+    }
   };
 
   if (status === 'success') {
