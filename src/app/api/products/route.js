@@ -5,41 +5,42 @@
 // There is no JSX here — just JavaScript that returns a Response.
 //
 // URL examples:
-//   /api/products                         → all products
-//   /api/products?category=remeras        → only remeras
-//   /api/products?search=hoodie           → matches name or description
-//   /api/products?category=accesorios&search=gorra → combined filter
+//   /api/products                         → all 10 products
+//   /api/products?category=remeras        → 2 products
+//   /api/products?search=hoodie           → 1 product
+//   /api/products?category=accesorios&search=gorra → 1 product
 
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { products } from '@/data/products';
 
-export async function GET(request) {
+export function GET(request) {
+  // new URL(request.url) parses the full URL string into an object with parts:
+  // { pathname, searchParams, host, ... }
+  // .searchParams is a URLSearchParams object — use .get('key') to read a param.
   const { searchParams } = new URL(request.url);
 
-  const category = searchParams.get('category');
-  const search = searchParams.get('search');
+  const category = searchParams.get('category'); // null if not provided
+  const search = searchParams.get('search');     // null if not provided
 
-  // Start with a base query that selects all columns from the products table.
-  // Methods like .eq() and .or() add WHERE clauses — they don't run yet.
-  let query = supabase.from('products').select('*');
+  let result = products;
 
   // Filter by category (skip if 'todos' or not provided)
   if (category && category !== 'todos') {
-    query = query.eq('category', category);
+    result = result.filter((p) => p.category === category);
   }
 
-  // Filter by search — .or() lets us check two columns at once.
-  // ilike means case-insensitive LIKE. %search% means "contains search anywhere".
+  // Filter by search query (name or description, case-insensitive)
   if (search) {
-    query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    const q = search.toLowerCase();
+    result = result.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q)
+    );
   }
 
-  // Awaiting the query sends the SQL to Supabase and returns { data, error }.
-  const { data, error } = await query;
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  return NextResponse.json(data);
+  // NextResponse.json() creates an HTTP response with:
+  //   Content-Type: application/json
+  //   Body: JSON.stringify(result)
+  return NextResponse.json(result);
 }

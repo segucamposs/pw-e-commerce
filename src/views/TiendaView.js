@@ -16,7 +16,7 @@ import Nav from '@/components/Nav';
 import ProductCard from '@/components/ProductCard';
 import CartDrawer from '@/components/CartDrawer';
 import useCart from '@/hooks/useCart';
-import { CATEGORIES } from '@/data/categories';
+import { CATEGORIES } from '@/data/products';
 import '@/merch.css';
 
 function TiendaView() {

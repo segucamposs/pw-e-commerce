@@ -5,29 +5,26 @@
 //   /tienda/swap-gorra    → params.id = 'swap-gorra'
 
 import ProductView from '@/views/ProductView';
-import { supabase } from '@/lib/supabase';
+import { products } from '@/data/products';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pw-e-commerce.vercel.app';
 
 // generateStaticParams: tells Next.js which [id] values exist at build time.
 // Next.js pre-renders one HTML file per product — faster load and better SEO
 // because Google gets a real HTML page instead of waiting for JavaScript.
-// In E5, we query Supabase instead of reading the local array.
-export async function generateStaticParams() {
-  const { data } = await supabase.from('products').select('id');
-  return (data ?? []).map((product) => ({ id: product.id }));
+// In E5, this function will call Supabase instead of reading the local array.
+export function generateStaticParams() {
+  return products.map((product) => ({ id: product.id }));
 }
 
-// generateMetadata: gives each product page its own unique title,
-// description, and OG image so links shared on WhatsApp/Twitter show
-// the correct product name and image.
+// generateMetadata: replaces the static `export const metadata = {...}`.
+// It receives the same params as the page, so each product gets its own
+// unique title, description, and OG image in the <head>.
+// Without this, every product page would show "Producto — SWAP Podcast"
+// in the browser tab and when shared on WhatsApp/Twitter/etc.
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const { data: product } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return { title: 'Producto no encontrado' };
@@ -57,14 +54,12 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
-  const { data: product } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const product = products.find((p) => p.id === id);
 
   // Product schema: Google can show price, availability, and images directly
   // in search results ("rich results") when this structured data is present.
+  // BreadcrumbList shows the page path (Inicio > Tienda > Product Name)
+  // in the Google search snippet.
   const productSchema = product
     ? {
         '@context': 'https://schema.org',
