@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 
 export async function POST(request) {
   const { nombre, email, instagram, tema } = await request.json();
@@ -8,7 +8,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Faltan campos requeridos.' }, { status: 400 });
   }
 
-  const { error } = await supabase
+  const { error } = await getSupabase()
     .from('guest_applications')
     .insert({ nombre, email, instagram: instagram || null, tema });
 

@@ -11,13 +11,14 @@
 //   /api/products?category=accesorios&search=gorra → 1 product
 
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const category = searchParams.get('category');
   const search = searchParams.get('search');
 
+  const supabase = getSupabase();
   let query = supabase.from('products').select('*');
 
   if (category && category !== 'todos') {
