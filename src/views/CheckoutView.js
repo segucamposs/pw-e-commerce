@@ -46,6 +46,8 @@ function CheckoutView() {
 
   // Controlled form state — one object for all fields.
   // When E6 connects Mercado Pago, handleSubmit receives this object as-is.
+  const [orderStatus, setOrderStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+
   const [form, setForm] = useState({
     nombre: '',
     email: '',
@@ -62,14 +64,29 @@ function CheckoutView() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // TODO E6: replace this stub with Mercado Pago preference creation + redirect.
-  // Expected flow:
-  //   1. POST /api/checkout with { form, cartItems }
-  //   2. Server creates an MP preference and returns { init_point: URL }
-  //   3. router.push(init_point) sends user to MP checkout
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // placeholder — no action yet
+    setOrderStatus('submitting');
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ form, cartItems, total }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setOrderStatus('error');
+        return;
+      }
+      setOrderStatus('success');
+      // TODO E6: replace success state with Mercado Pago redirect
+      // Expected flow:
+      //   1. POST /api/checkout returns { init_point: URL } from MP preference
+      //   2. router.push(init_point) sends user to MP checkout
+    } catch {
+      setOrderStatus('error');
+    }
   };
 
   const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
@@ -325,17 +342,30 @@ function CheckoutView() {
                 </div>
               </div>
 
-              {/* Submit — the `form` attribute links this button to the form above */}
-              <button
-                type="submit"
-                form="checkout-form"
-                className="btn btn-primary checkout-submit-btn"
-              >
-                Pagar con Mercado Pago
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M2 8h12M9 3l5 5-5 5" />
-                </svg>
-              </button>
+              {orderStatus === 'success' ? (
+                <p className="form-status status-ok" role="status">
+                  ¡Pedido recibido! Te contactamos pronto.
+                </p>
+              ) : (
+                <>
+                  <button
+                    type="submit"
+                    form="checkout-form"
+                    className="btn btn-primary checkout-submit-btn"
+                    disabled={orderStatus === 'submitting'}
+                  >
+                    {orderStatus === 'submitting' ? 'Procesando...' : 'Pagar con Mercado Pago'}
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M2 8h12M9 3l5 5-5 5" />
+                    </svg>
+                  </button>
+                  {orderStatus === 'error' && (
+                    <p className="form-status status-error" role="alert">
+                      Algo salió mal. Intentá de nuevo.
+                    </p>
+                  )}
+                </>
+              )}
 
               <p className="checkout-secure-note">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

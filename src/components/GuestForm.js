@@ -35,8 +35,19 @@ function GuestForm() {
 
     setSubmitting(true);
     try {
-      setStatus('ok');
-      setForm({ nombre: '', email: '', instagram: '', tema: '' });
+      const res = await fetch('/api/guests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setErrors({ general: data.error || 'Algo salió mal. Intentá de nuevo.' });
+        setStatus('error');
+      } else {
+        setStatus('ok');
+        setForm({ nombre: '', email: '', instagram: '', tema: '' });
+      }
     } catch {
       setStatus('error');
     } finally {

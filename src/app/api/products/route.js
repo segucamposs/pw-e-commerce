@@ -11,36 +11,27 @@
 //   /api/products?category=accesorios&search=gorra → 1 product
 
 import { NextResponse } from 'next/server';
-import { products } from '@/data/products';
+import { getSupabase } from '@/lib/supabase';
 
-export function GET(request) {
-  // new URL(request.url) parses the full URL string into an object with parts:
-  // { pathname, searchParams, host, ... }
-  // .searchParams is a URLSearchParams object — use .get('key') to read a param.
+export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  const category = searchParams.get('category');
+  const search = searchParams.get('search');
 
-  const category = searchParams.get('category'); // null if not provided
-  const search = searchParams.get('search');     // null if not provided
+  const supabase = getSupabase();
+  let query = supabase.from('products').select('*');
 
-  let result = products;
-
-  // Filter by category (skip if 'todos' or not provided)
   if (category && category !== 'todos') {
-    result = result.filter((p) => p.category === category);
+    query = query.eq('category', category);
   }
 
-  // Filter by search query (name or description, case-insensitive)
   if (search) {
-    const q = search.toLowerCase();
-    result = result.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
-    );
+    query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
   }
 
-  // NextResponse.json() creates an HTTP response with:
-  //   Content-Type: application/json
-  //   Body: JSON.stringify(result)
-  return NextResponse.json(result);
+  const { data, error } = await query;
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  return NextResponse.json(data);
 }
