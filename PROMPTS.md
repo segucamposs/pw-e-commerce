@@ -169,3 +169,17 @@ All prompts sent during the development of this project, with date and time.
 
 **Prompt:** "can we add the direct link to the whatsapp icon now?" + number: +54 9 2355 463731
 **Output:** Added `href="https://wa.me/5492355463731"` with `target="_blank" rel="noopener noreferrer"` to: src/components/WhatsAppFab.js, src/pages/GuestPage.js (inline button), guest.html, and index.html (user was testing static files via Live Server).
+
+---
+
+## 2026-06-09
+
+**Prompt:** "hey claude, im not being able to connect the database, can you check what it is please"
+**Output:** Diagnosed the E5 Supabase connection. Verified the DB itself works (direct curl to the Supabase REST API returned products with the keys in .env.local) and local dev works (`/api/products` on localhost returned all 10 products from Supabase). The failure is only on Vercel: the feature/e5-supabase preview deploy returns HTTP 500 on `/api/products`, and runtime logs show "Error: supabaseUrl is required" — because NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY only exist in .env.local (gitignored) and were never added to Vercel's Environment Variables. No code changes needed; fix is adding both vars in Vercel project settings and redeploying.
+
+---
+
+## 2026-06-14
+
+**Prompt:** "modify the aesthetics of the swap social media page [/redes]: (1) add a little orange blur from the bottom matching brand colors, (2) replace 'Para los que están construyendo su versión.' with 'No somos expertos, preguntamos como vos 🎙' and add 'Co-hosts — Segu Campos & Fran Bottaro' below, (3) swap the SVG icons for the official brand logos (uploaded PNGs)."
+**Output:** RedesView.js — replaced the inline SVG icon per social with official brand logo PNGs rendered via `<img className="redes-card-logo">`; SOCIALS entries now carry a `logo` path instead of an `icon` JSX node. Updated subtitle copy and added a `redes-cohosts` line. redes.css — added a blurred orange radial-gradient via `.redes-page::after` (uses --accent-glow), bumped `.redes-page` to position:relative + overflow:hidden and lifted `.redes-container` above it with z-index; restyled `.redes-card-icon` (removed tinted background) and added `.redes-card-logo` (36×36, object-fit:contain); added `.redes-cohosts` style and tightened subtitle spacing. Saved logos to public/assets/socials/{instagram,tiktok,spotify,youtube,apple-podcasts}.png.

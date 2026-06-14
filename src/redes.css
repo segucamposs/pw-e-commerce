@@ -13,12 +13,38 @@
 }
 
 .redes-page {
+  position: relative;
   min-height: calc(100vh - 160px);
   background: var(--bg);
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 2.5rem 1.5rem 4rem;
+  overflow: hidden;
+}
+
+.redes-page::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -320px;
+  transform: translateX(-50%);
+  width: 175%;
+  height: 92%;
+  background: radial-gradient(
+    ellipse at center,
+    var(--accent-glow, rgba(255, 102, 0, 0.6)) 0%,
+    rgba(255, 102, 0, 0.3) 45%,
+    transparent 78%
+  );
+  filter: blur(75px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.redes-container {
+  position: relative;
+  z-index: 1;
 }
 
 .redes-container {
@@ -30,10 +56,18 @@
 }
 
 .redes-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.redes-cohosts {
+  font-size: 0.8rem;
   color: var(--text-muted);
   margin: 0 0 2.5rem;
-  font-style: italic;
+  text-align: center;
 }
 
 .redes-list {
@@ -70,17 +104,15 @@
   flex-shrink: 0;
   width: 42px;
   height: 42px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--platform-color);
-  transition: background var(--transition);
 }
 
-.redes-card:hover .redes-card-icon {
-  background: rgba(255, 255, 255, 0.08);
+.redes-card-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 
 .redes-card-body {
@@ -120,4 +152,27 @@
   font-size: 0.75rem;
   color: var(--text-muted);
   opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+  .redes-header {
+    padding: 1rem 1.5rem 0;
+  }
+
+  .redes-header-logo {
+    height: 84px;
+  }
+
+  .redes-page {
+    min-height: auto;
+    padding: 1.25rem 1.5rem 4rem;
+  }
+
+  .redes-subtitle {
+    margin-bottom: 0.4rem;
+  }
+
+  .redes-cohosts {
+    margin-bottom: 1.75rem;
+  }
 }
